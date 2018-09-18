@@ -19,6 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".vue.VueListeMagasin" />
+        <activity android:name=".vue.VueAjouterCourse"></activity>
     </application>
 
 </manifest>

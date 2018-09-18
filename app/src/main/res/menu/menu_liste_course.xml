@@ -7,4 +7,9 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_gestion_magasin"
+        android:orderInCategory="100"
+        android:title="Gestion magasin"
+        app:showAsAction="never" />
 </menu>

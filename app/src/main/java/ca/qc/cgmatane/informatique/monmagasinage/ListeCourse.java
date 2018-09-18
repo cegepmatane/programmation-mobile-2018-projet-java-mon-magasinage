@@ -1,5 +1,6 @@
 package ca.qc.cgmatane.informatique.monmagasinage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import ca.qc.cgmatane.informatique.monmagasinage.vue.VueListeMagasin;
 
 public class ListeCourse extends AppCompatActivity {
 
@@ -18,7 +21,7 @@ public class ListeCourse extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.vue_liste_course_action_naviguer_ajouter_course);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,6 +47,12 @@ public class ListeCourse extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if (id == R.id.action_gestion_magasin) {
+            Intent intentionNaviguerVueGestionMagasin = new Intent(this, VueListeMagasin.class);
+            startActivity(intentionNaviguerVueGestionMagasin);
             return true;
         }
 
