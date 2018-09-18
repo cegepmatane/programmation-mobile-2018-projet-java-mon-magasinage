@@ -9,11 +9,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueAjouterCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueListeMagasin;
 
 public class ListeCourse extends AppCompatActivity {
+
+    /** Données*/
+    protected Courses listeCourse;
+
+    /** Composants graphiques*/
+    protected ListView listViewCourse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +31,14 @@ public class ListeCourse extends AppCompatActivity {
         setContentView(R.layout.vue_liste_course);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        /** Instanciation des composants graphiques*/
+        listViewCourse = findViewById(R.id.vue_liste_course_listeview);
+
+        /** Instanciation des données*/
+        listeCourse = simulerListeCourse();
+        /** Affichage*/
+        afficherToutesLesCourses();
 
         FloatingActionButton actionNaviguerAjouterCourse = (FloatingActionButton) findViewById(R.id.vue_liste_course_action_naviguer_ajouter_course);
         actionNaviguerAjouterCourse.setOnClickListener(new View.OnClickListener() {
@@ -62,4 +80,30 @@ public class ListeCourse extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    protected Courses simulerListeCourse(){
+        Courses listeCourse = new Courses();
+        Course course = new Course();
+        course.setId(1);
+        course.setNom("Course du mardi soir");
+        listeCourse.add(course);
+        course = new Course();
+        course.setId(2);
+        course.setNom("Course du samedi matin");
+        listeCourse.add(course);
+        course = new Course();
+        course.setId(2);
+        course.setNom("Course gourmande (exeptionnelle)");
+        listeCourse.add(course);
+        return listeCourse;
+    }
+
+    private void afficherToutesLesCourses(){
+        SimpleAdapter adapterListeCourses = new SimpleAdapter(this, listeCourse.recuperereListePourAdapteur(), android.R.layout.two_line_list_item,
+                new String[]{Course.NOM, Course.ID_COURSE},
+                new int[]{ android.R.id.text1, android.R.id.text2});
+
+        listViewCourse.setAdapter(adapterListeCourses);
+    }
+
 }
