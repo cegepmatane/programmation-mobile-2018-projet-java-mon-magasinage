@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import ca.qc.cgmatane.informatique.monmagasinage.vue.VueAjouterCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueListeMagasin;
 
 public class ListeCourse extends AppCompatActivity {
@@ -21,15 +22,18 @@ public class ListeCourse extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.vue_liste_course_action_naviguer_ajouter_course);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton actionNaviguerAjouterCourse = (FloatingActionButton) findViewById(R.id.vue_liste_course_action_naviguer_ajouter_course);
+        actionNaviguerAjouterCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                Intent intentionNaviguerAjouterCourse = new Intent(ListeCourse.this, VueAjouterCourse.class);
+                startActivity(intentionNaviguerAjouterCourse);
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
