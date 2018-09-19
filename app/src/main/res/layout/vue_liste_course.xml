@@ -50,4 +50,15 @@
         app:rippleColor="?android:attr/statusBarColor"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
+    <SearchView
+        android:id="@+id/vue_liste_course_barre_recherche"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/vue_liste_course_listeview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

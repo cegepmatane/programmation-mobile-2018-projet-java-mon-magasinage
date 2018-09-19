@@ -78,7 +78,7 @@ public class Course {
         sportPourAdapteur.put(ID_COURSE, String.valueOf(this.id));
         sportPourAdapteur.put(NOM, this.nom);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy  hh:mm");
-        sportPourAdapteur.put(DATE_NOTIFICATION, this.dateNotification.format(formatter));
+        sportPourAdapteur.put(DATE_NOTIFICATION,"pour le : "+ this.dateNotification.format(formatter));
         sportPourAdapteur.put(DATE_REALISATION, this.dateRealisation.format(formatter));
         return sportPourAdapteur;
     }

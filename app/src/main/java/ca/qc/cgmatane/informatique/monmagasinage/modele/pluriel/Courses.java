@@ -25,4 +25,10 @@ public class Courses extends ArrayList<Course> {
         }
         return listePourAdapteur;
     }
+
+    public Courses creerNouvelleListeParValeur(){
+        Courses sports = new Courses();
+        sports.addAll(this);
+        return sports;
+    }
 }
