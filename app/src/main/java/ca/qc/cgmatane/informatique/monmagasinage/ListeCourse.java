@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import java.time.LocalDateTime;
+
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueAjouterCourse;
@@ -86,21 +88,27 @@ public class ListeCourse extends AppCompatActivity {
         Course course = new Course();
         course.setId(1);
         course.setNom("Course du mardi soir");
+        course.setDateNotification( LocalDateTime.now());
+        course.setDateRealisation( LocalDateTime.now());
         listeCourse.add(course);
         course = new Course();
         course.setId(2);
         course.setNom("Course du samedi matin");
+        course.setDateNotification( LocalDateTime.now());
+        course.setDateRealisation( LocalDateTime.now());
         listeCourse.add(course);
         course = new Course();
         course.setId(2);
         course.setNom("Course gourmande (exeptionnelle)");
+        course.setDateNotification( LocalDateTime.now());
+        course.setDateRealisation( LocalDateTime.now());
         listeCourse.add(course);
         return listeCourse;
     }
 
     private void afficherToutesLesCourses(){
         SimpleAdapter adapterListeCourses = new SimpleAdapter(this, listeCourse.recuperereListePourAdapteur(), android.R.layout.two_line_list_item,
-                new String[]{Course.NOM, Course.ID_COURSE},
+                new String[]{Course.NOM, Course.DATE_REALISATION},
                 new int[]{ android.R.id.text1, android.R.id.text2});
 
         listViewCourse.setAdapter(adapterListeCourses);

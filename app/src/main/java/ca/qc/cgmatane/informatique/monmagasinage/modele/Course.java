@@ -1,7 +1,11 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele;
 
+import android.icu.text.SimpleDateFormat;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class Course {
@@ -73,8 +77,9 @@ public class Course {
         HashMap<String, String> sportPourAdapteur = new HashMap<String, String>();
         sportPourAdapteur.put(ID_COURSE, String.valueOf(this.id));
         sportPourAdapteur.put(NOM, this.nom);
-
-        //TODO completer avec les autres champs si besoin
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy  hh:mm");
+        sportPourAdapteur.put(DATE_NOTIFICATION, this.dateNotification.format(formatter));
+        sportPourAdapteur.put(DATE_REALISATION, this.dateRealisation.format(formatter));
         return sportPourAdapteur;
     }
 }
