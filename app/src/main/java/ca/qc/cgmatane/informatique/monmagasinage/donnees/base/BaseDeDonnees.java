@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBaseDeDonnees, RequeteInsertionBaseDeDonnees {
-    private static final int VERSION_BDD = 2;
+    private static final int VERSION_BDD = 8;
     private static BaseDeDonnees instance = null;
 
     public static BaseDeDonnees getInstance(Context contexte)
@@ -25,12 +25,14 @@ public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBa
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        System.out.println("onCreate()");
         this.create(db);
         this.insertion(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
+        System.out.println("onUpgrade()");
         this.suppression(db);
         this.create(db);
         this.insertion(db);
@@ -39,6 +41,7 @@ public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBa
 
     @Override
     public void onDowngrade(SQLiteDatabase db, int arg1, int arg2) {
+        System.out.println("onDowngrade()");
         this.suppression(db);
         this.create(db);
         this.insertion(db);

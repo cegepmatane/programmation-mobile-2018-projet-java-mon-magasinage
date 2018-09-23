@@ -6,7 +6,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
 public interface RequeteCreationBaseDeDonnees {
     /** Course */
     public final static String DELETE_TABLE_COURSE ="drop table IF EXISTS "+ Course.NOM_TABLE;
-    public final static String CREATE_TABLE_COURSE = String.format("create table %s ( %s INTEGER PRIMARY KEY, %s TEXT, %s DATE, %s DATE, %s INTEGER)",
+    public final static String CREATE_TABLE_COURSE = String.format("create table %s ( %s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s TEXT, %s INTEGER)",
             Course.NOM_TABLE, Course.CHAMP_ID_COURSE, Course.CHAMP_NOM,Course.CHAMP_DATE_NOTIFICATION, Course.CHAMP_DATE_REALISATION, Course.CHAMP_ID_COURSE_ORIGINAL);
 
     /** Magasin */

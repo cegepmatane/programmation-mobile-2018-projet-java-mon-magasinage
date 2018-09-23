@@ -45,7 +45,7 @@ public class CourseDAO implements CourseSQL{
             String nom= curseurCourses.getString(indexNom);
             String dateNotification = curseurCourses.getString(indexDateNotification);
             String dateRealisation = curseurCourses.getString(indexDateNotification);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD HH:MM:SS.SSS");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm");
             /*LocalDateTime dateTime = LocalDateTime.parse(str, formatter);*/
             course = new Course(id_course, nom, LocalDateTime.parse(dateNotification, formatter), LocalDateTime.parse(dateRealisation, formatter));
 

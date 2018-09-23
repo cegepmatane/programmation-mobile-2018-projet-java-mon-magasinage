@@ -73,7 +73,8 @@ public class Course {
         HashMap<String, String> coursePourAdapteur = new HashMap<String, String>();
         coursePourAdapteur.put(CHAMP_ID_COURSE, String.valueOf(this.id));
         coursePourAdapteur.put(CHAMP_NOM, this.nom);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy  hh:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm");
+        String st = this.dateNotification.format(formatter);
         coursePourAdapteur.put(CHAMP_DATE_NOTIFICATION,"pour le : "+ this.dateNotification.format(formatter));
         coursePourAdapteur.put(CHAMP_DATE_REALISATION, this.dateRealisation.format(formatter));
         return coursePourAdapteur;

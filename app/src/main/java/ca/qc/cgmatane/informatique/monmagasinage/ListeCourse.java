@@ -14,6 +14,7 @@ import android.widget.SimpleAdapter;
 
 import java.time.LocalDateTime;
 
+import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
@@ -24,6 +25,7 @@ public class ListeCourse extends AppCompatActivity {
 
     /** Données*/
     protected Courses listeCourse;
+    protected CourseDAO courseDAO;
 
     /** Composants graphiques*/
     protected ListView vueListViewCourse;
@@ -44,7 +46,9 @@ public class ListeCourse extends AppCompatActivity {
 
         /** Instanciation des données*/
         BaseDeDonnees.getInstance(this); // Initialiser l'intance avec une activity
-        listeCourse = simulerListeCourse();
+        courseDAO = CourseDAO.getInstance();
+//        listeCourse = simulerListeCourse();
+        listeCourse = courseDAO.listerCourses();
         listeCourseAffichage = new Courses();
 
         /** Affichage*/
