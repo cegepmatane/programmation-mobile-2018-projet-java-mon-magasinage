@@ -1,21 +1,17 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele;
 
-import android.icu.text.SimpleDateFormat;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.HashMap;
 
 public class Course {
-    public static final String NOM_CLASS= "course";
+    public static final String NOM_TABLE = "course";
 
-    public static final String ID_COURSE = "id_course";
-    public static final String NOM  = "nom";
-    public static final String DATE_NOTIFICATION  = "notification";
-    public static final String DATE_REALISATION = "realisation";
-    public static final String ID_COURSE_ORIGINAL = "id_course_original";
+    public static final String CHAMP_ID_COURSE = "id_course";
+    public static final String CHAMP_NOM = "nom";
+    public static final String CHAMP_DATE_NOTIFICATION = "notification";
+    public static final String CHAMP_DATE_REALISATION = "realisation";
+    public static final String CHAMP_ID_COURSE_ORIGINAL = "id_course_original";
 
     private int id;
     private String nom;
@@ -75,11 +71,11 @@ public class Course {
 
     public HashMap<String, String> obtenirObjetPourAdapteur() {
         HashMap<String, String> sportPourAdapteur = new HashMap<String, String>();
-        sportPourAdapteur.put(ID_COURSE, String.valueOf(this.id));
-        sportPourAdapteur.put(NOM, this.nom);
+        sportPourAdapteur.put(CHAMP_ID_COURSE, String.valueOf(this.id));
+        sportPourAdapteur.put(CHAMP_NOM, this.nom);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy  hh:mm");
-        sportPourAdapteur.put(DATE_NOTIFICATION,"pour le : "+ this.dateNotification.format(formatter));
-        sportPourAdapteur.put(DATE_REALISATION, this.dateRealisation.format(formatter));
+        sportPourAdapteur.put(CHAMP_DATE_NOTIFICATION,"pour le : "+ this.dateNotification.format(formatter));
+        sportPourAdapteur.put(CHAMP_DATE_REALISATION, this.dateRealisation.format(formatter));
         return sportPourAdapteur;
     }
 }

@@ -134,7 +134,7 @@ public class ListeCourse extends AppCompatActivity {
 
     private void afficherToutesLesCourses(){
         SimpleAdapter adapterListeCourses = new SimpleAdapter(this, listeCourseAffichage.recuperereListePourAdapteur(), android.R.layout.two_line_list_item,
-                new String[]{Course.NOM, Course.DATE_NOTIFICATION},
+                new String[]{Course.CHAMP_NOM, Course.CHAMP_DATE_NOTIFICATION},
                 new int[]{ android.R.id.text1, android.R.id.text2});
 
         vueListViewCourse.setAdapter(adapterListeCourses);
