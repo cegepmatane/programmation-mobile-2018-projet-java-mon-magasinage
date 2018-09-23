@@ -70,12 +70,12 @@ public class Course {
     }
 
     public HashMap<String, String> obtenirObjetPourAdapteur() {
-        HashMap<String, String> sportPourAdapteur = new HashMap<String, String>();
-        sportPourAdapteur.put(CHAMP_ID_COURSE, String.valueOf(this.id));
-        sportPourAdapteur.put(CHAMP_NOM, this.nom);
+        HashMap<String, String> coursePourAdapteur = new HashMap<String, String>();
+        coursePourAdapteur.put(CHAMP_ID_COURSE, String.valueOf(this.id));
+        coursePourAdapteur.put(CHAMP_NOM, this.nom);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy  hh:mm");
-        sportPourAdapteur.put(CHAMP_DATE_NOTIFICATION,"pour le : "+ this.dateNotification.format(formatter));
-        sportPourAdapteur.put(CHAMP_DATE_REALISATION, this.dateRealisation.format(formatter));
-        return sportPourAdapteur;
+        coursePourAdapteur.put(CHAMP_DATE_NOTIFICATION,"pour le : "+ this.dateNotification.format(formatter));
+        coursePourAdapteur.put(CHAMP_DATE_REALISATION, this.dateRealisation.format(formatter));
+        return coursePourAdapteur;
     }
 }
