@@ -22,17 +22,17 @@
     <EditText
         android:id="@+id/vue_ajouter_course_nom_course"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:ems="10"
+        android:focusedByDefault="false"
+        android:hint="nom de la liste"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="nom de la liste"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_ajouter_course_titre"
-        android:focusedByDefault="false"/>
+        app:layout_constraintTop_toBottomOf="@+id/vue_ajouter_course_titre" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -49,13 +49,12 @@
         android:id="@+id/vue_ajouter_course_linear_layout_magasin"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:orientation="vertical"
         android:focusableInTouchMode="true"
-        app:layout_constraintBottom_toTopOf="@+id/vue_ajouter_course_action_enregistrer"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/vue_ajouter_course_action_ajouter_produit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,8 +63,21 @@
         <ListView
             android:id="@+id/vue_ajouter_course_list_view_produits"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"></ListView>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/vue_ajouter_course_action_ajouter_produit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:text="ajouter une course"
+        app:layout_constraintBottom_toTopOf="@+id/vue_ajouter_course_action_enregistrer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <Button
         android:id="@+id/vue_ajouter_course_action_enregistrer"
