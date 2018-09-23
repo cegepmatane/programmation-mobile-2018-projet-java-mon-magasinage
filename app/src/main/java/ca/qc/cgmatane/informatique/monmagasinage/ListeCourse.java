@@ -14,6 +14,7 @@ import android.widget.SimpleAdapter;
 
 import java.time.LocalDateTime;
 
+import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueAjouterCourse;
@@ -42,8 +43,10 @@ public class ListeCourse extends AppCompatActivity {
         vueBarreRechercheCourse = findViewById(R.id.vue_liste_course_barre_recherche);
 
         /** Instanciation des données*/
+        BaseDeDonnees.getInstance(this); // Initialiser l'intance avec une activity
         listeCourse = simulerListeCourse();
         listeCourseAffichage = new Courses();
+
         /** Affichage*/
         actualisationAffichage();
 
