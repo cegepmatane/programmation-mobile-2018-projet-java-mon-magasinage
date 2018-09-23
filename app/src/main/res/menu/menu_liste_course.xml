@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ca.qc.cgmatane.informatique.monmagasinage.ListeCourse">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_gestion_magasin"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Gestion magasin"
         app:showAsAction="never" />
 </menu>
