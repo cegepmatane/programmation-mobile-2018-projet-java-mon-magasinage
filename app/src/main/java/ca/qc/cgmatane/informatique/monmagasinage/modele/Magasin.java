@@ -1,8 +1,8 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele;
 
 public class Magasin {
-<<<<<<< Updated upstream
-=======
+    public static final String CHAMP_ID = "id_magasin";
+    public static final String CHAMP_NOM = "nom";
     private int id;
     private String nom;
 
@@ -29,5 +29,4 @@ public class Magasin {
     public void setNom(String nom) {
         this.nom = nom;
     }
->>>>>>> Stashed changes
 }
