@@ -23,6 +23,8 @@ import ca.qc.cgmatane.informatique.monmagasinage.vue.VueListeMagasin;
 
 public class ListeCourse extends AppCompatActivity {
 
+    private static final int ACTIVITE_MODIFIER_COURSE = 1;
+
     /** Données*/
     protected Courses listeCourse;
     protected CourseDAO courseDAO;
@@ -61,7 +63,7 @@ public class ListeCourse extends AppCompatActivity {
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
                 Intent intentionNaviguerAjouterCourse = new Intent(ListeCourse.this, VueAjouterCourse.class);
-                startActivity(intentionNaviguerAjouterCourse);
+                startActivityForResult(intentionNaviguerAjouterCourse, ACTIVITE_MODIFIER_COURSE);
             }
         });
 
@@ -146,5 +148,11 @@ public class ListeCourse extends AppCompatActivity {
 
         vueListViewCourse.setAdapter(adapterListeCourses);
     }
-
+    protected void onActivityResult(int activite, int resultat, Intent donnees){
+        switch (activite){
+            case ACTIVITE_MODIFIER_COURSE:
+                actualisationAffichage();
+                break;
+        }
+    }
 }
