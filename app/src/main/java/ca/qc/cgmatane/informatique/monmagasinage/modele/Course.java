@@ -12,6 +12,8 @@ public class Course {
     public static final String CHAMP_DATE_NOTIFICATION = "notification";
     public static final String CHAMP_DATE_REALISATION = "realisation";
     public static final String CHAMP_ID_COURSE_ORIGINAL = "id_course_original";
+    public static final String CHAMP_ID_MAGASIN = "id_magasin";
+
 
     private int id;
     private String nom;

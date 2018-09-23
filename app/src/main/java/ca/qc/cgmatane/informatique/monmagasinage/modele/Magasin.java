@@ -7,6 +7,11 @@ public class Magasin {
     public static final String NOM_TABLE = "magasin";
     public static final String CHAMP_ID = "id_magasin";
     public static final String CHAMP_NOM = "nom";
+    public static final String CHAMP_ADRESSE = "adresse";
+    public static final String CHAMP_VILLE = "ville";
+    public static final String CHAMP_COOR_X = "coor_x";
+    public static final String CHAMP_COOR_Y = "coor_y";
+
 
     private int id;
     private String nom;
