@@ -26,6 +26,7 @@ public class CourseDAO implements CourseSQL{
     public CourseDAO() {
         this.listeCourses = new Courses();
         this.accesseurBaseDeDonnees = BaseDeDonnees.getInstance();
+        listerCourses();
     }
 
     public Courses listerCourses(){
@@ -55,5 +56,14 @@ public class CourseDAO implements CourseSQL{
         curseurCourses.close();
 
         return this.listeCourses;
+    }
+
+    public Course recupererCourseAvecId(int id) {
+        for (Course course : this.listeCourses){
+            if (course.getId()==id){
+                return course;
+            }
+        }
+        return null;
     }
 }
