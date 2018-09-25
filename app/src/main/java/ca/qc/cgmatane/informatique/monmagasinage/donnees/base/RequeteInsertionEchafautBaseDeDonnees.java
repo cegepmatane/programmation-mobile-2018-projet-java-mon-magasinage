@@ -3,7 +3,7 @@ package ca.qc.cgmatane.informatique.monmagasinage.donnees.base;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
 
-public interface RequeteInsertionBaseDeDonnees {
+public interface RequeteInsertionEchafautBaseDeDonnees {
     /** Magasin */
     public final static String INSERT_MAGASIN_1= String.format("insert into %s (%s, %s, %s, %s, %s, %s) VALUES (%s, '%s', '%s', '%s', %s, %s)",
             Magasin.NOM_TABLE, Magasin.CHAMP_ID, Magasin.CHAMP_NOM, Magasin.CHAMP_ADRESSE, Magasin.CHAMP_VILLE, Magasin.CHAMP_COOR_X, Magasin.CHAMP_COOR_Y,

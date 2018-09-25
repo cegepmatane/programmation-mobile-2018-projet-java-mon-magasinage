@@ -14,7 +14,7 @@ public class LignesCourse extends ArrayList<LigneCourse>{
         };
         return null;
     }
-    
+
     public LigneCourse trouverAvecIdProduit(int id){
         for(LigneCourse ligneCourse: this){
             if(null != ligneCourse.getProduit() && ligneCourse.getProduit().getId() == id){
