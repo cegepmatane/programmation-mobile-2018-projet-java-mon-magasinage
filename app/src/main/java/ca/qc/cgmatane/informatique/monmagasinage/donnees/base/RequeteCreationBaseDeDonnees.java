@@ -26,16 +26,16 @@ public interface RequeteCreationBaseDeDonnees {
 
     /** Produit*/
     final static String DELETE_TABLE_PRODUIT ="drop table IF EXISTS "+ Produit.NOM_TABLE;
-    final static String CREATE_TABLE_PRODUIT = String.format("create table %s ( %s INTEGER PRIMARY KEY, %s TEXT, %s INTEGER, %s INTEGER, %s INTEGER, " +
-                    "FOREIGN KEY("+Produit.CHAMP_ID_UNITE+") REFERENCES "+Unite.NOM_TABLE+"("+Unite.CHAMP_ID +") )",
-            Produit.NOM_TABLE, Produit.CHAMP_ID, Produit.CHAMP_NOM, Produit.CHAMP_QUANTITE_DEFAUT, Produit.CHAMP_RECURENCE_ACHAT, Produit.CHAMP_ID_UNITE);
+    final static String CREATE_TABLE_PRODUIT = String.format("create table %s ( %s INTEGER PRIMARY KEY, %s TEXT, %s INTEGER, %s INTEGER)",
+            Produit.NOM_TABLE, Produit.CHAMP_ID, Produit.CHAMP_NOM, Produit.CHAMP_QUANTITE_DEFAUT, Produit.CHAMP_RECURENCE_ACHAT);
 
     /** LigneCourse */
     final static String DELETE_TABLE_LIGNE_COURSE ="drop table IF EXISTS "+ LigneCourse.NOM_TABLE;
-    final static String CREATE_TABLE_LIGNE_COURSE = String.format("create table %s (%s INTEGER, %s INTEGER, %s INTEGER, %s BOOLEAN, " +
+    final static String CREATE_TABLE_LIGNE_COURSE = String.format("create table %s (%s INTEGER, %s INTEGER, %s INTEGER, %s BOOLEAN, %s INTEGER, " +
             "PRIMARY KEY("+LigneCourse.CHAMP_ID_COURSE+", "+LigneCourse.CHAMP_ID_PRODUIT+"),"+
             "FOREIGN KEY("+LigneCourse.CHAMP_ID_COURSE+") REFERENCES "+Course.NOM_TABLE+"("+Course.CHAMP_ID_COURSE +")," +
-            "FOREIGN KEY("+LigneCourse.CHAMP_ID_PRODUIT+") REFERENCES "+Produit.NOM_TABLE+"("+Produit.CHAMP_ID +") )",
-            LigneCourse.NOM_TABLE, LigneCourse.CHAMP_ID_COURSE, LigneCourse.CHAMP_ID_PRODUIT, LigneCourse.CHAMP_QUANTITE, LigneCourse.CHAMP_COCHE);
+            "FOREIGN KEY("+LigneCourse.CHAMP_ID_PRODUIT+") REFERENCES "+Produit.NOM_TABLE+"("+Produit.CHAMP_ID +")," +
+            "FOREIGN KEY("+LigneCourse.CHAMP_ID_UNITE+") REFERENCES "+Unite.NOM_TABLE+"("+Unite.CHAMP_ID +") )",
+            LigneCourse.NOM_TABLE, LigneCourse.CHAMP_ID_COURSE, LigneCourse.CHAMP_ID_PRODUIT, LigneCourse.CHAMP_QUANTITE, LigneCourse.CHAMP_COCHE, LigneCourse.CHAMP_ID_UNITE);
 
 }

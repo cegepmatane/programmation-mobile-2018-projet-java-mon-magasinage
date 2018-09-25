@@ -7,13 +7,11 @@ public class Produit {
     public static final String CHAMP_NOM = "nom";
     public static final String CHAMP_QUANTITE_DEFAUT = "quantiteDefaut";
     public static final String CHAMP_RECURENCE_ACHAT = "recurenceAchat";
-    public static final String CHAMP_ID_UNITE= "id_unite";
 
     private int id;
     private String nom;
     private int quantiteDefaut;
     private int recurenceAchat; //Jour
-    private Unite monUnite;
 
     public Produit(int id, String nom, int quantiteDefaut) {
         this.id = id;
@@ -56,11 +54,4 @@ public class Produit {
         this.recurenceAchat = recurenceAchat;
     }
 
-    public Unite getMonUnite() {
-        return monUnite;
-    }
-
-    public void setMonUnite(Unite monUnite) {
-        this.monUnite = monUnite;
-    }
 }

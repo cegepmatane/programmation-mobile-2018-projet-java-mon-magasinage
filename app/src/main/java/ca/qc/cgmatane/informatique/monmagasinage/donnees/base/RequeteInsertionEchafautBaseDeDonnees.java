@@ -2,6 +2,7 @@ package ca.qc.cgmatane.informatique.monmagasinage.donnees.base;
 
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Unite;
 
 public interface RequeteInsertionEchafautBaseDeDonnees {
@@ -33,5 +34,5 @@ public interface RequeteInsertionEchafautBaseDeDonnees {
             '8', "centilitre");
 
     /** Produit*/
-
+//    final static String INSERT_FRUIT_ET_LEGUMES=String.format(null);
 }

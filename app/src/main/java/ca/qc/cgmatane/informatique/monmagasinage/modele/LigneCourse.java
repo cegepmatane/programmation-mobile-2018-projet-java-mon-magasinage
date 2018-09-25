@@ -7,6 +7,7 @@ public class LigneCourse {
     public static final String CHAMP_ID_PRODUIT ="id_produit";
     public static final String CHAMP_QUANTITE ="quantite";
     public static final String CHAMP_COCHE ="coche";
+    public static final String CHAMP_ID_UNITE = "id_unite";
 
     private Course course;
     private Produit produit;
