@@ -17,8 +17,10 @@ public class VueModifierCourse extends AppCompatActivity {
         setContentView(R.layout.activity_vue_modifier_course);
 
         Bundle parametres = this.getIntent().getExtras();
-        String parametreIdCourse = (String) parametres.get("idCourse");
+        String parametreIdCourse = (String) parametres.get(Course.CHAMP_ID_COURSE);
         int idCourse = Integer.parseInt(parametreIdCourse);
+
+        System.out.println(idCourse);
 
         Course courseAModifier = courseDAO.recupererCourseAvecId(idCourse);
 
