@@ -1,6 +1,8 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele;
 
 public class LigneCourse {
+    public static final String NOM_TABLE = "ligneCourse";
+
     public static final String CHAMP_ID_COURSE ="id_course";
     public static final String CHAMP_ID_PRODUIT ="id_produit";
     public static final String CHAMP_QUANTITE ="quantite";

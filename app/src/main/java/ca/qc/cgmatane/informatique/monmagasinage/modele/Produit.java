@@ -1,6 +1,8 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele;
 
 public class Produit {
+    public static final String NOM_TABLE = "produit";
+
     public static final String CHAMP_ID = "id_produit";
     public static final String CHAMP_NOM = "nom";
     public static final String CHAMP_QUANTITE_DEFAUT = "quantiteDefaut";

@@ -55,6 +55,9 @@ public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBa
 
 
     private void suppression(SQLiteDatabase db){
+        db.execSQL(DELETE_TABLE_LIGNE_COURSE);
+        db.execSQL(DELETE_TABLE_PRODUIT);
+        db.execSQL(DELETE_TABLE_UNITE);
         db.execSQL(DELETE_TABLE_COURSE);
         db.execSQL(DELETE_TABLE_MAGASIN);
     }
@@ -62,6 +65,9 @@ public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBa
     private void create(SQLiteDatabase db){
         db.execSQL(CREATE_TABLE_COURSE);
         db.execSQL(CREATE_TABLE_MAGASIN);
+        db.execSQL(CREATE_TABLE_UNTITE);
+        db.execSQL(CREATE_TABLE_PRODUIT);
+        db.execSQL(CREATE_TABLE_LIGNE_COURSE);
 
     }
 
