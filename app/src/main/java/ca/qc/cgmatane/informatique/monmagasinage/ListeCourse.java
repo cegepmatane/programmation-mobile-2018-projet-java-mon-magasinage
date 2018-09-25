@@ -8,11 +8,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
@@ -20,6 +22,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueAjouterCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueListeMagasin;
+import ca.qc.cgmatane.informatique.monmagasinage.vue.VueModifierCourse;
 
 public class ListeCourse extends AppCompatActivity {
 
@@ -78,6 +81,19 @@ public class ListeCourse extends AppCompatActivity {
                 rechercheUtilisateur = newText;
                 actualisationAffichage();
                 return true;
+            }
+        });
+
+        vueListViewCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View vue, int position, long id) {
+                ListView vueListeCourse = (ListView) vue.getParent();
+                @SuppressWarnings("unchecked")
+                HashMap<String,String> course =(HashMap<String,String>) vueListeCourse.getItemAtPosition((int)position);
+
+                Intent intentionNaviguerModifierCourse = new Intent(ListeCourse.this, VueModifierCourse.class);
+                intentionNaviguerModifierCourse.putExtra(Course.CHAMP_ID_COURSE, course.get(Course.CHAMP_ID_COURSE));
+                startActivityForResult(intentionNaviguerModifierCourse, ACTIVITE_MODIFIER_COURSE);
             }
         });
     }
