@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBaseDeDonnees, RequeteInsertionEchafautBaseDeDonnees {
-    private static final int VERSION_BDD = 17;
+    private static final int VERSION_BDD = 19;
     private static BaseDeDonnees instance = null;
 
     public static BaseDeDonnees getInstance(Context contexte)

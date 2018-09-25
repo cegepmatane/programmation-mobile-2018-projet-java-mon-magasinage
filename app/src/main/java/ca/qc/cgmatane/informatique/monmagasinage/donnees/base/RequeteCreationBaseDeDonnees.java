@@ -22,7 +22,7 @@ public interface RequeteCreationBaseDeDonnees {
     /** Unite*/
     final static String DELETE_TABLE_UNITE ="drop table IF EXISTS "+ Unite.NOM_TABLE;
     final static String CREATE_TABLE_UNTITE = String.format("create table %s ( %s INTEGER PRIMARY KEY, %s TEXT )",
-            Unite.NOM_TABLE, Unite.CHAMP_ID, Unite.CHAMP_ID);
+            Unite.NOM_TABLE, Unite.CHAMP_ID, Unite.CHAMP_LIBELLE);
 
     /** Produit*/
     final static String DELETE_TABLE_PRODUIT ="drop table IF EXISTS "+ Produit.NOM_TABLE;
