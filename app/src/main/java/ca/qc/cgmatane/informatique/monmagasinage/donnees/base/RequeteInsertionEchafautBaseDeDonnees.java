@@ -21,7 +21,7 @@ public interface RequeteInsertionEchafautBaseDeDonnees {
             Course.NOM_TABLE,  Course.CHAMP_NOM, Course.CHAMP_DATE_NOTIFICATION, Course.CHAMP_DATE_REALISATION, Course.CHAMP_ID_COURSE_ORIGINAL, Course.CHAMP_ID_MAGASIN,  "Course du samedi", "2016-01-01-10:20", "2016-01-01-10:20", null,  1);
 
     /** Unite */
-    final static String INSERT_UNITE_1=String.format("insert into %s (%s, %s) VALUES (%s, '%s'), (%s, '%s'), (%s, '%s'), (%s, '%s'), (%s, '%s'), (%s, '%s'), (%s, '%s'), (%s, '%s')",
+    final static String INSERT_UNITE=String.format("insert into %s (%s, %s) VALUES (%s, '%s'), (%s, '%s'), (%s, '%s'), (%s, '%s'), (%s, '%s'), (%s, '%s'), (%s, '%s'), (%s, '%s')",
             Unite.NOM_TABLE, Unite.CHAMP_ID, Unite.CHAMP_LIBELLE,
             '1', "kilogramme",
             '2', "pièce",
@@ -31,5 +31,7 @@ public interface RequeteInsertionEchafautBaseDeDonnees {
             '6', "Sachet",
             '7', "Litre",
             '8', "centilitre");
+
     /** Produit*/
+
 }

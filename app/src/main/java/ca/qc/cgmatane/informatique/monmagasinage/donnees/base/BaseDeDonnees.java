@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBaseDeDonnees, RequeteInsertionEchafautBaseDeDonnees {
-    private static final int VERSION_BDD = 19;
+    private static final int VERSION_BDD = 20;
     private static BaseDeDonnees instance = null;
 
     public static BaseDeDonnees getInstance(Context contexte)
@@ -72,6 +72,7 @@ public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBa
     }
 
     private void insertion(SQLiteDatabase db){
+        db.execSQL(INSERT_UNITE);
         db.execSQL(INSERT_MAGASIN_1);
         db.execSQL(INSERT_COURSE_1);
         db.execSQL(INSERT_COURSE_2);
