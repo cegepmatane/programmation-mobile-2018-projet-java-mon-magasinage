@@ -1,7 +1,9 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele;
 
 public class Unite {
-    public static final String CHAMP_ID_UNITE = "id_unite";
+    public static final String NOM_TABLE = "unite";
+
+    public static final String CHAMP_ID = "id_unite";
     public static final String CHAMP_LIBELLE = "libelle";
 
     private int id;
