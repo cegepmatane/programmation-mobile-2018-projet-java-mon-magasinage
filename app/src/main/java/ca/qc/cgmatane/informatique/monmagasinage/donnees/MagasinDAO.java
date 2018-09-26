@@ -50,6 +50,7 @@ public class MagasinDAO {
             Double coorY = curseurMagasin.getDouble(indexCooY);
 
             magasin= new Magasin(id, nom, adresse, ville, coorX, coorY);
+            listeMagasins.add(magasin);
         }
         curseurMagasin.close();
         return listeMagasins;
