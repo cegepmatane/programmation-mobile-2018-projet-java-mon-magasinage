@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import ca.qc.cgmatane.informatique.monmagasinage.R;
@@ -29,6 +30,7 @@ public class VueAjouterCourse extends AppCompatActivity {
         Button actionNaviguerAjouterProduitCourse = (Button) findViewById(R.id.vue_ajouter_course_action_ajouter_produit);
 
         final Course course = new Course();
+        //int id, String nom, LocalDateTime dateNotification, LocalDateTime dateRealisation
 
         actionNaviguerAjouterProduitCourse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +50,8 @@ public class VueAjouterCourse extends AppCompatActivity {
         actionNaviguerEnregistrerCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // TODO ajouter selection date
+                courseDAO.creerCourse("aa","2000-01-01-00:00","2000-01-01-01:01","1");
                 finish();
             }
         });
