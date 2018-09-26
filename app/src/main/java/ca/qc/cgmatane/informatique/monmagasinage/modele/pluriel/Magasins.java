@@ -39,7 +39,7 @@ public class Magasins extends ArrayList<Magasin>{
     public ArrayAdapter recuperereListeMagasinPourSpinner(Context context){
         List<String> listPourSpinner = new ArrayList<String>();
         for (Magasin magasin: this){
-            listPourSpinner.add(magasin.getNom());
+            listPourSpinner.add(magasin.getNom() + " " + magasin.getVille());
         }
 
         ArrayAdapter<String> adapterMagasins = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listPourSpinner);
