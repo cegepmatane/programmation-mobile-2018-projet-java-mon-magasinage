@@ -74,6 +74,9 @@ public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBa
     private void insertion(SQLiteDatabase db){
         db.execSQL(INSERT_UNITE);
         db.execSQL(INSERT_MAGASIN_1);
+        db.execSQL(INSERT_MAGASIN_2);
+        db.execSQL(INSERT_MAGASIN_3);
+        db.execSQL(INSERT_MAGASIN_4);
         db.execSQL(INSERT_COURSE_1);
         db.execSQL(INSERT_COURSE_2);
         db.execSQL(INSERT_COURSE_3);
