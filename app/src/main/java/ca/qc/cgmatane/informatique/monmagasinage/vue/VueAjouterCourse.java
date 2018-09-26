@@ -36,7 +36,7 @@ public class VueAjouterCourse extends AppCompatActivity {
         Spinner spinnerMagasin = findViewById(R.id.vue_ajouter_course_spinner_produit);
         Button actionNaviguerAjouterProduitCourse = (Button) findViewById(R.id.vue_ajouter_course_action_ajouter_produit);
 
-        spinnerMagasin.setAdapter(magasinDAO.listerMagasins().recuperereListeMagasinPourSpinner(this));
+        spinnerMagasin.setAdapter(magasinDAO.getListeMagasins().recuperereListeMagasinPourSpinner(this));
 
         final Course course = new Course();
         //int id, String nom, LocalDateTime dateNotification, LocalDateTime dateRealisation
