@@ -1,8 +1,8 @@
 # Mon magasinage
 
-...Hugo blanchard
+Hugo blanchard
 Paul Jacobs
-Alexandre Beauquel...
+Alexandre Beauquel
 </br>
 Lien documentation : https://drive.google.com/open?id=1FOHEVgrW6x3oKJMKkcVbIp8kA_oySd0L
 </br>
