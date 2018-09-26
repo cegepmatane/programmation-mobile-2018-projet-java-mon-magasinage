@@ -65,7 +65,7 @@ public class CourseDAO implements CourseSQL{
         return this.listeCourses;
     }
 
-    public int creerCourse(String nom, String dateNotification, String dateRealisation, String idOriginal)
+    public int creerCourse(String nom, String dateNotification, String dateRealisation, String idOriginal, int idMagasin)
     {
 
         /*, new String[]{idOriginal,
@@ -78,6 +78,9 @@ public class CourseDAO implements CourseSQL{
         values.put(Course.CHAMP_DATE_NOTIFICATION,dateNotification);
         values.put(Course.CHAMP_DATE_REALISATION,dateRealisation);
         values.put(Course.CHAMP_ID_COURSE_ORIGINAL,idOriginal);
+
+        if (idMagasin<0)
+            values.put(Course.CHAMP_ID_MAGASIN, idMagasin); //verifie que la course est associé a un magasin
 
 
         int newId = (int) accesseurBaseDeDonnees.getWritableDatabase().insert(Course.NOM_TABLE,null, values);
