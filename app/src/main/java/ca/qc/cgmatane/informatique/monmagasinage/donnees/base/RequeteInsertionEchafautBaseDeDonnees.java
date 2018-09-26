@@ -9,7 +9,17 @@ public interface RequeteInsertionEchafautBaseDeDonnees {
     /** Magasin */
     final static String INSERT_MAGASIN_1= String.format("insert into %s (%s, %s, %s, %s, %s, %s) VALUES (%s, '%s', '%s', '%s', %s, %s)",
             Magasin.NOM_TABLE, Magasin.CHAMP_ID, Magasin.CHAMP_NOM, Magasin.CHAMP_ADRESSE, Magasin.CHAMP_VILLE, Magasin.CHAMP_COOR_X, Magasin.CHAMP_COOR_Y,
-            1, "IGA", "rue sans nom", "Matane", 54.45, 15.97);
+            1, "IGA ", "rue sans nom", "Matane", 54.45, 15.97);
+    final static String INSERT_MAGASIN_2= String.format("insert into %s (%s, %s, %s, %s, %s, %s) VALUES (%s, '%s', '%s', '%s', %s, %s)",
+            Magasin.NOM_TABLE, Magasin.CHAMP_ID, Magasin.CHAMP_NOM, Magasin.CHAMP_ADRESSE, Magasin.CHAMP_VILLE, Magasin.CHAMP_COOR_X, Magasin.CHAMP_COOR_Y,
+            2, "Maxi ", "rue sans nom", "Matane", 54.45, 15.97);
+    final static String INSERT_MAGASIN_3= String.format("insert into %s (%s, %s, %s, %s, %s, %s) VALUES (%s, '%s', '%s', '%s', %s, %s)",
+            Magasin.NOM_TABLE, Magasin.CHAMP_ID, Magasin.CHAMP_NOM, Magasin.CHAMP_ADRESSE, Magasin.CHAMP_VILLE, Magasin.CHAMP_COOR_X, Magasin.CHAMP_COOR_Y,
+            3, "Super C", "rue sans nom", "Matane", 54.45, 15.97);
+    final static String INSERT_MAGASIN_4= String.format("insert into %s (%s, %s, %s, %s, %s, %s) VALUES (%s, '%s', '%s', '%s', %s, %s)",
+            Magasin.NOM_TABLE, Magasin.CHAMP_ID, Magasin.CHAMP_NOM, Magasin.CHAMP_ADRESSE, Magasin.CHAMP_VILLE, Magasin.CHAMP_COOR_X, Magasin.CHAMP_COOR_Y,
+            4, "Walmart", "rue sans nom", "Matane", 54.45, 15.97);
+
 
     /** Course*/
     final static String INSERT_COURSE_1=String.format("insert into %s (%s, %s, %s, %s, %s) VALUES ('%s', '%s', '%s', %s, %s)",
