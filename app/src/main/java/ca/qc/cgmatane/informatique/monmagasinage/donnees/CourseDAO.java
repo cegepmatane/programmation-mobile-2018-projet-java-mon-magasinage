@@ -31,7 +31,7 @@ public class CourseDAO implements CourseSQL{
         return instance;
     }
 
-    public CourseDAO() {
+    private CourseDAO() {
         this.listeCourses = new Courses();
         this.accesseurBaseDeDonnees = BaseDeDonnees.getInstance();
     }
