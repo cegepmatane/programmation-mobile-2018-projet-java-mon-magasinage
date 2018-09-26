@@ -34,7 +34,6 @@ public class CourseDAO implements CourseSQL{
     public CourseDAO() {
         this.listeCourses = new Courses();
         this.accesseurBaseDeDonnees = BaseDeDonnees.getInstance();
-        listerCourses();
     }
 
     public Courses listerCourses(){
@@ -99,5 +98,13 @@ public class CourseDAO implements CourseSQL{
             }
         }
         return null;
+    }
+
+    public Courses getListeCourses() {
+        return listeCourses;
+    }
+
+    public void setListeCourses(Courses listeCourses) {
+        this.listeCourses = listeCourses;
     }
 }
