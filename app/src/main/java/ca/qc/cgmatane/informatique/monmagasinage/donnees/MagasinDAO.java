@@ -14,7 +14,7 @@ public class MagasinDAO {
     private static MagasinDAO instance;
     private BaseDeDonnees accesseurBaseDeDonnees;
 
-    protected Magasins listeMagasins;
+    private Magasins listeMagasins;
 
     private MagasinDAO() {
         listeMagasins = new Magasins();

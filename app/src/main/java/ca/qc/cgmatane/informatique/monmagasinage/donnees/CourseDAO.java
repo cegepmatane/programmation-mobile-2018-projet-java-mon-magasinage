@@ -39,12 +39,16 @@ public class CourseDAO implements CourseSQL{
     public Courses listerCourses(){
         Cursor curseurCourses = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_COURSE, null);
         this.listeCourses.clear();
+
+        MagasinDAO magasinDAO = MagasinDAO.getInstance();
+        magasinDAO.listerMagasins();//Chargement des magasins
         Course course;
 
         int indexId = curseurCourses.getColumnIndex(Course.CHAMP_ID_COURSE);
         int indexNom = curseurCourses.getColumnIndex(Course.CHAMP_NOM);
         int indexDateNotification = curseurCourses.getColumnIndex(Course.CHAMP_DATE_NOTIFICATION);
         int indexDateRealisation = curseurCourses.getColumnIndex(Course.CHAMP_DATE_REALISATION);
+        int indexIdMagasin = curseurCourses.getColumnIndex(Course.CHAMP_ID_MAGASIN);
         //TODO à gérer plus tard
         int indexIdCourseOriginal = curseurCourses.getColumnIndex(Course.CHAMP_ID_COURSE_ORIGINAL);
 
@@ -52,11 +56,12 @@ public class CourseDAO implements CourseSQL{
             int id_course= curseurCourses.getInt(indexId);
             String nom= curseurCourses.getString(indexNom);
             String dateNotification = curseurCourses.getString(indexDateNotification);
-            String dateRealisation = curseurCourses.getString(indexDateNotification);
+            String dateRealisation = curseurCourses.getString(indexDateRealisation);
+            int id_magasin = curseurCourses.getInt(indexIdMagasin);
 
             /*LocalDateTime dateTime = LocalDateTime.parse(str, formatter);*/
             course = new Course(id_course, nom, LocalDateTime.parse(dateNotification, formatter), LocalDateTime.parse(dateRealisation, formatter));
-
+            course.setMonMagasin(magasinDAO.getListeMagasins().trouverAvecId(id_magasin));
             this.listeCourses.add(course);
         }
 

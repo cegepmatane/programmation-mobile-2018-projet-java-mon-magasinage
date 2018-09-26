@@ -17,8 +17,10 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
+import ca.qc.cgmatane.informatique.monmagasinage.donnees.MagasinDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueAjouterCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueListeMagasin;
