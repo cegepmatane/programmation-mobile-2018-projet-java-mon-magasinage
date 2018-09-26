@@ -7,4 +7,10 @@
         android:orderInCategory="100"
         android:title="Gestion magasin"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_changer_theme"
+        android:orderInCategory="100"
+        android:title="Gestion des thèmes"
+        app:showAsAction="never" />
 </menu>

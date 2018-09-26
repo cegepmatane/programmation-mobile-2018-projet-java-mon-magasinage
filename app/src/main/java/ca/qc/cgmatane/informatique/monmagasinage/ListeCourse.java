@@ -25,6 +25,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueAjouterCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueListeMagasin;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueModifierCourse;
+import ca.qc.cgmatane.informatique.monmagasinage.vue.VueModifierTheme;
 
 public class ListeCourse extends AppCompatActivity {
 
@@ -121,31 +122,12 @@ public class ListeCourse extends AppCompatActivity {
             startActivity(intentionNaviguerVueGestionMagasin);
             return true;
         }
-
+        else if(id == R.id.action_changer_theme){
+            Intent intentionNavigierChangerTheme = new Intent(this, VueModifierTheme.class);
+            startActivity(intentionNavigierChangerTheme);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
-    }
-
-    protected Courses simulerListeCourse(){
-        Courses listeCourse = new Courses();
-        Course course = new Course();
-        course.setId(1);
-        course.setNom("Course du mardi soir");
-        course.setDateNotification( LocalDateTime.now());
-        course.setDateRealisation( LocalDateTime.now());
-        listeCourse.add(course);
-        course = new Course();
-        course.setId(2);
-        course.setNom("Course du samedi matin");
-        course.setDateNotification( LocalDateTime.now());
-        course.setDateRealisation( LocalDateTime.now());
-        listeCourse.add(course);
-        course = new Course();
-        course.setId(2);
-        course.setNom("Course gourmande (exeptionnelle)");
-        course.setDateNotification( LocalDateTime.now());
-        course.setDateRealisation( LocalDateTime.now());
-        listeCourse.add(course);
-        return listeCourse;
     }
 
     private void actualisationAffichage() {

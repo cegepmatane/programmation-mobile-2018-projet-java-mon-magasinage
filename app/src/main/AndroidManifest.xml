@@ -24,7 +24,8 @@
         <activity android:name=".vue.VueAjouterMagasin" />
         <activity android:name=".vue.VueAjouterCourse" />
         <activity android:name=".vue.VueAjouterProduitListeCourse" />
-        <activity android:name=".vue.VueModifierCourse"></activity>
+        <activity android:name=".vue.VueModifierCourse" />
+        <activity android:name=".vue.VueModifierTheme"></activity>
     </application>
 
 </manifest>
