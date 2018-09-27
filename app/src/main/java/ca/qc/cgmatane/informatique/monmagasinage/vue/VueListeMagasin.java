@@ -21,6 +21,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.MagasinDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Magasins;
 
 
@@ -40,6 +41,7 @@ public class VueListeMagasin extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(EnumerationTheme.isThemeSombre() ? R.style.ThemeSombre : R.style.ThemeLumineux);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_liste_magasin);
 

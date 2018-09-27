@@ -13,14 +13,12 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
-import ca.qc.cgmatane.informatique.monmagasinage.donnees.MagasinDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueAjouterCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueListeMagasin;
@@ -29,7 +27,8 @@ import ca.qc.cgmatane.informatique.monmagasinage.vue.VueModifierTheme;
 
 public class ListeCourse extends AppCompatActivity {
 
-    private static final int ACTIVITE_MODIFIER_COURSE = 1;
+    private static final int ACTIVITE_RESULTAT_MODIFIER_COURSE = 1;
+    private static final int ACTIVITE_RESULTAT_MODIFIER_THEME = 2;
 
     /** Données*/
     protected Courses listeCourse;
@@ -43,6 +42,7 @@ public class ListeCourse extends AppCompatActivity {
     protected Courses listeCourseAffichage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        try { this.setTheme(EnumerationTheme.isThemeSombre() ? R.style.ThemeSombreNoActionBar : R.style.ThemeLumineuxNoActionBar); } catch (Exception e) { e.printStackTrace(); }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_liste_course);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -69,7 +69,7 @@ public class ListeCourse extends AppCompatActivity {
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
                 Intent intentionNaviguerAjouterCourse = new Intent(ListeCourse.this, VueAjouterCourse.class);
-                startActivityForResult(intentionNaviguerAjouterCourse, ACTIVITE_MODIFIER_COURSE);
+                startActivityForResult(intentionNaviguerAjouterCourse, ACTIVITE_RESULTAT_MODIFIER_COURSE);
             }
         });
 
@@ -96,7 +96,7 @@ public class ListeCourse extends AppCompatActivity {
 
                 Intent intentionNaviguerModifierCourse = new Intent(ListeCourse.this, VueModifierCourse.class);
                 intentionNaviguerModifierCourse.putExtra(Course.CHAMP_ID_COURSE, course.get(Course.CHAMP_ID_COURSE));
-                startActivityForResult(intentionNaviguerModifierCourse, ACTIVITE_MODIFIER_COURSE);
+                startActivityForResult(intentionNaviguerModifierCourse, ACTIVITE_RESULTAT_MODIFIER_COURSE);
             }
         });
     }
@@ -124,7 +124,7 @@ public class ListeCourse extends AppCompatActivity {
         }
         else if(id == R.id.action_changer_theme){
             Intent intentionNavigierChangerTheme = new Intent(this, VueModifierTheme.class);
-            startActivity(intentionNavigierChangerTheme);
+            startActivityForResult(intentionNavigierChangerTheme, ACTIVITE_RESULTAT_MODIFIER_THEME);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -150,8 +150,12 @@ public class ListeCourse extends AppCompatActivity {
     }
     protected void onActivityResult(int activite, int resultat, Intent donnees){
         switch (activite){
-            case ACTIVITE_MODIFIER_COURSE:
+            case ACTIVITE_RESULTAT_MODIFIER_COURSE:
                 actualisationAffichage();
+                break;
+            case ACTIVITE_RESULTAT_MODIFIER_THEME:
+                this.setTheme(EnumerationTheme.isThemeSombre() ? R.style.ThemeSombre : R.style.ThemeLumineux);
+                recreate();
                 break;
         }
     }
