@@ -42,7 +42,7 @@ public class ListeCourse extends AppCompatActivity {
     protected Courses listeCourseAffichage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        this.setTheme(EnumerationTheme.getThemeSelectionne().getIdLien() ==EnumerationTheme.SOMBRE.getIdLien() ? R.style.ThemeSombreNoActionBar : R.style.ThemeLumineuxNoActionBar);
+        this.setTheme(EnumerationTheme.getThemeSelectionne().getIdLienSansActionBar());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_liste_course);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -52,8 +52,7 @@ public class VueModifierTheme extends AppCompatActivity {
         listeDeroulanteTheme.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //TODO à optimiser
-                EnumerationTheme enumerationTheme = EnumerationTheme.retournerThemeParPosition(position);
+                EnumerationTheme enumerationTheme = EnumerationTheme.getMesThemes().get(position);
                 if(enumerationTheme != null){
                     EnumerationTheme.setThemeSelectionne(enumerationTheme);
                 }

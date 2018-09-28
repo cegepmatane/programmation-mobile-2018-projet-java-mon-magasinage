@@ -12,18 +12,32 @@ import java.util.List;
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 
 public enum EnumerationTheme {
-    SOMBRE("Théme sombre", R.style.ThemeSombre),
-    LUMINEUX("Théme lumineux", R.style.ThemeLumineux),
-    LUMINEUX_2("Théme lumineux test", R.style.ThemeLumineux)
+    DEFAULT("Théme par defaut", R.style.AppTheme, R.style.AppTheme_NoActionBar),
+    SOMBRE("Théme sombre", R.style.ThemeSombre, R.style.ThemeSombreNoActionBar),
+    LUMINEUX("Théme lumineux", R.style.ThemeLumineux, R.style.ThemeLumineuxNoActionBar),
+    VERT("Théme vert", R.style.ThemeVert, R.style.ThemeVertNoActionBar)
     ;
 
     private String nom ="";
     private int idLien;
-    private static EnumerationTheme themeSelectionne = SOMBRE;
+    private int idLienSansActionBar;
+    private static EnumerationTheme themeSelectionne = DEFAULT;
+    private static ArrayList<EnumerationTheme> mesThemes = new ArrayList<EnumerationTheme>();
 
-    EnumerationTheme(String nom, int lien) {
+    EnumerationTheme(String nom, int idLien, int idLienSansActionBar) {
         this.nom = nom;
-        this.idLien = lien;
+        this.idLien = idLien;
+        this.idLienSansActionBar = idLienSansActionBar;
+    }
+
+    public static ArrayList<EnumerationTheme> getMesThemes() {
+        /** Charge les thémes dans une arrayliste pour éviter de recréer des instances de thémes à chaque .values()*/
+        if(mesThemes.size() <1){
+            for (EnumerationTheme theme: EnumerationTheme.values()){
+                mesThemes.add(theme);
+            }
+        }
+        return mesThemes;
     }
 
     public String getNom() {
@@ -32,6 +46,14 @@ public enum EnumerationTheme {
 
     public int getIdLien() {
         return idLien;
+    }
+
+    public int getIdLienSansActionBar() {
+        return idLienSansActionBar;
+    }
+
+    public void setIdLienSansActionBar(int idLienSansActionBar) {
+        this.idLienSansActionBar = idLienSansActionBar;
     }
 
     public static EnumerationTheme getThemeSelectionne() {
@@ -51,7 +73,7 @@ public enum EnumerationTheme {
     public static ArrayAdapter recuperereListeThemesPourSpinner(Context context){
         //TODO changer pour eviter de recréé un objet
         List<String> listPourSpinner = new ArrayList<String>();
-        for (EnumerationTheme theme: EnumerationTheme.values()){
+        for (EnumerationTheme theme: EnumerationTheme.getMesThemes()){
             listPourSpinner.add(theme.getNom());
         }
         ArrayAdapter<String> adapterThemes = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listPourSpinner);
@@ -62,7 +84,7 @@ public enum EnumerationTheme {
     public static EnumerationTheme retournerThemeParPosition(int postition){
         //TODO changer pour eviter de recréé un objet
         int i=0;
-        for (EnumerationTheme theme: EnumerationTheme.values()){
+        for (EnumerationTheme theme: EnumerationTheme.getMesThemes()){
             if(postition == i){
                 return theme;
             }
