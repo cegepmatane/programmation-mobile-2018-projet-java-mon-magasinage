@@ -32,7 +32,7 @@ public class Magasins extends ArrayList<Magasin>{
     }
 
     /***
-     * Adapter avec une liste de nom de restaurants
+     * Adapter avec une liste de nom de magains
      * @param context Context
      * @return ArrayAdaptater
      */

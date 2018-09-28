@@ -42,7 +42,7 @@ public class ListeCourse extends AppCompatActivity {
     protected Courses listeCourseAffichage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        try { this.setTheme(EnumerationTheme.isThemeSombre() ? R.style.ThemeSombreNoActionBar : R.style.ThemeLumineuxNoActionBar); } catch (Exception e) { e.printStackTrace(); }
+        this.setTheme(EnumerationTheme.getThemeSelectionne().getIdLien() ==EnumerationTheme.SOMBRE.getIdLien() ? R.style.ThemeSombreNoActionBar : R.style.ThemeLumineuxNoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_liste_course);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -154,7 +154,6 @@ public class ListeCourse extends AppCompatActivity {
                 actualisationAffichage();
                 break;
             case ACTIVITE_RESULTAT_MODIFIER_THEME:
-                this.setTheme(EnumerationTheme.isThemeSombre() ? R.style.ThemeSombre : R.style.ThemeLumineux);
                 recreate();
                 break;
         }

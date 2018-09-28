@@ -9,7 +9,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationT
 public class VueAjouterMagasin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(EnumerationTheme.isThemeSombre() ? R.style.ThemeSombre : R.style.ThemeLumineux);
+        EnumerationTheme.changerTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_ajouter_magasin);
     }

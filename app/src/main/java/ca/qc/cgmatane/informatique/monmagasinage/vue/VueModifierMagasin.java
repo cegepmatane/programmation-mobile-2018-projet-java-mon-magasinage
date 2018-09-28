@@ -10,7 +10,7 @@ public class VueModifierMagasin extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(EnumerationTheme.isThemeSombre() ? R.style.ThemeSombre : R.style.ThemeLumineux);
+        EnumerationTheme.changerTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_modifier_magasin);
     }
