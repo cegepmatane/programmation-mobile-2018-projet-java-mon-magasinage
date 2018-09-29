@@ -7,11 +7,13 @@ import android.view.View;
 import android.widget.Button;
 
 import ca.qc.cgmatane.informatique.monmagasinage.R;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 
 public class VueAjouterProduitListeCourse extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        EnumerationTheme.changerTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_ajouter_produit_liste_course);
         Button actionNaviguerAjouterProduitCourse = (Button) findViewById(R.id.vue_ajouter_produit_liste_course_action_enregistrer);

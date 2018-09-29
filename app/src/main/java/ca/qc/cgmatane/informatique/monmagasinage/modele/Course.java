@@ -20,6 +20,7 @@ public class Course {
     private LocalDateTime dateNotification;
     private LocalDateTime dateRealisation;
     private Course courseOriginal;
+    private Magasin monMagasin;
 
     public Course(int id, String nom, LocalDateTime dateNotification, LocalDateTime dateRealisation) {
         this.id = id;
@@ -69,6 +70,14 @@ public class Course {
 
     public void setCourseOriginal(Course courseOriginal) {
         this.courseOriginal = courseOriginal;
+    }
+
+    public Magasin getMonMagasin() {
+        return monMagasin;
+    }
+
+    public void setMonMagasin(Magasin monMagasin) {
+        this.monMagasin = monMagasin;
     }
 
     public HashMap<String, String> obtenirObjetPourAdapteur() {

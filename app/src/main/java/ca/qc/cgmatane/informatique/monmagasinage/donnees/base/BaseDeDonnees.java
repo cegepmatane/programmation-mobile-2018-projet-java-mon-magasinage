@@ -4,8 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBaseDeDonnees, RequeteInsertionBaseDeDonnees {
-    private static final int VERSION_BDD = 17;
+public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBaseDeDonnees, RequeteInsertionEchafautBaseDeDonnees {
+    private static final int VERSION_BDD = 1;
     private static BaseDeDonnees instance = null;
 
     public static BaseDeDonnees getInstance(Context contexte)
@@ -55,6 +55,9 @@ public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBa
 
 
     private void suppression(SQLiteDatabase db){
+        db.execSQL(DELETE_TABLE_LIGNE_COURSE);
+        db.execSQL(DELETE_TABLE_PRODUIT);
+        db.execSQL(DELETE_TABLE_UNITE);
         db.execSQL(DELETE_TABLE_COURSE);
         db.execSQL(DELETE_TABLE_MAGASIN);
     }
@@ -62,14 +65,22 @@ public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBa
     private void create(SQLiteDatabase db){
         db.execSQL(CREATE_TABLE_COURSE);
         db.execSQL(CREATE_TABLE_MAGASIN);
+        db.execSQL(CREATE_TABLE_UNTITE);
+        db.execSQL(CREATE_TABLE_PRODUIT);
+        db.execSQL(CREATE_TABLE_LIGNE_COURSE);
 
     }
 
     private void insertion(SQLiteDatabase db){
+        db.execSQL(INSERT_UNITE);
         db.execSQL(INSERT_MAGASIN_1);
+        db.execSQL(INSERT_MAGASIN_2);
+        db.execSQL(INSERT_MAGASIN_3);
+        db.execSQL(INSERT_MAGASIN_4);
         db.execSQL(INSERT_COURSE_1);
         db.execSQL(INSERT_COURSE_2);
         db.execSQL(INSERT_COURSE_3);
 
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES);
     }
 }
