@@ -8,10 +8,6 @@
         <item name="colorAccent">@android:color/white</item>
         <item name="android:colorForeground">@android:color/white</item>
         <item name="android:colorBackground">@android:color/darker_gray</item>
-        <item name="android:colorButtonNormal">@android:color/holo_blue_light</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:panelColorBackground">@android:color/holo_blue_light</item>
-
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -23,12 +19,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="ThemeSombreNoActionBar" parent="ThemeSombre" >
+    <style name="ThemeSombreNoActionBar" parent="Theme.AppCompat" >
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="ThemeLumineuxNoActionBar" parent="ThemeLumineux" >
+    <style name="ThemeLumineuxNoActionBar" parent="Theme.AppCompat.Light" >
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -38,9 +34,6 @@
     </style>
 
     <style name="ThemeLumineux" parent="Theme.AppCompat.Light" >
-        <item name="android:textColor">@android:color/black</item>
-        <item name="android:colorForeground">@android:color/black</item>
-        <item name="colorAccent">@android:color/black</item>
     </style>
 
     <style name="ThemeVert" parent="Theme.AppCompat" >
@@ -51,9 +44,14 @@
         <item name="colorAccent">@android:color/black</item>
     </style>
 
-    <style name="ThemeVertNoActionBar" parent="ThemeVert" >
+    <style name="ThemeVertNoActionBar" parent="Theme.AppCompat" >
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorPrimaryDark">@android:color/holo_green_light</item>
+        <item name="colorPrimary">@android:color/holo_green_light</item>
+        <item name="android:colorForeground">@android:color/white</item>
+        <item name="android:colorBackground">@android:color/holo_green_dark</item>
+        <item name="colorAccent">@android:color/black</item>
     </style>
 
 </resources>
