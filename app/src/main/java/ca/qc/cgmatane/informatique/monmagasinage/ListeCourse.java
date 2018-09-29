@@ -20,6 +20,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
+import ca.qc.cgmatane.informatique.monmagasinage.vue.CarteMagasin;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueAjouterCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueListeMagasin;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.VueModifierCourse;
@@ -123,8 +124,14 @@ public class ListeCourse extends AppCompatActivity {
             return true;
         }
         else if(id == R.id.action_changer_theme){
-            Intent intentionNavigierChangerTheme = new Intent(this, VueModifierTheme.class);
-            startActivityForResult(intentionNavigierChangerTheme, ACTIVITE_RESULTAT_MODIFIER_THEME);
+            Intent intentionNaviguerChangerTheme = new Intent(this, VueModifierTheme.class);
+            startActivityForResult(intentionNaviguerChangerTheme, ACTIVITE_RESULTAT_MODIFIER_THEME);
+            return true;
+        }
+        else if(id == R.id.action_carte_magasin){
+            //TODO à modifier navigation de puis la vue princpal pour tester l'implementation
+            Intent intentionNaviguerCarteMagasin = new Intent(this, CarteMagasin.class);
+            startActivity(intentionNaviguerCarteMagasin);
             return true;
         }
         return super.onOptionsItemSelected(item);
