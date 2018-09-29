@@ -7,10 +7,14 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import ca.qc.cgmatane.informatique.monmagasinage.R;
+import ca.qc.cgmatane.informatique.monmagasinage.donnees.MagasinDAO;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Magasins;
 
 public class CarteMagasin extends FragmentActivity implements OnMapReadyCallback {
 
@@ -39,11 +43,35 @@ public class CarteMagasin extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        //TODO test
+        Magasins listeMagasins = MagasinDAO.getInstance().getListeMagasins();
+        for(Magasin magasin: listeMagasins){
+            LatLng latLng = new LatLng(magasin.getCoorX(), magasin.getCoorY());
+            mMap.addMarker(new MarkerOptions().position(latLng).title(magasin.getNom()));
+            if(magasin.getId() == listeMagasins.get(0).getId()){
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                //Build camera position
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .target(latLng)
+                        .zoom(12).build();
+                //Zoom in and animate the camera.
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
 
-        LatLng sydney = new LatLng(-34, 151);
-        LatLng matane = new LatLng(48.841252, -67.497522);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.addMarker(new MarkerOptions().position(matane).title("Marker pour Matane !"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(matane));
+        }
+
+        //mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+
     }
+
+    /*private void moveToCurrentLocation(LatLng currentLocation)
+    {
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15));
+        // Zoom in, animating the camera.
+        googleMap.animateCamera(CameraUpdateFactory.zoomIn());
+        // Zoom out to zoom level 10, animating with a duration of 2 seconds.
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+
+
+    }*/
 }
