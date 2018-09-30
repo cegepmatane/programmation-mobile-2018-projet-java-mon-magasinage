@@ -80,6 +80,8 @@ public class Course {
         this.monMagasin = monMagasin;
     }
 
+
+
     public HashMap<String, String> obtenirObjetPourAdapteur() {
         HashMap<String, String> coursePourAdapteur = new HashMap<String, String>();
         coursePourAdapteur.put(CHAMP_ID_COURSE, String.valueOf(this.id));

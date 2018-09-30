@@ -47,6 +47,16 @@ public class Magasins extends ArrayList<Magasin>{
         return  adapterMagasins;
     }
 
+    public int retournerPositionMagasinDansListe(int idMagasin){
+        int position = 0;
+        for (Magasin magasin:this){
+            if (magasin.getId()==idMagasin){
+                return position;
+            }
+            position++;
+        }
+        return 0;
+    }
 
 
 }

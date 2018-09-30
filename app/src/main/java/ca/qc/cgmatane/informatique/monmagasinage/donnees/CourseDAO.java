@@ -15,6 +15,7 @@ import javax.xml.validation.Validator;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.CourseSQL;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 
 public class CourseDAO implements CourseSQL{
@@ -83,7 +84,7 @@ public class CourseDAO implements CourseSQL{
         return this.listeCourses;
     }
 
-    public int creerCourse(String nom, String dateNotification, String dateRealisation, String idOriginal, int idMagasin)
+    public int creerCourse(String nom, String dateNotification, String dateRealisation, int idOriginal, Magasin magasin)
     {
 
         ContentValues values = new ContentValues();
@@ -108,10 +109,49 @@ public class CourseDAO implements CourseSQL{
                 nom,
                 dateNotificationFormatted,
                 dateRealisationFormatted);
-        course.setMonMagasin(magasinDAO.getListeMagasins().trouverAvecId(idMagasin));
+        course.setMonMagasin(magasin);
         this.listeCourses.add(course);
 
         return 0;
+    }
+
+
+    public void modifierCourse(int id, String nom, String dateNotification, String dateRealisation, int idOriginal, Magasin magasin)
+    {
+
+        ContentValues values = new ContentValues();
+        values.put(Course.CHAMP_NOM,nom);
+        values.put(Course.CHAMP_DATE_NOTIFICATION,dateNotification);
+        values.put(Course.CHAMP_DATE_REALISATION,dateRealisation);
+        values.put(Course.CHAMP_ID_COURSE_ORIGINAL,idOriginal);
+        values.put(Course.CHAMP_ID_COURSE_ORIGINAL,idOriginal);
+
+        LocalDateTime dateNotificationFormatted = null;
+        LocalDateTime dateRealisationFormatted = null;
+
+        accesseurBaseDeDonnees.getWritableDatabase().update(Course.NOM_TABLE,
+                values,
+                Course.CHAMP_ID_COURSE+"="+id,
+                null);
+
+        if (dateNotification != null && !"".equals(dateNotification))
+            dateNotificationFormatted = LocalDateTime.parse(dateNotification, formatter);
+
+        if (dateRealisation != null && !"".equals(dateRealisation))
+            dateRealisationFormatted = LocalDateTime.parse(dateRealisation, formatter);
+
+        Course course = new Course(id,
+                nom,
+                dateNotificationFormatted,
+                dateRealisationFormatted);
+        course.setMonMagasin(magasin);
+
+        Course courseAmodifier = this.getListeCourses().trouverAvecId(id);
+        courseAmodifier.setNom(nom);
+        courseAmodifier.setDateNotification(dateNotificationFormatted);
+        courseAmodifier.setDateRealisation(dateRealisationFormatted);
+        courseAmodifier.setCourseOriginal(null);
+        courseAmodifier.setMonMagasin(magasin);
     }
 
     public Courses getListeCourses() {

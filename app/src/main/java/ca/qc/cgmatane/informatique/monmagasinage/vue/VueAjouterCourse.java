@@ -78,8 +78,8 @@ public class VueAjouterCourse extends AppCompatActivity {
                     courseDAO.creerCourse(nomCourse.getText().toString(),
                             dateNotification.getText().toString(),
                             null,
-                            "1",
-                            spinnerMagasin.getSelectedItemPosition());
+                            0,
+                            magasinDAO.getListeMagasins().get(spinnerMagasin.getSelectedItemPosition()));
                     finish();
                 }else {
                     Toast message = Toast.makeText(getApplicationContext(), //display toast message
