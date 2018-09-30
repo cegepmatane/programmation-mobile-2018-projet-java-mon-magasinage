@@ -85,9 +85,19 @@ public class Course {
         coursePourAdapteur.put(CHAMP_ID_COURSE, String.valueOf(this.id));
         coursePourAdapteur.put(CHAMP_NOM, this.nom);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm");
-        String st = this.dateNotification.format(formatter);
-        coursePourAdapteur.put(CHAMP_DATE_NOTIFICATION,"pour le : "+ this.dateNotification.format(formatter));
-        coursePourAdapteur.put(CHAMP_DATE_REALISATION, this.dateRealisation.format(formatter));
+        if(this.dateNotification != null){
+            coursePourAdapteur.put(CHAMP_DATE_NOTIFICATION,"pour le : "+ this.dateNotification.format(formatter));
+
+        }else {
+            coursePourAdapteur.put(CHAMP_DATE_NOTIFICATION," non daté ");
+        }
+        if(this.dateRealisation != null){
+            coursePourAdapteur.put(CHAMP_DATE_REALISATION,"pour le : "+ this.dateRealisation.format(formatter));
+
+        }else {
+            coursePourAdapteur.put(CHAMP_DATE_REALISATION," non daté ");
+        }
+
         return coursePourAdapteur;
     }
 }

@@ -18,6 +18,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 
 public class CourseDAO implements CourseSQL{
+    private MagasinDAO magasinDAO;
     private static CourseDAO instance = null;
     private BaseDeDonnees accesseurBaseDeDonnees;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm");
@@ -34,13 +35,13 @@ public class CourseDAO implements CourseSQL{
     private CourseDAO() {
         this.listeCourses = new Courses();
         this.accesseurBaseDeDonnees = BaseDeDonnees.getInstance();
+        this.magasinDAO = MagasinDAO.getInstance();
     }
 
     public Courses listerCourses(){
         Cursor curseurCourses = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_COURSE, null);
         this.listeCourses.clear();
 
-        MagasinDAO magasinDAO = MagasinDAO.getInstance();
         magasinDAO.listerMagasins();//Chargement des magasins
         Course course;
 
@@ -73,39 +74,32 @@ public class CourseDAO implements CourseSQL{
     public int creerCourse(String nom, String dateNotification, String dateRealisation, String idOriginal, int idMagasin)
     {
 
-        /*, new String[]{idOriginal,
-                nom,
-                dateNotification,
-                dateRealisation,
-                id});*/
         ContentValues values = new ContentValues();
         values.put(Course.CHAMP_NOM,nom);
         values.put(Course.CHAMP_DATE_NOTIFICATION,dateNotification);
         values.put(Course.CHAMP_DATE_REALISATION,dateRealisation);
         values.put(Course.CHAMP_ID_COURSE_ORIGINAL,idOriginal);
 
-        if (idMagasin<0)
-            values.put(Course.CHAMP_ID_MAGASIN, idMagasin); //verifie que la course est associé a un magasin
-
 
         int newId = (int) accesseurBaseDeDonnees.getWritableDatabase().insert(Course.NOM_TABLE,null, values);
 
-        System.out.println("id cree"+newId);
-        this.listeCourses.add(new Course(newId,
-                nom,
-                LocalDateTime.parse(dateNotification, formatter),
-                LocalDateTime.parse(dateRealisation, formatter))
-        );
-        return 0;
-    }
+        LocalDateTime dateNotificationFormatted = null;
+        LocalDateTime dateRealisationFormatted = null;
 
-    public Course recupererCourseAvecId(int id) {
-        for (Course course : this.listeCourses){
-            if (course.getId()==id){
-                return course;
-            }
-        }
-        return null;
+        if (dateNotification != null && !"".equals(dateNotification))
+            dateNotificationFormatted = LocalDateTime.parse(dateNotification, formatter);
+
+        if (dateRealisation != null && !"".equals(dateRealisation))
+            dateRealisationFormatted = LocalDateTime.parse(dateRealisation, formatter);
+
+        Course course = new Course(newId,
+                nom,
+                dateNotificationFormatted,
+                dateRealisationFormatted);
+        course.setMonMagasin(magasinDAO.getListeMagasins().trouverAvecId(idMagasin));
+        this.listeCourses.add(course);
+
+        return 0;
     }
 
     public Courses getListeCourses() {

@@ -45,17 +45,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vue_ajouter_course_nom_course" />
 
+    <TextView
+        android:id="@+id/vue_ajouter_course_date_notification_label"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:text="date de la notification :"
+        app:layout_constraintTop_toBottomOf="@+id/vue_ajouter_course_spinner_produit" />
+
     <EditText
         android:id="@+id/vue_ajouter_course_date_notification"
-        android:focusable="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
+        android:focusable="false"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_ajouter_course_spinner_produit" />
+        app:layout_constraintTop_toBottomOf="@+id/vue_ajouter_course_date_notification_label" />
 
     <Button
         android:id="@+id/vue_ajouter_course_action_ajouter_produit"

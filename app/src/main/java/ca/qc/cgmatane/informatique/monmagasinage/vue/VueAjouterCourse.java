@@ -12,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -47,7 +48,7 @@ public class VueAjouterCourse extends AppCompatActivity {
 
         final EditText nomCourse = findViewById(R.id.vue_ajouter_course_nom_course);
         dateNotification = findViewById(R.id.vue_ajouter_course_date_notification);
-        Spinner spinnerMagasin = findViewById(R.id.vue_ajouter_course_spinner_produit);
+        final Spinner spinnerMagasin = findViewById(R.id.vue_ajouter_course_spinner_produit);
         Button actionNaviguerAjouterProduitCourse = (Button) findViewById(R.id.vue_ajouter_course_action_ajouter_produit);
 
         spinnerMagasin.setAdapter(magasinDAO.getListeMagasins().recuperereListeMagasinPourSpinner(this));
@@ -73,13 +74,19 @@ public class VueAjouterCourse extends AppCompatActivity {
         actionNaviguerEnregistrerCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO ajouter selection date
-                courseDAO.creerCourse(nomCourse.getText().toString(),
-                        dateNotification.getText().toString(),
-                        "2000-01-01-01:01",
-                        "1",
-                        0);
-                finish();
+                if (!"".equals(nomCourse.getText().toString())){
+                    courseDAO.creerCourse(nomCourse.getText().toString(),
+                            dateNotification.getText().toString(),
+                            null,
+                            "1",
+                            spinnerMagasin.getSelectedItemPosition());
+                    finish();
+                }else {
+                    Toast message = Toast.makeText(getApplicationContext(), //display toast message
+                            "Vous devez choisir un nom", Toast.LENGTH_SHORT);
+                    message.show();
+                }
+
             }
         });
 
