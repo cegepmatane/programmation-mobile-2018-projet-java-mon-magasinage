@@ -28,6 +28,13 @@ public class Magasin {
         this.coorX = coorX;
         this.coorY = coorY;
     }
+    public Magasin(String nom, String adresse, String ville, Double coorX, Double coorY) {
+        this.nom = nom;
+        this.adresse = adresse;
+        this.ville = ville;
+        this.coorX = coorX;
+        this.coorY = coorY;
+    }
 
     public Magasin() {
     }

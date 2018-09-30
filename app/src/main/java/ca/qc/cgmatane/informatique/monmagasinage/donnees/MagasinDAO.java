@@ -1,6 +1,8 @@
 package ca.qc.cgmatane.informatique.monmagasinage.donnees;
 
+import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,5 +64,41 @@ public class MagasinDAO {
 
     public void setListeMagasins(Magasins listeMagasins) {
         this.listeMagasins = listeMagasins;
+    }
+
+    public void ajouterMagasin(Magasin magasin) {
+        SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Magasin.CHAMP_NOM, magasin.getNom());
+        values.put(Magasin.CHAMP_ADRESSE, magasin.getAdresse());
+        values.put(Magasin.CHAMP_VILLE, magasin.getVille());
+        values.put(Magasin.CHAMP_COOR_X, magasin.getCoorX());
+        values.put(Magasin.CHAMP_COOR_Y, magasin.getCoorY());
+
+        int id = (int) db.insert(Magasin.NOM_TABLE, null, values);
+        magasin.setId(id);
+        listeMagasins.add(magasin);
+    }
+
+    public Magasin trouverMagasin(int id_magasin) {
+        for (Magasin magasinRechercher : this.listeMagasins){
+            if (magasinRechercher.getId() == id_magasin){
+                return magasinRechercher;}
+        }
+        return null;
+
+    }
+
+    public void modifierMagasin(Magasin magasin) {
+        SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Magasin.CHAMP_NOM, magasin.getNom());
+        values.put(Magasin.CHAMP_ADRESSE, magasin.getAdresse());
+        values.put(Magasin.CHAMP_VILLE, magasin.getVille());
+        values.put(Magasin.CHAMP_COOR_X, magasin.getCoorX());
+        values.put(Magasin.CHAMP_COOR_Y, magasin.getCoorY());
+
+        db.update(Magasin.NOM_TABLE, values, "id_magasin="+magasin.getId(), null);
+
     }
 }

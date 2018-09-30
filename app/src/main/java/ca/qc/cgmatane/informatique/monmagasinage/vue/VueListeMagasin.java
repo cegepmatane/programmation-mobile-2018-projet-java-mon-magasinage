@@ -48,7 +48,7 @@ public class VueListeMagasin extends AppCompatActivity {
   /*      BaseDeDonnees.getInstance(getApplicationContext());*/
         accesseurMagasin = MagasinDAO.getInstance();
         listeMagasinsAffichage = new Magasins();
-        listeMagasins = simulerListeMagasins();
+        listeMagasins = accesseurMagasin.listerMagasins();
 
         vueListeMagasin = (ListView) findViewById(R.id.vue_liste_titre);
 
@@ -121,28 +121,24 @@ public class VueListeMagasin extends AppCompatActivity {
         return liste;
     }
 
-   /* public Intent getIntentionNaviguerAjouterAlarme() {
-        return intentionNaviguerAjouterAlarme;
-    }*/
+
 
     protected void onActivityResult(int activite, int resultat, Intent donnees)
     {
         switch(activite)
         {
             case ACTIVITE_MODIFIER_MAGASIN:
-                afficherTousLesMagasins();
+                actualisationAffichage();
                 break;
             case ACTIVITE_AJOUTER_MAGASIN:
-                afficherTousLesMagasins();
+               actualisationAffichage();
                 break;
-          /*  case ACTIVITE_AJOUTER_ALARME:
-                afficherTousLesMagasins();
-                break;*/
         }
 
     }
     private void actualisationAffichage() {
         listeMagasinsAffichage.clear();
+        listeMagasins = accesseurMagasin.getListeMagasins();
         for(Magasin magasin: listeMagasins){
                 listeMagasinsAffichage.add(magasin);
         }
