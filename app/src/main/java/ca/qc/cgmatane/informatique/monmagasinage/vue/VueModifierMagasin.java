@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.MagasinDAO;
@@ -53,7 +54,13 @@ public class VueModifierMagasin extends AppCompatActivity{
                 new View.OnClickListener()
                 {
                     public void onClick(View arg0) {
-                        modifierMagasin();
+                        if ((champNom.getText().toString().equals(""))||(champCoorX.getText().toString().equals(""))||(champCoorY.getText().toString().equals(""))){
+                            Toast message = Toast.makeText(getApplicationContext(), //display toast message
+                                    "Vous devez choisir un nom et et des coordonnées", Toast.LENGTH_SHORT);
+                            message.show();
+                        }else{
+                            modifierMagasin();
+                        }
                     }
                 }
         );

@@ -90,6 +90,7 @@ public class Magasin {
     public HashMap<String, String> obtenirObjetPourAdapteur() {
         HashMap<String, String> magasinPourAdapteur = new HashMap<String, String>();
         magasinPourAdapteur.put(CHAMP_ID, String.valueOf(this.id));
+        magasinPourAdapteur.put(CHAMP_ADRESSE, this.adresse +", "+ this.ville);
         magasinPourAdapteur.put(CHAMP_NOM, this.nom);
         return magasinPourAdapteur;
     }

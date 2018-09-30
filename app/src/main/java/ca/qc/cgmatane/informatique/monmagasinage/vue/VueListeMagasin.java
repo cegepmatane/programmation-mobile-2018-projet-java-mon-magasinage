@@ -148,7 +148,7 @@ public class VueListeMagasin extends AppCompatActivity {
 
     private void afficherTousLesMagasins(){
         SimpleAdapter adapterListeCourses = new SimpleAdapter(this, listeMagasinsAffichage.recuperereListeMagasinPourAdapteur(), android.R.layout.two_line_list_item,
-                new String[]{Magasin.CHAMP_NOM, Magasin.CHAMP_ID},
+                new String[]{Magasin.CHAMP_NOM, Magasin.CHAMP_ADRESSE},
                 new int[]{ android.R.id.text1, android.R.id.text2});
 
         vueListeMagasin.setAdapter(adapterListeCourses);
