@@ -56,12 +56,24 @@ public class CourseDAO implements CourseSQL{
         for(curseurCourses.moveToFirst();!curseurCourses.isAfterLast();curseurCourses.moveToNext()){
             int id_course= curseurCourses.getInt(indexId);
             String nom= curseurCourses.getString(indexNom);
-            String dateNotification = curseurCourses.getString(indexDateNotification);
-            String dateRealisation = curseurCourses.getString(indexDateRealisation);
+            String str_dateNotification = curseurCourses.getString(indexDateNotification);
+            String str_realisation = curseurCourses.getString(indexDateRealisation);
             int id_magasin = curseurCourses.getInt(indexIdMagasin);
 
-            /*LocalDateTime dateTime = LocalDateTime.parse(str, formatter);*/
-            course = new Course(id_course, nom, LocalDateTime.parse(dateNotification, formatter), LocalDateTime.parse(dateRealisation, formatter));
+            LocalDateTime dateNotification;
+            LocalDateTime dateRealisation;
+            if(str_dateNotification.equals("")){
+                dateNotification = LocalDateTime.parse(str_dateNotification, formatter);
+            }else {
+                dateNotification =null;
+            }
+            if(str_dateNotification.equals("")){
+                 dateRealisation = LocalDateTime.parse(str_realisation, formatter);
+            }else {
+                 dateRealisation = null;
+            }
+
+            course = new Course(id_course, nom, dateNotification, dateRealisation);
             course.setMonMagasin(magasinDAO.getListeMagasins().trouverAvecId(id_magasin));
             this.listeCourses.add(course);
         }
