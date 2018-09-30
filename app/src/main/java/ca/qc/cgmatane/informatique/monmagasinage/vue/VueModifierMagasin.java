@@ -28,10 +28,10 @@ public class VueModifierMagasin extends AppCompatActivity{
         this.accesseurMagasins = MagasinDAO.getInstance();
 
         Bundle parametres = this.getIntent().getExtras();
-        String parametre_id_magasin = (String) parametres.get("id_magasin");
+        String parametre_id_magasin = (String) parametres.get(Magasin.CHAMP_ID);
         int id_magasin = Integer.parseInt(parametre_id_magasin);
 
-        magasin = accesseurMagasins.trouverMagasin(id_magasin);
+        magasin = accesseurMagasins.getListeMagasins().trouverAvecId(id_magasin);
 
         champNom = (EditText)findViewById(R.id.vue_modifier_magasin_champ_nom);
         champAdresse = (EditText)findViewById(R.id.vue_modifier_magasin_champ_adresse);
@@ -60,15 +60,15 @@ public class VueModifierMagasin extends AppCompatActivity{
 
     }
     public void modifierMagasin(){
-        Magasin magasin = new Magasin(this.magasin.getId(),
-                champNom.getText().toString(),
-                champAdresse.getText().toString(),
-                champVille.getText().toString(),
-                Double.valueOf(champCoorX.getText().toString()),
-                Double.valueOf(champCoorY.getText().toString()));
+        int id = magasin.getId();
+        String newNom = champNom.getText().toString();
+        String newAdresse = champAdresse.getText().toString();
+        String newVille = champVille.getText().toString();
+        String newCoorX = champCoorX.getText().toString();
+        String newCoorY = champCoorY.getText().toString();
 
 
-        accesseurMagasins.modifierMagasin(magasin);
+        accesseurMagasins.modifierMagasin(id, newNom, newAdresse, newVille, newCoorX, newCoorY);
         naviguerRetourListeMagasins();
 
     }

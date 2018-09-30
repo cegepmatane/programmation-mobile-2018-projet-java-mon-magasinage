@@ -80,25 +80,24 @@ public class MagasinDAO {
         listeMagasins.add(magasin);
     }
 
-    public Magasin trouverMagasin(int id_magasin) {
-        for (Magasin magasinRechercher : this.listeMagasins){
-            if (magasinRechercher.getId() == id_magasin){
-                return magasinRechercher;}
-        }
-        return null;
 
-    }
-
-    public void modifierMagasin(Magasin magasin) {
+    public void modifierMagasin(int id, String nom, String adresse, String ville, String coorX, String coorY) {
         SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Magasin.CHAMP_NOM, magasin.getNom());
-        values.put(Magasin.CHAMP_ADRESSE, magasin.getAdresse());
-        values.put(Magasin.CHAMP_VILLE, magasin.getVille());
-        values.put(Magasin.CHAMP_COOR_X, magasin.getCoorX());
-        values.put(Magasin.CHAMP_COOR_Y, magasin.getCoorY());
+        values.put(Magasin.CHAMP_ID, id);
+        values.put(Magasin.CHAMP_NOM, nom);
+        values.put(Magasin.CHAMP_ADRESSE, adresse);
+        values.put(Magasin.CHAMP_VILLE, ville);
+        values.put(Magasin.CHAMP_COOR_X, coorX);
+        values.put(Magasin.CHAMP_COOR_Y, coorY);
 
-        db.update(Magasin.NOM_TABLE, values, "id_magasin="+magasin.getId(), null);
+        db.update(Magasin.NOM_TABLE, values, Magasin.CHAMP_ID+"="+id, null);
+        Magasin magasin = listeMagasins.trouverAvecId(id);
+        magasin.setNom(nom);
+        magasin.setAdresse(adresse);
+        magasin.setVille(ville);
+        magasin.setCoorX(Double.parseDouble(coorX));
+        magasin.setCoorY(Double.parseDouble(coorY));
 
     }
 }

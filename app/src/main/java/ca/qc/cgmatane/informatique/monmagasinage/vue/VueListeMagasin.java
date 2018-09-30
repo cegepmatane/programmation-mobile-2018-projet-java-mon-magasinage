@@ -78,9 +78,9 @@ public class VueListeMagasin extends AppCompatActivity {
                                 VueListeMagasin.this,
                                 VueModifierMagasin.class
                         );
-                        intentionNaviguerModiferMagasin.putExtra("id_magasin",
-                                magasin.get("id_magasin"));
-                        System.out.println(magasin.get("id_magasin"));
+                        intentionNaviguerModiferMagasin.putExtra(Magasin.CHAMP_ID,
+                                magasin.get(Magasin.CHAMP_ID));
+                        System.out.println(magasin.get(Magasin.CHAMP_ID));
                         startActivityForResult(intentionNaviguerModiferMagasin,
                                 ACTIVITE_MODIFIER_MAGASIN);
 
