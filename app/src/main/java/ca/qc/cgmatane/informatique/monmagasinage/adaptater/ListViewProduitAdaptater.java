@@ -16,7 +16,6 @@ import java.util.List;
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.UniteDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Unite;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Produits;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Unites;
 
@@ -75,5 +74,13 @@ public class ListViewProduitAdaptater extends BaseAdapter {
         }
         return convertView;
 
+    }
+
+    public Produits getListeProduits() {
+        return listeProduits;
+    }
+
+    public void setListeProduits(Produits listeProduits) {
+        this.listeProduits = listeProduits;
     }
 }

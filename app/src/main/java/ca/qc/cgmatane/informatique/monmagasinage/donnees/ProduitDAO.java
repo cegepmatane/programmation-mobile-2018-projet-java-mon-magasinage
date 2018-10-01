@@ -19,6 +19,7 @@ public class ProduitDAO {
         accesseurBaseDeDonnees = BaseDeDonnees.getInstance();
         uniteDAO = UniteDAO.getInstance();
         listeProduits = new Produits();
+        listerProduits();
     }
 
     public static ProduitDAO getInstance(){
