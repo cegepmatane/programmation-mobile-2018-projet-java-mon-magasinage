@@ -63,12 +63,12 @@ public class CourseDAO implements CourseSQL{
 
             LocalDateTime dateNotification;
             LocalDateTime dateRealisation;
-            if(str_dateNotification.equals("")){
+            if(!str_dateNotification.equals("")){
                 dateNotification = LocalDateTime.parse(str_dateNotification, formatter);
             }else {
                 dateNotification =null;
             }
-            if(str_dateNotification.equals("")){
+            if(!str_dateNotification.equals("")){
                  dateRealisation = LocalDateTime.parse(str_realisation, formatter);
             }else {
                  dateRealisation = null;
