@@ -10,27 +10,30 @@
         <item name="android:colorBackground">@android:color/darker_gray</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="ThemeSombreNoActionBar" parent="Theme.AppCompat" >
+    <style name="ThemeSombreNoActionBar" parent="ThemeSombre" >
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="ThemeLumineuxNoActionBar" parent="Theme.AppCompat.Light" >
+    <style name="ThemeLumineuxNoActionBar" parent="ThemeLumineux" >
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
     <style name="ThemeSombre" parent="Theme.AppCompat" >
 
+        <item name="android:colorBackground">@color/background_material_dark</item>
+        <item name="android:colorForeground">@color/foreground_material_dark</item>
     </style>
 
     <style name="ThemeLumineux" parent="Theme.AppCompat.Light" >
@@ -44,14 +47,9 @@
         <item name="colorAccent">@android:color/black</item>
     </style>
 
-    <style name="ThemeVertNoActionBar" parent="Theme.AppCompat" >
+    <style name="ThemeVertNoActionBar" parent="ThemeVert" >
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="colorPrimaryDark">@android:color/holo_green_light</item>
-        <item name="colorPrimary">@android:color/holo_green_light</item>
-        <item name="android:colorForeground">@android:color/white</item>
-        <item name="android:colorBackground">@android:color/holo_green_dark</item>
-        <item name="colorAccent">@android:color/black</item>
     </style>
 
 </resources>
