@@ -100,4 +100,10 @@ public class MagasinDAO {
         magasin.setCoorY(Double.parseDouble(coorY));
 
     }
+
+    public void supprimerMagasin(int id) {
+        SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
+        db.delete(Magasin.NOM_TABLE, Magasin.CHAMP_ID +"="+ id, null);
+        listeMagasins.remove(listeMagasins.trouverAvecId(id));
+    }
 }

@@ -56,7 +56,7 @@ public class VueAjouterMagasin extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                     String adresseComplete = place.getAddress().toString();
-                    String adresse[] = adresseComplete.split(",");
+                    String adresse[] = adresseComplete.split(", ");
                     champNom.setText(place.getName());
                     champAdresse.setText(adresse[0]);
                     champVille.setText(adresse[1]);

@@ -65,6 +65,21 @@ public class VueModifierMagasin extends AppCompatActivity{
                 }
         );
 
+
+        Button actionSupprimerMagasin =
+                (Button)findViewById(R.id.action_supprimer_magasin);
+
+        actionSupprimerMagasin.setOnClickListener(
+
+                new View.OnClickListener()
+                {
+                    public void onClick(View arg0) {
+                        accesseurMagasins.supprimerMagasin(magasin.getId());
+                        naviguerRetourListeMagasins();
+                    }
+                }
+        );
+
     }
     public void modifierMagasin(){
         int id = magasin.getId();
