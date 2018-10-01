@@ -1,5 +1,7 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele;
 
+import java.util.HashMap;
+
 public class Produit {
     public static final String NOM_TABLE = "produit";
 
@@ -20,6 +22,13 @@ public class Produit {
     }
 
     public Produit() {
+    }
+
+    public Produit(int id, String nom, int quantiteDefaut, int recurenceAchat) {
+        this.id = id;
+        this.nom = nom;
+        this.quantiteDefaut = quantiteDefaut;
+        this.recurenceAchat = recurenceAchat;
     }
 
     public int getId() {

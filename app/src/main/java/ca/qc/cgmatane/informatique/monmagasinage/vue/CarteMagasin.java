@@ -220,5 +220,5 @@ public class CarteMagasin extends FragmentActivity implements OnMapReadyCallback
             Log.e("Exception: %s", e.getMessage());
         }
     }
-    
+
 }

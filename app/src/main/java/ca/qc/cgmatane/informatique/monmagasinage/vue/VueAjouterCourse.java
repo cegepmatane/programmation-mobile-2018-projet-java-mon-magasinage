@@ -3,43 +3,44 @@ package ca.qc.cgmatane.informatique.monmagasinage.vue;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import ca.qc.cgmatane.informatique.monmagasinage.R;
+import ca.qc.cgmatane.informatique.monmagasinage.adaptater.ListViewProduitAdaptater;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.MagasinDAO;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
+import ca.qc.cgmatane.informatique.monmagasinage.donnees.ProduitDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Produits;
 
 public class VueAjouterCourse extends AppCompatActivity {
 
     private final int AJOUTER_PRODUIT_ID_RETOUR=0;
-
+    /** Données*/
     private CourseDAO courseDAO = CourseDAO.getInstance();
     private MagasinDAO magasinDAO = MagasinDAO.getInstance();
+    private ProduitDAO produitDAO = ProduitDAO.getInstance();
+    private Produits listeProduits;
+    /** Affichage*/
     private final Calendar myCalendar = Calendar.getInstance(TimeZone.getDefault());
     private EditText dateNotification;
     Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-
+    private ListView listeviewProduits;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         EnumerationTheme.changerTheme(this);
@@ -49,14 +50,19 @@ public class VueAjouterCourse extends AppCompatActivity {
         final EditText nomCourse = findViewById(R.id.vue_ajouter_course_nom_course);
         dateNotification = findViewById(R.id.vue_ajouter_course_date_notification);
         final Spinner spinnerMagasin = findViewById(R.id.vue_ajouter_course_spinner_produit);
-        Button actionNaviguerAjouterProduitCourse = (Button) findViewById(R.id.vue_ajouter_course_action_ajouter_produit);
+        //Button actionNaviguerAjouterProduitCourse = (Button) findViewById(R.id.vue_ajouter_course_action_ajouter_produit);
+        listeviewProduits =(ListView) findViewById(R.id.vue_ajouter_course_liste_produits);
 
+        try {
+            listeProduits = produitDAO.listerProduits();
+            ListViewProduitAdaptater listViewProduitAdaptater = new ListViewProduitAdaptater(listeProduits,this);
+            listeviewProduits.setAdapter(listViewProduitAdaptater);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         spinnerMagasin.setAdapter(magasinDAO.getListeMagasins().recuperereListeMagasinPourSpinner(this));
 
-        final Course course = new Course();
-        //int id, String nom, LocalDateTime dateNotification, LocalDateTime dateRealisation
-
-        actionNaviguerAjouterProduitCourse.setOnClickListener(new View.OnClickListener() {
+      /*  actionNaviguerAjouterProduitCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intentionNaviguerAjouterProduitCourse = new Intent(VueAjouterCourse.this, VueAjouterProduitListeCourse.class);
@@ -67,7 +73,7 @@ public class VueAjouterCourse extends AppCompatActivity {
                 intentionNaviguerAjouterProduitCourse.putExtra("course", produits);
                 startActivityForResult(intentionNaviguerAjouterProduitCourse, AJOUTER_PRODUIT_ID_RETOUR);
             }
-        });
+        });*/
 
         Button actionNaviguerEnregistrerCourse = (Button) findViewById(R.id.vue_ajouter_course_action_enregistrer);
 

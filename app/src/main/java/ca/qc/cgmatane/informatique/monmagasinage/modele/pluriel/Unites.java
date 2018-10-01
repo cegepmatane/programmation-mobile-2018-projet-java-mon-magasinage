@@ -1,6 +1,10 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel;
 
+import android.content.Context;
+import android.widget.ArrayAdapter;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Unite;
 
@@ -13,5 +17,16 @@ public class Unites extends ArrayList<Unite>{
             }
         };
         return null;
+    }
+
+    public ArrayAdapter recuperAdapterPourSpinner(Context context){
+        List<String> listPourSpinner = new ArrayList<String>();
+        for (Unite unite: this){
+            listPourSpinner.add(unite.getLibelle());
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listPourSpinner);
+
+        return  adapter;
     }
 }
