@@ -1,6 +1,8 @@
 package ca.qc.cgmatane.informatique.monmagasinage.vue;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,7 +14,11 @@ import android.widget.Toast;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+
+import java.io.IOException;
+import java.util.List;
 
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.MagasinDAO;
@@ -49,8 +55,13 @@ public class VueAjouterMagasin extends AppCompatActivity {
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                System.out.println(place.getName());
-                System.out.println(place.getAddress());
+                    String adresseComplete = place.getAddress().toString();
+                    String adresse[] = adresseComplete.split(",");
+                    champNom.setText(place.getName());
+                    champAdresse.setText(adresse[0]);
+                    champVille.setText(adresse[1]);
+                    champCoorX.setText(String.valueOf(place.getLatLng().latitude));
+                    champCoorY.setText(String.valueOf(place.getLatLng().longitude));
             }
 
             @Override
