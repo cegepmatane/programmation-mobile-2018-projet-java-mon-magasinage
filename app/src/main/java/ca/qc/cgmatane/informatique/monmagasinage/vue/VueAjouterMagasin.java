@@ -1,11 +1,18 @@
 package ca.qc.cgmatane.informatique.monmagasinage.vue;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.MagasinDAO;
@@ -36,6 +43,22 @@ public class VueAjouterMagasin extends AppCompatActivity {
         champCoorY = (EditText)findViewById(R.id.vue_ajouter_magasin_champ_coory);
 
 
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                System.out.println(place.getName());
+                System.out.println(place.getAddress());
+            }
+
+            @Override
+            public void onError(Status status) {
+
+                System.out.println("error");
+            }
+        });
         Button actionEnregistrerMagasin =
                 (Button)findViewById(R.id.action_enregistrer_magasin);
 
