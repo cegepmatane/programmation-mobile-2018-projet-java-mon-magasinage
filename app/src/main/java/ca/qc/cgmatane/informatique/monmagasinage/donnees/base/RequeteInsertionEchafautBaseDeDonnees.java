@@ -47,13 +47,14 @@ public interface RequeteInsertionEchafautBaseDeDonnees {
     /* LigneCourse*/
     final static String INSERT_LIGNE_COURSE_1=String.format("INSERT INTO %s (%s, %s, %s, %s, %s)VALUES (1, 1, 1, 0, )",
             LigneCourse.NOM_TABLE, LigneCourse.CHAMP_ID_COURSE, LigneCourse.CHAMP_ID_PRODUIT, LigneCourse.CHAMP_QUANTITE, LigneCourse.CHAMP_COCHE, LigneCourse.CHAMP_ID_UNITE);
+
     /** Produit*/
-    final static String INSERT_FRUIT_ET_LEGUMES_1 ="INSERT INTO produit VALUES (1, 'AIL', 1, 0), "+
-    "(2, 'ARGOUSE', 1, 0)," +
-     "(3, 'ARMOISE COMMUNE', 1, 0),"+
-     "(4, 'ARTICHAUT', 1, 0), " +
-     "(5, 'ASPERGE', 1, 0), "+
-     "(6, 'AUBERGINE', 1, 0);" ;
+    final static String INSERT_FRUIT_ET_LEGUMES_1 ="INSERT INTO produit VALUES (1, 'Ail', 3, 1, 0), "+
+    "(2, 'Banane', 4, 1, 0)," +
+     "(3, 'Lait ', 1, 7, 0),"+
+     "(4, 'Nutella', 1, 1, 0), " +
+     "(5, 'Asperge', 1, 1, 0), "+
+     "(6, 'Aubergine', 1, 1, 0);" ;
 
 
 

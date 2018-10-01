@@ -18,9 +18,10 @@ import ca.qc.cgmatane.informatique.monmagasinage.donnees.UniteDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Unite;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Produits;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Unites;
 
 public class ListViewProduitAdaptater extends BaseAdapter {
-    private UniteDAO uniteDAO;
+    private Unites listeUnites;
     private Produits listeProduits;
     private LayoutInflater layoutInflater = null;
     private Activity context;
@@ -30,8 +31,7 @@ public class ListViewProduitAdaptater extends BaseAdapter {
         this.layoutInflater = LayoutInflater.from(context);
         this.context = context;
 
-        uniteDAO= UniteDAO.getInstance();
-        uniteDAO.listerUnites();
+        listeUnites = UniteDAO.getInstance().getListeUnite();
     }
 
     @Override
@@ -57,9 +57,9 @@ public class ListViewProduitAdaptater extends BaseAdapter {
             Spinner spinnerQuantite = (Spinner) convertView.findViewById(R.id.ligne_listview_produit_spinner_quantite);
             Spinner spinnerUnite = (Spinner) convertView.findViewById(R.id.ligne_listview_produit_spinner_unite);
             Button actionLigneProduit = (Button) convertView.findViewById(R.id.ligne_listview_produit_button_action);
-            spinnerUnite.setAdapter(uniteDAO.getListeUnite().recuperAdapterPourSpinner(context));
+            spinnerUnite.setAdapter(listeUnites.recuperAdapterPourSpinner(context));
             List<String> listPourSpinner = new ArrayList<String>();
-            for (int i = 1;i<12;i++){
+            for (int i = 1;i<10;i++){
                 listPourSpinner.add(i + "");
             }
             //TODO à faire ailleur pour eviter de la faire à chaque ligne
@@ -68,7 +68,8 @@ public class ListViewProduitAdaptater extends BaseAdapter {
             final Produit produitSelectionne = listeProduits.get(position);
             if (produitSelectionne != null){
                 textViewNomProduit.setText(produitSelectionne.getNom().toLowerCase());
-
+                spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(produitSelectionne.getUniteDefaut().getId()));
+                spinnerQuantite.setSelection(produitSelectionne.getQuantiteDefaut()-1);
             }
             return convertView;
         }

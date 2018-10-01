@@ -1,18 +1,18 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele;
 
-import java.util.HashMap;
-
 public class Produit {
     public static final String NOM_TABLE = "produit";
 
     public static final String CHAMP_ID = "id_produit";
     public static final String CHAMP_NOM = "nom";
     public static final String CHAMP_QUANTITE_DEFAUT = "quantiteDefaut";
-    public static final String CHAMP_RECURENCE_ACHAT = "recurenceAchat";
+    public static final String CHAMP_UNITE_DEFAUT = "uniteDefaut";
+    public static final String CHAMP_RECURRENCE_ACHAT = "recurrenceAchat";
 
     private int id;
     private String nom;
     private int quantiteDefaut;
+    private Unite uniteDefaut;
     private int recurenceAchat; //Jour
 
     public Produit(int id, String nom, int quantiteDefaut) {
@@ -63,4 +63,11 @@ public class Produit {
         this.recurenceAchat = recurenceAchat;
     }
 
+    public Unite getUniteDefaut() {
+        return uniteDefaut;
+    }
+
+    public void setUniteDefaut(Unite uniteDefaut) {
+        this.uniteDefaut = uniteDefaut;
+    }
 }
