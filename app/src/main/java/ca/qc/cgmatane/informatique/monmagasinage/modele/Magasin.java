@@ -28,6 +28,13 @@ public class Magasin {
         this.coorX = coorX;
         this.coorY = coorY;
     }
+    public Magasin(String nom, String adresse, String ville, Double coorX, Double coorY) {
+        this.nom = nom;
+        this.adresse = adresse;
+        this.ville = ville;
+        this.coorX = coorX;
+        this.coorY = coorY;
+    }
 
     public Magasin() {
     }
@@ -83,6 +90,7 @@ public class Magasin {
     public HashMap<String, String> obtenirObjetPourAdapteur() {
         HashMap<String, String> magasinPourAdapteur = new HashMap<String, String>();
         magasinPourAdapteur.put(CHAMP_ID, String.valueOf(this.id));
+        magasinPourAdapteur.put(CHAMP_ADRESSE, this.adresse +", "+ this.ville);
         magasinPourAdapteur.put(CHAMP_NOM, this.nom);
         return magasinPourAdapteur;
     }

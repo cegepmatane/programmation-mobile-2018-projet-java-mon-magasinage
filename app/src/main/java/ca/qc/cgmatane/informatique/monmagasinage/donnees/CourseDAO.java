@@ -2,22 +2,20 @@ package ca.qc.cgmatane.informatique.monmagasinage.donnees;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.icu.text.LocaleDisplayNames;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-
-import javax.xml.validation.Validator;
 
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.CourseSQL;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
 
 public class CourseDAO implements CourseSQL{
+    private MagasinDAO magasinDAO;
+    private LigneCourseDAO ligneCourseDAO;
     private static CourseDAO instance = null;
     private BaseDeDonnees accesseurBaseDeDonnees;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm");
@@ -34,13 +32,14 @@ public class CourseDAO implements CourseSQL{
     private CourseDAO() {
         this.listeCourses = new Courses();
         this.accesseurBaseDeDonnees = BaseDeDonnees.getInstance();
+        this.magasinDAO = MagasinDAO.getInstance();
+        this.ligneCourseDAO = LigneCourseDAO.getInstance();
     }
 
     public Courses listerCourses(){
         Cursor curseurCourses = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_COURSE, null);
         this.listeCourses.clear();
 
-        MagasinDAO magasinDAO = MagasinDAO.getInstance();
         magasinDAO.listerMagasins();//Chargement des magasins
         Course course;
 
@@ -55,12 +54,24 @@ public class CourseDAO implements CourseSQL{
         for(curseurCourses.moveToFirst();!curseurCourses.isAfterLast();curseurCourses.moveToNext()){
             int id_course= curseurCourses.getInt(indexId);
             String nom= curseurCourses.getString(indexNom);
-            String dateNotification = curseurCourses.getString(indexDateNotification);
-            String dateRealisation = curseurCourses.getString(indexDateRealisation);
+            String str_dateNotification = curseurCourses.getString(indexDateNotification);
+            String str_dateRealisation = curseurCourses.getString(indexDateRealisation);
             int id_magasin = curseurCourses.getInt(indexIdMagasin);
 
-            /*LocalDateTime dateTime = LocalDateTime.parse(str, formatter);*/
-            course = new Course(id_course, nom, LocalDateTime.parse(dateNotification, formatter), LocalDateTime.parse(dateRealisation, formatter));
+            LocalDateTime dateNotification;
+            LocalDateTime dateRealisation;
+            if(!str_dateNotification.equals("")){
+                dateNotification = LocalDateTime.parse(str_dateNotification, formatter);
+            }else {
+                dateNotification =null;
+            }
+            if(!str_dateRealisation.equals("")){
+                 dateRealisation = LocalDateTime.parse(str_dateRealisation, formatter);
+            }else {
+                 dateRealisation = null;
+            }
+
+            course = new Course(id_course, nom, dateNotification, dateRealisation);
             course.setMonMagasin(magasinDAO.getListeMagasins().trouverAvecId(id_magasin));
             this.listeCourses.add(course);
         }
@@ -70,42 +81,73 @@ public class CourseDAO implements CourseSQL{
         return this.listeCourses;
     }
 
-    public int creerCourse(String nom, String dateNotification, String dateRealisation, String idOriginal, int idMagasin)
+    public void creerCourse(String nom, String dateNotification, String dateRealisation, int idOriginal, Magasin magasin, LignesCourse ligneCourses)
     {
 
-        /*, new String[]{idOriginal,
-                nom,
-                dateNotification,
-                dateRealisation,
-                id});*/
         ContentValues values = new ContentValues();
         values.put(Course.CHAMP_NOM,nom);
         values.put(Course.CHAMP_DATE_NOTIFICATION,dateNotification);
         values.put(Course.CHAMP_DATE_REALISATION,dateRealisation);
         values.put(Course.CHAMP_ID_COURSE_ORIGINAL,idOriginal);
-
-        if (idMagasin<0)
-            values.put(Course.CHAMP_ID_MAGASIN, idMagasin); //verifie que la course est associé a un magasin
+        values.put(Course.CHAMP_ID_MAGASIN, magasin.getId());
 
 
         int newId = (int) accesseurBaseDeDonnees.getWritableDatabase().insert(Course.NOM_TABLE,null, values);
 
-        System.out.println("id cree"+newId);
-        this.listeCourses.add(new Course(newId,
-                nom,
-                LocalDateTime.parse(dateNotification, formatter),
-                LocalDateTime.parse(dateRealisation, formatter))
-        );
-        return 0;
+        LocalDateTime dateNotificationFormatted = null;
+        LocalDateTime dateRealisationFormatted = null;
+
+        if (dateNotification != null && !"".equals(dateNotification))
+            dateNotificationFormatted = LocalDateTime.parse(dateNotification, formatter);
+
+        if (dateRealisation != null && !"".equals(dateRealisation))
+            dateRealisationFormatted = LocalDateTime.parse(dateRealisation, formatter);
+        if(ligneCourseDAO.enregistrerListeLigneCoursePourUneCourse(ligneCourses)){
+            Course course = new Course(newId, nom, dateNotificationFormatted, dateRealisationFormatted);
+            course.setMonMagasin(magasin);
+            course.setMesLignesCourse(ligneCourses);
+            this.listeCourses.add(course);
+        }
+
     }
 
-    public Course recupererCourseAvecId(int id) {
-        for (Course course : this.listeCourses){
-            if (course.getId()==id){
-                return course;
-            }
-        }
-        return null;
+
+    public void modifierCourse(int id, String nom, String dateNotification, String dateRealisation, int idOriginal, Magasin magasin)
+    {
+
+        ContentValues values = new ContentValues();
+        values.put(Course.CHAMP_NOM,nom);
+        values.put(Course.CHAMP_DATE_NOTIFICATION,dateNotification);
+        values.put(Course.CHAMP_DATE_REALISATION,dateRealisation);
+        values.put(Course.CHAMP_ID_COURSE_ORIGINAL,idOriginal);
+        values.put(Course.CHAMP_ID_MAGASIN, magasin.getId());
+
+        LocalDateTime dateNotificationFormatted = null;
+        LocalDateTime dateRealisationFormatted = null;
+
+        accesseurBaseDeDonnees.getWritableDatabase().update(Course.NOM_TABLE,
+                values,
+                Course.CHAMP_ID_COURSE+"="+id,
+                null);
+
+        if (dateNotification != null && !"".equals(dateNotification))
+            dateNotificationFormatted = LocalDateTime.parse(dateNotification, formatter);
+
+        if (dateRealisation != null && !"".equals(dateRealisation))
+            dateRealisationFormatted = LocalDateTime.parse(dateRealisation, formatter);
+
+        Course course = new Course(id,
+                nom,
+                dateNotificationFormatted,
+                dateRealisationFormatted);
+        course.setMonMagasin(magasin);
+
+        Course courseAmodifier = this.getListeCourses().trouverAvecId(id);
+        courseAmodifier.setNom(nom);
+        courseAmodifier.setDateNotification(dateNotificationFormatted);
+        courseAmodifier.setDateRealisation(dateRealisationFormatted);
+        courseAmodifier.setCourseOriginal(null);
+        courseAmodifier.setMonMagasin(magasin);
     }
 
     public Courses getListeCourses() {

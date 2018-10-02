@@ -12,10 +12,10 @@ import java.util.List;
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 
 public enum EnumerationTheme {
-    DEFAULT("Théme par defaut", R.style.AppTheme, R.style.AppTheme_NoActionBar),
-    SOMBRE("Théme sombre", R.style.ThemeSombre, R.style.ThemeSombreNoActionBar),
-    LUMINEUX("Théme lumineux", R.style.ThemeLumineux, R.style.ThemeLumineuxNoActionBar),
-    VERT("Théme vert", R.style.ThemeVert, R.style.ThemeVertNoActionBar)
+    DEFAULT("Thème par defaut", R.style.AppTheme, R.style.AppTheme_NoActionBar),
+    SOMBRE("Thème sombre", R.style.ThemeSombre, R.style.ThemeSombreNoActionBar),
+    LUMINEUX("Thème lumineux", R.style.ThemeLumineux, R.style.ThemeLumineuxNoActionBar),
+    VERT("Thème vert", R.style.ThemeVert, R.style.ThemeVertNoActionBar)
     ;
 
     private String nom ="";

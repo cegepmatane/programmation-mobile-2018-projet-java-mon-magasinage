@@ -28,9 +28,9 @@
         android:id="@+id/vue_modifier_theme_action_quitter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="64dp"
-        android:text="Quitter" />
+        android:layout_marginEnd="16dp"
+        android:text="Retour" />
 
 </LinearLayout>

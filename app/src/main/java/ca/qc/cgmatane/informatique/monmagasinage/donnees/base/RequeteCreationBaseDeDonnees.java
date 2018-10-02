@@ -26,8 +26,9 @@ public interface RequeteCreationBaseDeDonnees {
 
     /** Produit*/
     final static String DELETE_TABLE_PRODUIT ="drop table IF EXISTS "+ Produit.NOM_TABLE;
-    final static String CREATE_TABLE_PRODUIT = String.format("create table %s ( %s INTEGER PRIMARY KEY, %s TEXT, %s INTEGER, %s INTEGER)",
-            Produit.NOM_TABLE, Produit.CHAMP_ID, Produit.CHAMP_NOM, Produit.CHAMP_QUANTITE_DEFAUT, Produit.CHAMP_RECURENCE_ACHAT);
+    final static String CREATE_TABLE_PRODUIT = String.format("create table %s ( %s INTEGER PRIMARY KEY, %s TEXT, %s INTEGER, %s INTEGER, %s INTEGER, "+
+            "FOREIGN KEY("+Produit.CHAMP_UNITE_DEFAUT+") REFERENCES "+Unite.NOM_TABLE+"("+Unite.CHAMP_ID +"))",
+            Produit.NOM_TABLE, Produit.CHAMP_ID, Produit.CHAMP_NOM, Produit.CHAMP_QUANTITE_DEFAUT, Produit.CHAMP_UNITE_DEFAUT, Produit.CHAMP_RECURRENCE_ACHAT);
 
     /** LigneCourse */
     final static String DELETE_TABLE_LIGNE_COURSE ="drop table IF EXISTS "+ LigneCourse.NOM_TABLE;

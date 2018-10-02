@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".vue.VueModifierCourse">
+    tools:context=".vue.VueAjouterCourse">
 
     <TextView
         android:id="@+id/vue_modifier_course_titre"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_titre" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/vue_modifier_course_spinner_produit"
         android:layout_width="368dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
@@ -45,26 +45,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_nom_course" />
 
-    <LinearLayout
-        android:id="@+id/vue_modifier_course_linear_layout_magasin"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/vue_modifier_course_date_notification_label"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/vue_modifier_course_action_modifier_produit"
+        android:text="date de la notification :"
+        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_spinner_produit" />
+
+    <EditText
+        android:id="@+id/vue_modifier_course_date_notification"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:focusable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner">
-
-        <ListView
-            android:id="@+id/vue_modifier_course_list_view_produits"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_date_notification_label" />
 
     <Button
         android:id="@+id/vue_modifier_course_action_modifier_produit"
@@ -73,7 +73,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
-        android:text="modifier une course"
+        android:text="modifier un produit"
         app:layout_constraintBottom_toTopOf="@+id/vue_modifier_course_action_enregistrer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -86,7 +86,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
-        android:text="Enregistrer les modifications"
+        android:text="Enregistrer la course"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

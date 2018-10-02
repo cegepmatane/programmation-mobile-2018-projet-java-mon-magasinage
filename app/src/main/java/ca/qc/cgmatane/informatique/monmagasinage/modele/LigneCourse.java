@@ -12,6 +12,7 @@ public class LigneCourse {
     private Course course;
     private Produit produit;
     private int quantite;
+    private Unite unite;
     private boolean coche;
 
     public LigneCourse(Course course, Produit produit, int quantite, boolean coche) {
@@ -54,5 +55,13 @@ public class LigneCourse {
 
     public void setCoche(boolean coche) {
         this.coche = coche;
+    }
+
+    public Unite getUnite() {
+        return unite;
+    }
+
+    public void setUnite(Unite unite) {
+        this.unite = unite;
     }
 }

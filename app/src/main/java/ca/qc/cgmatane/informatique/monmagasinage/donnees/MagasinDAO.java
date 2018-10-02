@@ -1,6 +1,8 @@
 package ca.qc.cgmatane.informatique.monmagasinage.donnees;
 
+import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,5 +64,46 @@ public class MagasinDAO {
 
     public void setListeMagasins(Magasins listeMagasins) {
         this.listeMagasins = listeMagasins;
+    }
+
+    public void ajouterMagasin(Magasin magasin) {
+        SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Magasin.CHAMP_NOM, magasin.getNom());
+        values.put(Magasin.CHAMP_ADRESSE, magasin.getAdresse());
+        values.put(Magasin.CHAMP_VILLE, magasin.getVille());
+        values.put(Magasin.CHAMP_COOR_X, magasin.getCoorX());
+        values.put(Magasin.CHAMP_COOR_Y, magasin.getCoorY());
+
+        int id = (int) db.insert(Magasin.NOM_TABLE, null, values);
+        magasin.setId(id);
+        listeMagasins.add(magasin);
+    }
+
+
+    public void modifierMagasin(int id, String nom, String adresse, String ville, String coorX, String coorY) {
+        SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Magasin.CHAMP_ID, id);
+        values.put(Magasin.CHAMP_NOM, nom);
+        values.put(Magasin.CHAMP_ADRESSE, adresse);
+        values.put(Magasin.CHAMP_VILLE, ville);
+        values.put(Magasin.CHAMP_COOR_X, coorX);
+        values.put(Magasin.CHAMP_COOR_Y, coorY);
+
+        db.update(Magasin.NOM_TABLE, values, Magasin.CHAMP_ID+"="+id, null);
+        Magasin magasin = listeMagasins.trouverAvecId(id);
+        magasin.setNom(nom);
+        magasin.setAdresse(adresse);
+        magasin.setVille(ville);
+        magasin.setCoorX(Double.parseDouble(coorX));
+        magasin.setCoorY(Double.parseDouble(coorY));
+
+    }
+
+    public void supprimerMagasin(int id) {
+        SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
+        db.delete(Magasin.NOM_TABLE, Magasin.CHAMP_ID +"="+ id, null);
+        listeMagasins.remove(listeMagasins.trouverAvecId(id));
     }
 }

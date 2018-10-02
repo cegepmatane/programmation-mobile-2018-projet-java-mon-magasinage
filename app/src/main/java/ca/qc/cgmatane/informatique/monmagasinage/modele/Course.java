@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
+import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
+
 public class Course {
     public static final String NOM_TABLE = "course";
 
@@ -21,15 +23,18 @@ public class Course {
     private LocalDateTime dateRealisation;
     private Course courseOriginal;
     private Magasin monMagasin;
+    private LignesCourse mesLignesCourse;
 
     public Course(int id, String nom, LocalDateTime dateNotification, LocalDateTime dateRealisation) {
         this.id = id;
         this.nom = nom;
         this.dateNotification = dateNotification;
         this.dateRealisation = dateRealisation;
+        mesLignesCourse = new LignesCourse();
     }
 
     public Course() {
+        mesLignesCourse = new LignesCourse();
     }
 
     public int getId() {
@@ -80,14 +85,32 @@ public class Course {
         this.monMagasin = monMagasin;
     }
 
+    public LignesCourse getMesLignesCourse() {
+        return mesLignesCourse;
+    }
+
+    public void setMesLignesCourse(LignesCourse mesLignesCourse) {
+        this.mesLignesCourse = mesLignesCourse;
+    }
+
     public HashMap<String, String> obtenirObjetPourAdapteur() {
         HashMap<String, String> coursePourAdapteur = new HashMap<String, String>();
         coursePourAdapteur.put(CHAMP_ID_COURSE, String.valueOf(this.id));
         coursePourAdapteur.put(CHAMP_NOM, this.nom);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm");
-        String st = this.dateNotification.format(formatter);
-        coursePourAdapteur.put(CHAMP_DATE_NOTIFICATION,"pour le : "+ this.dateNotification.format(formatter));
-        coursePourAdapteur.put(CHAMP_DATE_REALISATION, this.dateRealisation.format(formatter));
+        if(this.dateNotification != null){
+            coursePourAdapteur.put(CHAMP_DATE_NOTIFICATION,"pour le : "+ this.dateNotification.format(formatter));
+
+        }else {
+            coursePourAdapteur.put(CHAMP_DATE_NOTIFICATION," non daté ");
+        }
+        if(this.dateRealisation != null){
+            coursePourAdapteur.put(CHAMP_DATE_REALISATION,"pour le : "+ this.dateRealisation.format(formatter));
+
+        }else {
+            coursePourAdapteur.put(CHAMP_DATE_REALISATION," non daté ");
+        }
+
         return coursePourAdapteur;
     }
 }

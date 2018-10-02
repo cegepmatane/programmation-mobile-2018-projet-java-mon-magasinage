@@ -7,6 +7,11 @@
         android:orderInCategory="100"
         android:title="Gestion magasin"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_carte_magasin"
+        android:orderInCategory="100"
+        android:title="Carte des magasins"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_changer_theme"
