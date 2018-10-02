@@ -38,8 +38,8 @@ public class VueModifierCourse extends AppCompatActivity {
     private EditText nomCourse;
     private EditText dateNotification;
     private Spinner spinnerMagasin;
-    private Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-    private final Calendar myCalendar = Calendar.getInstance(TimeZone.getDefault());
+    private Calendar currentTimeCalendar = Calendar.getInstance(TimeZone.getDefault());
+    private final Calendar dateNotificationCalendar = Calendar.getInstance(TimeZone.getDefault());
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm");
 
     @Override
@@ -81,7 +81,7 @@ public class VueModifierCourse extends AppCompatActivity {
                     courseDAO.modifierCourse(courseAModifier.getId(),
                             nomCourse.getText().toString(),
                             dateNotification.getText().toString(),
-                            null,
+                            "",
                             0,
                             magasinDAO.getListeMagasins().get(spinnerMagasin.getSelectedItemPosition()));
 
@@ -89,16 +89,19 @@ public class VueModifierCourse extends AppCompatActivity {
                     ComponentName nomServiceNotification = new ComponentName(getApplicationContext(),
                             Notification.class);
 
-
+                    long offset = dateNotificationCalendar.getTimeInMillis()-currentTimeCalendar.getTimeInMillis();
+                    offset /= 60;
+                    Log.d("timee date nottification", String.valueOf(dateNotificationCalendar.getTimeInMillis()));
+                    Log.d("timee current", String.valueOf(currentTimeCalendar.getTimeInMillis()));
+                    Log.d("offsetNotificationTime", String.valueOf(offset));
 
                     PersistableBundle bundle = new PersistableBundle();
                     bundle.putString("titre", nomCourse.getText().toString());
                     bundle.putString("text", "va faire tes courses");
-                    bundle.putString("date", dateNotification.getText().toString());
 
                     JobInfo.Builder jobInfo = new JobInfo.Builder(1, nomServiceNotification);
-                    jobInfo.setMinimumLatency(5000);
-                    jobInfo.setOverrideDeadline(6000);
+                    jobInfo.setMinimumLatency(offset);
+                    //jobInfo.setOverrideDeadline(6000);
                     jobInfo.setExtras(bundle);
 
                     JobScheduler mSchedular = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);
@@ -124,8 +127,8 @@ public class VueModifierCourse extends AppCompatActivity {
             public void onClick(View v) {
 
                 new DatePickerDialog(VueModifierCourse.this, date,
-                        calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH)).show();
+                        currentTimeCalendar.get(Calendar.YEAR), currentTimeCalendar.get(Calendar.MONTH),
+                        currentTimeCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -136,9 +139,9 @@ public class VueModifierCourse extends AppCompatActivity {
 
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            myCalendar.set(Calendar.HOUR, hourOfDay);
-            myCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            myCalendar.set(Calendar.MINUTE, minute);
+            dateNotificationCalendar.set(Calendar.HOUR, hourOfDay);
+            dateNotificationCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            dateNotificationCalendar.set(Calendar.MINUTE, minute);
             updateLabel();
         }
 
@@ -150,13 +153,13 @@ public class VueModifierCourse extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, monthOfYear);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            dateNotificationCalendar.set(Calendar.YEAR, year);
+            dateNotificationCalendar.set(Calendar.MONTH, monthOfYear);
+            dateNotificationCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
             TimePickerDialog mTimePicker;
-            mTimePicker = new TimePickerDialog(VueModifierCourse.this, time, calendar.get(Calendar.HOUR),
-                    calendar.get(Calendar.MINUTE), true);//Yes 24 hour time
+            mTimePicker = new TimePickerDialog(VueModifierCourse.this, time, currentTimeCalendar.get(Calendar.HOUR),
+                    currentTimeCalendar.get(Calendar.MINUTE), true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
             mTimePicker.show();
 
@@ -171,7 +174,7 @@ public class VueModifierCourse extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
 
-        dateNotification.setText(sdf.format(myCalendar.getTime()));
+        dateNotification.setText(sdf.format(dateNotificationCalendar.getTime()));
     }
 
 }
