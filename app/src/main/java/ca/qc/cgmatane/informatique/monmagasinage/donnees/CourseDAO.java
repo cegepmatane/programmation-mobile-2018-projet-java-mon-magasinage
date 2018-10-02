@@ -2,15 +2,9 @@ package ca.qc.cgmatane.informatique.monmagasinage.donnees;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.icu.text.LocaleDisplayNames;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-
-import javax.xml.validation.Validator;
 
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.CourseSQL;
@@ -58,7 +52,7 @@ public class CourseDAO implements CourseSQL{
             int id_course= curseurCourses.getInt(indexId);
             String nom= curseurCourses.getString(indexNom);
             String str_dateNotification = curseurCourses.getString(indexDateNotification);
-            String str_realisation = curseurCourses.getString(indexDateRealisation);
+            String str_dateRealisation = curseurCourses.getString(indexDateRealisation);
             int id_magasin = curseurCourses.getInt(indexIdMagasin);
 
             LocalDateTime dateNotification;
@@ -68,8 +62,8 @@ public class CourseDAO implements CourseSQL{
             }else {
                 dateNotification =null;
             }
-            if(!str_dateNotification.equals("")){
-                 dateRealisation = LocalDateTime.parse(str_realisation, formatter);
+            if(!str_dateRealisation.equals("")){
+                 dateRealisation = LocalDateTime.parse(str_dateRealisation, formatter);
             }else {
                  dateRealisation = null;
             }
@@ -92,6 +86,7 @@ public class CourseDAO implements CourseSQL{
         values.put(Course.CHAMP_DATE_NOTIFICATION,dateNotification);
         values.put(Course.CHAMP_DATE_REALISATION,dateRealisation);
         values.put(Course.CHAMP_ID_COURSE_ORIGINAL,idOriginal);
+        values.put(Course.CHAMP_ID_MAGASIN, magasin.getId());
 
 
         int newId = (int) accesseurBaseDeDonnees.getWritableDatabase().insert(Course.NOM_TABLE,null, values);
@@ -124,7 +119,7 @@ public class CourseDAO implements CourseSQL{
         values.put(Course.CHAMP_DATE_NOTIFICATION,dateNotification);
         values.put(Course.CHAMP_DATE_REALISATION,dateRealisation);
         values.put(Course.CHAMP_ID_COURSE_ORIGINAL,idOriginal);
-        values.put(Course.CHAMP_ID_COURSE_ORIGINAL,idOriginal);
+        values.put(Course.CHAMP_ID_MAGASIN, magasin.getId());
 
         LocalDateTime dateNotificationFormatted = null;
         LocalDateTime dateRealisationFormatted = null;
