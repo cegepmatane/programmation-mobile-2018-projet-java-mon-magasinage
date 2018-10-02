@@ -33,4 +33,16 @@ public class LignesCourse extends ArrayList<LigneCourse>{
         };
         return false;
     }
+
+    /***
+     * Nombre total de produit
+     * @return
+     */
+    public int recupererQuantiteTotal() {
+        int quantite = 0;
+        for (LigneCourse ligneCourse : this) {
+            quantite += ligneCourse.getQuantite();
+        }
+        return  quantite;
+    }
 }

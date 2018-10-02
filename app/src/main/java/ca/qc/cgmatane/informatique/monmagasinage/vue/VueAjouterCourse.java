@@ -157,7 +157,7 @@ public class VueAjouterCourse extends AppCompatActivity {
             }else {
                 actualiserAffichageAvecListeProduits();
             }
-            recapitualtifPanier.setText("Produits : " +courseActuelle.getMesLignesCourse().size());
+            recapitualtifPanier.setText("Produits : " +courseActuelle.getMesLignesCourse().recupererQuantiteTotal());
         }
     };
 
