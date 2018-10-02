@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
+import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
+
 public class Course {
     public static final String NOM_TABLE = "course";
 
@@ -21,15 +23,18 @@ public class Course {
     private LocalDateTime dateRealisation;
     private Course courseOriginal;
     private Magasin monMagasin;
+    private LignesCourse mesLignesCourse;
 
     public Course(int id, String nom, LocalDateTime dateNotification, LocalDateTime dateRealisation) {
         this.id = id;
         this.nom = nom;
         this.dateNotification = dateNotification;
         this.dateRealisation = dateRealisation;
+        mesLignesCourse = new LignesCourse();
     }
 
     public Course() {
+        mesLignesCourse = new LignesCourse();
     }
 
     public int getId() {
@@ -80,7 +85,13 @@ public class Course {
         this.monMagasin = monMagasin;
     }
 
+    public LignesCourse getMesLignesCourse() {
+        return mesLignesCourse;
+    }
 
+    public void setMesLignesCourse(LignesCourse mesLignesCourse) {
+        this.mesLignesCourse = mesLignesCourse;
+    }
 
     public HashMap<String, String> obtenirObjetPourAdapteur() {
         HashMap<String, String> coursePourAdapteur = new HashMap<String, String>();

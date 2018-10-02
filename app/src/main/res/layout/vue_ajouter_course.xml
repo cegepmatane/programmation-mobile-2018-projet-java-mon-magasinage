@@ -74,12 +74,10 @@
 
     <SearchView
         android:id="@+id/vue_ajouter_course_barre_recherche"
-        android:layout_width="match_parent"
+        android:layout_width="182dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vue_ajouter_course_date_notification" />
 
@@ -94,7 +92,22 @@
         app:layout_constraintBottom_toTopOf="@+id/vue_ajouter_course_action_enregistrer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_ajouter_course_barre_recherche" />
+        app:layout_constraintTop_toBottomOf="@+id/vue_ajouter_course_barre_recherche">
+
+
+    </ListView>
+
+    <ToggleButton
+        android:id="@+id/vue_ajouter_course_toggle_panier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="8dp"
+        android:text="Afficher Panier"
+        android:textOff="Panier"
+        android:textOn="Produits"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vue_ajouter_course_date_notification" />
 <!--
     <Button
         android:id="@+id/vue_ajouter_course_action_ajouter_produit"
@@ -120,5 +133,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/vue_ajouter_course_recapitulatif_panier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Produits : 0"
+        app:layout_constraintStart_toEndOf="@+id/vue_ajouter_course_barre_recherche"
+        app:layout_constraintTop_toBottomOf="@+id/vue_ajouter_course_date_notification" />
+
 
 </android.support.constraint.ConstraintLayout>

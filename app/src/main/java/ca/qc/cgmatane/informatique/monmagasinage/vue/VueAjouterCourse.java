@@ -2,17 +2,26 @@ package ca.qc.cgmatane.informatique.monmagasinage.vue;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -20,30 +29,38 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import ca.qc.cgmatane.informatique.monmagasinage.R;
+import ca.qc.cgmatane.informatique.monmagasinage.adaptater.ListViewLigneCourseAdaptater;
 import ca.qc.cgmatane.informatique.monmagasinage.adaptater.ListViewProduitAdaptater;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.MagasinDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.ProduitDAO;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.LigneCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Produits;
 
 public class VueAjouterCourse extends AppCompatActivity {
+    public static final String EVENT_RECHARGER_AFFICHAGE= "event_recharger_affichage";
 
-    private final int AJOUTER_PRODUIT_ID_RETOUR=0;
     /** Données*/
     private CourseDAO courseDAO = CourseDAO.getInstance();
     private MagasinDAO magasinDAO = MagasinDAO.getInstance();
     private ProduitDAO produitDAO = ProduitDAO.getInstance();
     private Produits listeProduits;
+    private Course courseActuelle;
 
     /** Affichage*/
-    private final Calendar myCalendar = Calendar.getInstance(TimeZone.getDefault());
-    private EditText dateNotification;
-    Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-    private ListView listeviewProduits;
+    protected final Calendar myCalendar = Calendar.getInstance(TimeZone.getDefault());
+    protected EditText dateNotification;
+    protected Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+    protected ListView listeviewProduits;
     protected String rechercheUtilisateur ="";
-    ListViewProduitAdaptater listViewProduitAdaptater;
+    protected ToggleButton actionTogglePanier;
+    protected ListViewProduitAdaptater listViewProduitAdaptater;
+    protected ListViewLigneCourseAdaptater listViewLigneCourseAdaptater;
+    protected TextView recapitualtifPanier;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         EnumerationTheme.changerTheme(this);
@@ -55,30 +72,31 @@ public class VueAjouterCourse extends AppCompatActivity {
         final Spinner spinnerMagasin = findViewById(R.id.vue_ajouter_course_spinner_produit);
         listeviewProduits =(ListView) findViewById(R.id.vue_ajouter_course_liste_produits);
         SearchView barreDeRecherche = findViewById(R.id.vue_ajouter_course_barre_recherche);
-        //Button actionNaviguerAjouterProduitCourse = (Button) findViewById(R.id.vue_ajouter_course_action_ajouter_produit);
         Button actionNaviguerEnregistrerCourse = (Button) findViewById(R.id.vue_ajouter_course_action_enregistrer);
+        recapitualtifPanier = findViewById(R.id.vue_ajouter_course_recapitulatif_panier);
 
-        try {
-            listeProduits = new Produits();
-            listViewProduitAdaptater = new ListViewProduitAdaptater(listeProduits,this);
-            actualiserAffichageListeProduits();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        actionTogglePanier = findViewById(R.id.vue_ajouter_course_toggle_panier);
+        actionTogglePanier.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+
+                    actualiserAffichageAvecPanier();
+
+                }else {
+                    actualiserAffichageAvecListeProduits();
+                }
+            }
+        });
+
+        listeProduits = new Produits();
+        courseActuelle = new Course();
+        listViewProduitAdaptater = new ListViewProduitAdaptater(listeProduits, courseActuelle,this);
+        listViewLigneCourseAdaptater = new ListViewLigneCourseAdaptater(courseActuelle.getMesLignesCourse(), this);
+        actualiserAffichageAvecListeProduits();
+
         spinnerMagasin.setAdapter(magasinDAO.getListeMagasins().recuperereListeMagasinPourSpinner(this));
 
-      /*  actionNaviguerAjouterProduitCourse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentionNaviguerAjouterProduitCourse = new Intent(VueAjouterCourse.this, VueAjouterProduitListeCourse.class);
-                ArrayList<Integer> produits = new ArrayList<>();
-                produits.add(1);
-                produits.add(3);
-                produits.add(4);
-                intentionNaviguerAjouterProduitCourse.putExtra("course", produits);
-                startActivityForResult(intentionNaviguerAjouterProduitCourse, AJOUTER_PRODUIT_ID_RETOUR);
-            }
-        });*/
         barreDeRecherche.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -88,7 +106,11 @@ public class VueAjouterCourse extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 rechercheUtilisateur = newText;
-                actualiserAffichageListeProduits();
+                if(actionTogglePanier.isChecked()){
+                    actualiserAffichageAvecPanier();
+                }else {
+                    actualiserAffichageAvecListeProduits();
+                }
                 return true;
             }
         });
@@ -121,6 +143,29 @@ public class VueAjouterCourse extends AppCompatActivity {
                         calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter(VueAjouterCourse.EVENT_RECHARGER_AFFICHAGE));
+    }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String message = intent.getStringExtra("message");
+            Log.d("receiver", "Got message: " + message);
+            if(message.equals("panier")){
+                actualiserAffichageAvecPanier();
+            }else {
+                actualiserAffichageAvecListeProduits();
+            }
+            recapitualtifPanier.setText("Produits : " +courseActuelle.getMesLignesCourse().size());
+        }
+    };
+
+    @Override
+    protected void onDestroy(){
+        // Unregister since the activity is about to be closed.
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        super.onDestroy();
     }
 
     final TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
@@ -159,7 +204,7 @@ public class VueAjouterCourse extends AppCompatActivity {
         dateNotification.setText(sdf.format(myCalendar.getTime()));
     }
 
-    private void actualiserAffichageListeProduits() {
+    private void actualiserAffichageAvecListeProduits() {
         listeProduits.clear();
         for(Produit produit: produitDAO.getListeProduits()){
             if(produit.getNom().toLowerCase().contains(rechercheUtilisateur.toLowerCase())){
@@ -170,4 +215,14 @@ public class VueAjouterCourse extends AppCompatActivity {
         listeviewProduits.setAdapter(listViewProduitAdaptater);
     }
 
+    private void actualiserAffichageAvecPanier(){
+        LignesCourse ligneCourses = new LignesCourse();
+        for(LigneCourse ligneCourse: courseActuelle.getMesLignesCourse()){
+            if(ligneCourse.getProduit().getNom().toLowerCase().contains(rechercheUtilisateur.toLowerCase())){
+                ligneCourses.add(ligneCourse);
+            }
+        }
+        listViewLigneCourseAdaptater.setPanier(ligneCourses);
+        listeviewProduits.setAdapter(listViewLigneCourseAdaptater);
+    }
 }
