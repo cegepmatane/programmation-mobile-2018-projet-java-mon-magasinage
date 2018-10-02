@@ -11,9 +11,11 @@ import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.CourseSQL;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
 
 public class CourseDAO implements CourseSQL{
     private MagasinDAO magasinDAO;
+    private LigneCourseDAO ligneCourseDAO;
     private static CourseDAO instance = null;
     private BaseDeDonnees accesseurBaseDeDonnees;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm");
@@ -31,6 +33,7 @@ public class CourseDAO implements CourseSQL{
         this.listeCourses = new Courses();
         this.accesseurBaseDeDonnees = BaseDeDonnees.getInstance();
         this.magasinDAO = MagasinDAO.getInstance();
+        this.ligneCourseDAO = LigneCourseDAO.getInstance();
     }
 
     public Courses listerCourses(){
@@ -78,7 +81,7 @@ public class CourseDAO implements CourseSQL{
         return this.listeCourses;
     }
 
-    public int creerCourse(String nom, String dateNotification, String dateRealisation, int idOriginal, Magasin magasin)
+    public void creerCourse(String nom, String dateNotification, String dateRealisation, int idOriginal, Magasin magasin, LignesCourse ligneCourses)
     {
 
         ContentValues values = new ContentValues();
@@ -99,15 +102,11 @@ public class CourseDAO implements CourseSQL{
 
         if (dateRealisation != null && !"".equals(dateRealisation))
             dateRealisationFormatted = LocalDateTime.parse(dateRealisation, formatter);
-
-        Course course = new Course(newId,
-                nom,
-                dateNotificationFormatted,
-                dateRealisationFormatted);
+        ligneCourseDAO.enregistrerListeLigneCoursePourUneCourse(ligneCourses);
+        Course course = new Course(newId, nom, dateNotificationFormatted, dateRealisationFormatted);
         course.setMonMagasin(magasin);
         this.listeCourses.add(course);
 
-        return 0;
     }
 
 
