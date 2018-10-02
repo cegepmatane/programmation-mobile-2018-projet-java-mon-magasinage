@@ -92,7 +92,7 @@ public class VueAjouterCourse extends AppCompatActivity {
         listeProduits = new Produits();
         courseActuelle = new Course();
         listViewProduitAdaptater = new ListViewProduitAdaptater(listeProduits, courseActuelle,this);
-        listViewLigneCourseAdaptater = new ListViewLigneCourseAdaptater(courseActuelle.getMesLignesCourse(), this);
+        listViewLigneCourseAdaptater = new ListViewLigneCourseAdaptater(courseActuelle.getMesLignesCourse(),courseActuelle, this);
         actualiserAffichageAvecListeProduits();
 
         spinnerMagasin.setAdapter(magasinDAO.getListeMagasins().recuperereListeMagasinPourSpinner(this));
