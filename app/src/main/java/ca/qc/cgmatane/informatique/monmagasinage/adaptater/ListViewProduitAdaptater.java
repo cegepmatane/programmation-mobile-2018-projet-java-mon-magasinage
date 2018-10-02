@@ -80,10 +80,10 @@ public class ListViewProduitAdaptater extends BaseAdapter {
             if (produitSelectionne != null){
                 LigneCourse ligneCourse = course.getMesLignesCourse().trouverAvecIdProduit(produitSelectionne.getId());
                 if(ligneCourse != null){
-                    //TODO gérer les unités
                     //Le produit est dans le panier
                     actionLigneProduit.setText("suprr");
                     spinnerQuantite.setSelection(ligneCourse.getQuantite()-1);
+                    spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(ligneCourse.getUnite().getId()));
                     convertView.setBackgroundColor(0xFFB4E2B1);
                     spinnerQuantite.setEnabled(false);
                     spinnerUnite.setEnabled(false);
@@ -104,6 +104,7 @@ public class ListViewProduitAdaptater extends BaseAdapter {
                         @Override
                         public void onClick(View v) {
                             LigneCourse ligneCourse = new LigneCourse(course, produitSelectionne, spinnerQuantite.getSelectedItemPosition()+1, false);
+                            ligneCourse.setUnite(listeUnites.get(spinnerUnite.getSelectedItemPosition()));
                             course.getMesLignesCourse().add(ligneCourse);
                             envoyerMessagePourActualisation("produits");
                         }

@@ -79,9 +79,8 @@ public class ListViewLigneCourseAdaptater extends BaseAdapter {
             if(ligneCourse != null && ligneCourse.getProduit() != null){
                 //TODO gérer les unité
                 textViewNomProduit.setText(ligneCourse.getProduit().getNom().toLowerCase());
-                spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(ligneCourse.getProduit().getUniteDefaut().getId()));
+                spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(ligneCourse.getUnite().getId()));
                 spinnerQuantite.setSelection(ligneCourse.getQuantite()-1);
-
                 actionLigneProduit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
