@@ -51,6 +51,9 @@
             android:name="ca.qc.cgmatane.informatique.monmagasinage.vue.CarteMagasin"
             android:label="@string/title_activity_carte_magasin" />
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        
+        <service android:name=".modele.Notification"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
 
     </application>
 

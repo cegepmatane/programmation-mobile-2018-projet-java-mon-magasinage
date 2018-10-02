@@ -2,8 +2,13 @@ package ca.qc.cgmatane.informatique.monmagasinage.vue;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,6 +28,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.MagasinDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Notification;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 
 public class VueModifierCourse extends AppCompatActivity {
@@ -78,6 +84,31 @@ public class VueModifierCourse extends AppCompatActivity {
                             null,
                             0,
                             magasinDAO.getListeMagasins().get(spinnerMagasin.getSelectedItemPosition()));
+
+                    //Notification
+                    ComponentName nomServiceNotification = new ComponentName(getApplicationContext(),
+                            Notification.class);
+
+
+
+                    PersistableBundle bundle = new PersistableBundle();
+                    bundle.putString("titre", nomCourse.getText().toString());
+                    bundle.putString("text", "va faire tes courses");
+                    bundle.putString("date", dateNotification.getText().toString());
+
+                    JobInfo.Builder jobInfo = new JobInfo.Builder(1, nomServiceNotification);
+                    jobInfo.setMinimumLatency(5000);
+                    jobInfo.setOverrideDeadline(6000);
+                    jobInfo.setExtras(bundle);
+
+                    JobScheduler mSchedular = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);
+                    mSchedular.schedule(jobInfo.build());
+
+
+
+
+                    Log.d("notif", "start notif");
+
                     finish();
                 }else {
                     Toast message = Toast.makeText(getApplicationContext(), //display toast message
