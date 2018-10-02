@@ -1,6 +1,9 @@
 package ca.qc.cgmatane.informatique.monmagasinage.adaptater;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,23 +18,27 @@ import java.util.List;
 
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.UniteDAO;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.LigneCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Produits;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Unites;
+import ca.qc.cgmatane.informatique.monmagasinage.vue.VueAjouterCourse;
 
 public class ListViewLigneCourseAdaptater extends BaseAdapter {
     private Unites listeUnites;
     private LignesCourse panier;
     private LayoutInflater layoutInflater = null;
     private Activity context;
+    private Course courseActuelle;
 
-    public ListViewLigneCourseAdaptater(LignesCourse ligneCourses, Activity context) {
+    public ListViewLigneCourseAdaptater(LignesCourse ligneCourses, Course course, Activity context) {
         this.layoutInflater = LayoutInflater.from(context);
         this.context = context;
         listeUnites = UniteDAO.getInstance().getListeUnite();
         panier = ligneCourses;
+        courseActuelle = course;
     }
 
     @Override
@@ -74,6 +81,14 @@ public class ListViewLigneCourseAdaptater extends BaseAdapter {
                 textViewNomProduit.setText(ligneCourse.getProduit().getNom().toLowerCase());
                 spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(ligneCourse.getProduit().getUniteDefaut().getId()));
                 spinnerQuantite.setSelection(ligneCourse.getQuantite()-1);
+
+                actionLigneProduit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        courseActuelle.getMesLignesCourse().remove(courseActuelle.getMesLignesCourse().trouverAvecIdProduit(ligneCourse.getProduit().getId()));
+                        envoyerMessagePourActualisation("panier");
+                    }
+                });
             }
 
 
@@ -82,7 +97,13 @@ public class ListViewLigneCourseAdaptater extends BaseAdapter {
         return convertView;
 
     }
-
+    private void envoyerMessagePourActualisation(String message) {
+        Log.d("sender", "Broadcasting message");
+        Intent intent = new Intent(VueAjouterCourse.EVENT_RECHARGER_AFFICHAGE);
+        // You can also include some extra data.
+        intent.putExtra("message", message);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
     public LignesCourse getPanier() {
         return panier;
     }
