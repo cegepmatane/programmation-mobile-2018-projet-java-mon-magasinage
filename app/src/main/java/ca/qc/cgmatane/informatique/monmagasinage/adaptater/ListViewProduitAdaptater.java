@@ -81,7 +81,7 @@ public class ListViewProduitAdaptater extends BaseAdapter {
                 LigneCourse ligneCourse = course.getMesLignesCourse().trouverAvecIdProduit(produitSelectionne.getId());
                 if(ligneCourse != null){
                     //Le produit est dans le panier
-                    actionLigneProduit.setText("suprr");
+                    actionLigneProduit.setText("-");
                     spinnerQuantite.setSelection(ligneCourse.getQuantite()-1);
                     spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(ligneCourse.getUnite().getId()));
                     convertView.setBackgroundColor(0xFFB4E2B1);
@@ -96,7 +96,7 @@ public class ListViewProduitAdaptater extends BaseAdapter {
                     });
                 }else {
                     //Le produit n'est pas dans le panier
-                    actionLigneProduit.setText("add");
+                    actionLigneProduit.setText("+");
                     spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(produitSelectionne.getUniteDefaut().getId()));
                     spinnerQuantite.setSelection(produitSelectionne.getQuantiteDefaut()-1);
 

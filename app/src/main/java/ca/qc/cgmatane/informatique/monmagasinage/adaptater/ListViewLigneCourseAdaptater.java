@@ -74,7 +74,7 @@ public class ListViewLigneCourseAdaptater extends BaseAdapter {
             //TODO à faire ailleur pour eviter de la faire à chaque ligne
             spinnerQuantite.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listPourSpinner));
 
-            actionLigneProduit.setText("Suppr");
+            actionLigneProduit.setText("-");
             final LigneCourse ligneCourse = panier.get(position);
             if(ligneCourse != null && ligneCourse.getProduit() != null){
                 //TODO gérer les unité
