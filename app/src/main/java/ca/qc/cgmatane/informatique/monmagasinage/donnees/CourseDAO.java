@@ -102,10 +102,12 @@ public class CourseDAO implements CourseSQL{
 
         if (dateRealisation != null && !"".equals(dateRealisation))
             dateRealisationFormatted = LocalDateTime.parse(dateRealisation, formatter);
-        ligneCourseDAO.enregistrerListeLigneCoursePourUneCourse(ligneCourses);
-        Course course = new Course(newId, nom, dateNotificationFormatted, dateRealisationFormatted);
-        course.setMonMagasin(magasin);
-        this.listeCourses.add(course);
+        if(ligneCourseDAO.enregistrerListeLigneCoursePourUneCourse(ligneCourses)){
+            Course course = new Course(newId, nom, dateNotificationFormatted, dateRealisationFormatted);
+            course.setMonMagasin(magasin);
+            course.setMesLignesCourse(ligneCourses);
+            this.listeCourses.add(course);
+        }
 
     }
 

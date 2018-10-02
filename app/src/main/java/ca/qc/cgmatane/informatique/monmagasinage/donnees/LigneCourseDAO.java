@@ -51,6 +51,7 @@ public class LigneCourseDAO {
         } catch (Exception e) {
             db.endTransaction();
             e.printStackTrace();
+            return false;
         }
         return true;
     }
