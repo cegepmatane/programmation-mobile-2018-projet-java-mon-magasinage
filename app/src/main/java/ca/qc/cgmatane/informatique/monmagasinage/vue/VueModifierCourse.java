@@ -90,7 +90,7 @@ public class VueModifierCourse extends AppCompatActivity {
                             Notification.class);
 
                     long offset = dateNotificationCalendar.getTimeInMillis()-currentTimeCalendar.getTimeInMillis();
-                    offset /= 60;
+                    //offset /= 6 ;
                     Log.d("timee date nottification", String.valueOf(dateNotificationCalendar.getTimeInMillis()));
                     Log.d("timee current", String.valueOf(currentTimeCalendar.getTimeInMillis()));
                     Log.d("offsetNotificationTime", String.valueOf(offset));
