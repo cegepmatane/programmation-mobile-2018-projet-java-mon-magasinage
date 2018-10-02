@@ -121,7 +121,7 @@ public class VueAjouterCourse extends AppCompatActivity {
                 if (!"".equals(nomCourse.getText().toString())){
                     courseDAO.creerCourse(nomCourse.getText().toString(),
                             dateNotification.getText().toString(),
-                            null,
+                            "",
                             0,
                             magasinDAO.getListeMagasins().get(spinnerMagasin.getSelectedItemPosition()));
                     finish();
