@@ -21,6 +21,8 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.util.HashMap;
 
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
@@ -51,7 +53,10 @@ public class ListeCourse extends AppCompatActivity {
     protected Courses listeCourseAffichage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        EnumerationTheme.recupererThemeSelectionnee(getApplicationContext());
         this.setTheme(EnumerationTheme.getThemeSelectionne().getIdLienSansActionBar());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_liste_course);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
