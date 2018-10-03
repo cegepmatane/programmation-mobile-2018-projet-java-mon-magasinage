@@ -1,12 +1,16 @@
 package ca.qc.cgmatane.informatique.monmagasinage.donnees;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteTransactionListener;
 
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.LigneCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Produits;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Unites;
 
 public class LigneCourseDAO {
 
@@ -33,7 +37,6 @@ public class LigneCourseDAO {
 
         SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
         db.beginTransaction();
-        //TODO faire une transaction pour eviter les erreurs
         //On considere que toutes les lignes course on la meme course
         try {
             db.delete(LigneCourse.NOM_TABLE, LigneCourse.CHAMP_ID_COURSE +"="+lignesCourses.get(0).getCourse().getId() , null);
@@ -54,5 +57,33 @@ public class LigneCourseDAO {
             return false;
         }
         return true;
+    }
+
+    /***
+     * Rempli la liste LigneCourse de la course
+     * @param course
+     */
+    public void chargerListeLigneCoursePourUneCourse(Course course){
+        Produits listeProduits = produitDAO.getListeProduits();
+        Unites listeUnites = uniteDAO.getListeUnite();
+
+        Cursor curseurLignesCourse = accesseurBaseDeDonnees.getReadableDatabase().
+                rawQuery(String.format("select * from %s WHERE %s=%s",LigneCourse.NOM_TABLE, LigneCourse.CHAMP_ID_COURSE, course.getId()), null);
+
+        int indexIdProduit = curseurLignesCourse.getColumnIndex(LigneCourse.CHAMP_ID_PRODUIT);
+        int indexCoche = curseurLignesCourse.getColumnIndex(LigneCourse.CHAMP_COCHE);
+        int indexIdUnite = curseurLignesCourse.getColumnIndex(LigneCourse.CHAMP_ID_UNITE);
+        int indexQuantite = curseurLignesCourse.getColumnIndex(LigneCourse.CHAMP_QUANTITE);
+
+        for(curseurLignesCourse.moveToFirst();!curseurLignesCourse.isAfterLast();curseurLignesCourse.moveToNext()){
+            LigneCourse ligneCourse= new LigneCourse();
+            ligneCourse.setCourse(course);
+            ligneCourse.setProduit(listeProduits.trouverAvecId(curseurLignesCourse.getInt(indexIdProduit)));
+            ligneCourse.setQuantite(curseurLignesCourse.getInt(indexQuantite));
+            ligneCourse.setUnite(listeUnites.trouverAvecId(curseurLignesCourse.getInt(indexIdUnite)));
+            ligneCourse.setCoche(curseurLignesCourse.getInt(indexCoche)>0);
+            course.getMesLignesCourse().add(ligneCourse);
+        }
+        curseurLignesCourse.close();
     }
 }
