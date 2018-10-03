@@ -122,7 +122,7 @@ public class ListViewProduitAdaptater extends BaseAdapter {
 
     private void envoyerMessagePourActualisation(String message) {
         Log.d("sender", "Broadcasting message");
-        Intent intent = new Intent(VueAjouterCourse.EVENT_RECHARGER_AFFICHAGE);
+        Intent intent = new Intent("event_recharger_affichage");
         // You can also include some extra data.
         intent.putExtra("message", message);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
