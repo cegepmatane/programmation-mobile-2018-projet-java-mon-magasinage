@@ -74,21 +74,9 @@ public class VueAjouterCourse extends AppCompatActivity {
         SearchView barreDeRecherche = findViewById(R.id.vue_ajouter_course_barre_recherche);
         Button actionNaviguerEnregistrerCourse = (Button) findViewById(R.id.vue_ajouter_course_action_enregistrer);
         recapitualtifPanier = findViewById(R.id.vue_ajouter_course_recapitulatif_panier);
-
         actionTogglePanier = findViewById(R.id.vue_ajouter_course_toggle_panier);
-        actionTogglePanier.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
 
-                    actualiserAffichageAvecPanier();
-
-                }else {
-                    actualiserAffichageAvecListeProduits();
-                }
-            }
-        });
-
+        /** Affichage de base*/
         listeProduits = new Produits();
         courseActuelle = new Course();
         listViewProduitAdaptater = new ListViewProduitAdaptater(listeProduits, courseActuelle,this);
@@ -96,25 +84,7 @@ public class VueAjouterCourse extends AppCompatActivity {
         actualiserAffichageAvecListeProduits();
 
         spinnerMagasin.setAdapter(magasinDAO.getListeMagasins().recuperereListeMagasinPourSpinner(this));
-
-        barreDeRecherche.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                rechercheUtilisateur = newText;
-                if(actionTogglePanier.isChecked()){
-                    actualiserAffichageAvecPanier();
-                }else {
-                    actualiserAffichageAvecListeProduits();
-                }
-                return true;
-            }
-        });
-
+        /** Validation*/
         actionNaviguerEnregistrerCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,6 +102,40 @@ public class VueAjouterCourse extends AppCompatActivity {
                     message.show();
                 }
 
+            }
+        });
+
+        /** Affichage dynamique*/
+        actionTogglePanier.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+
+                    actualiserAffichageAvecPanier();
+
+                }else {
+                    actualiserAffichageAvecListeProduits();
+                }
+            }
+        });
+
+
+
+        barreDeRecherche.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                rechercheUtilisateur = newText;
+                if(actionTogglePanier.isChecked()){
+                    actualiserAffichageAvecPanier();
+                }else {
+                    actualiserAffichageAvecListeProduits();
+                }
+                return true;
             }
         });
 
