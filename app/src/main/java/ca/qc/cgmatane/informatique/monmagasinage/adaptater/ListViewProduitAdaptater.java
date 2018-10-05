@@ -26,7 +26,7 @@ public class ListViewProduitAdaptater extends BaseAdapter {
     private Activity context;
 
     private Course course;
-
+    private ArrayAdapter<String> adaptaterQuantite;
     public ListViewProduitAdaptater(Produits listeProduits, Course pcourse, Activity context) {
         this.listeProduits = listeProduits;
         this.layoutInflater = LayoutInflater.from(context);
@@ -34,7 +34,14 @@ public class ListViewProduitAdaptater extends BaseAdapter {
 
         listeUnites = UniteDAO.getInstance().getListeUnite();
         course = pcourse;
+
+        List<String> listPourSpinner = new ArrayList<String>();
+        for (int i = 1;i<10;i++){
+            listPourSpinner.add(i + "");
+        }
+        adaptaterQuantite= new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listPourSpinner);
     }
+
 
     @Override
     public int getCount() {
@@ -62,12 +69,7 @@ public class ListViewProduitAdaptater extends BaseAdapter {
             Button actionLigneProduit = (Button) convertView.findViewById(R.id.ligne_listview_produit_button_action);
 
             spinnerUnite.setAdapter(listeUnites.recuperAdapterPourSpinner(context));
-            List<String> listPourSpinner = new ArrayList<String>();
-            for (int i = 1;i<10;i++){
-                listPourSpinner.add(i + "");
-            }
-            //TODO à faire ailleur pour eviter de la faire à chaque ligne
-            spinnerQuantite.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listPourSpinner));
+            spinnerQuantite.setAdapter(adaptaterQuantite);
 
             final Produit produitSelectionne = listeProduits.get(position);
             if (produitSelectionne != null){

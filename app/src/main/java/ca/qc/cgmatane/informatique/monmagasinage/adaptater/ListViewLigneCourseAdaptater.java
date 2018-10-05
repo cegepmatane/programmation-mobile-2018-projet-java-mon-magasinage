@@ -24,6 +24,7 @@ public class ListViewLigneCourseAdaptater extends BaseAdapter {
     private LayoutInflater layoutInflater = null;
     private Activity context;
     private Course courseActuelle;
+    private ArrayAdapter<String> adaptaterQuantite;
 
     public ListViewLigneCourseAdaptater(LignesCourse ligneCourses, Course course, Activity context) {
         this.layoutInflater = LayoutInflater.from(context);
@@ -31,6 +32,12 @@ public class ListViewLigneCourseAdaptater extends BaseAdapter {
         listeUnites = UniteDAO.getInstance().getListeUnite();
         panier = ligneCourses;
         courseActuelle = course;
+
+        List<String> listPourSpinner = new ArrayList<String>();
+        for (int i = 1;i<10;i++){
+            listPourSpinner.add(i + "");
+        }
+        adaptaterQuantite= new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listPourSpinner);
     }
 
     @Override
@@ -59,12 +66,7 @@ public class ListViewLigneCourseAdaptater extends BaseAdapter {
             Button actionLigneProduit = (Button) convertView.findViewById(R.id.ligne_listview_produit_button_action);
 
             spinnerUnite.setAdapter(listeUnites.recuperAdapterPourSpinner(context));
-            List<String> listPourSpinner = new ArrayList<String>();
-            for (int i = 1;i<10;i++){
-                listPourSpinner.add(i + "");
-            }
-            //TODO à faire ailleur pour eviter de la faire à chaque ligne
-            spinnerQuantite.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listPourSpinner));
+            spinnerQuantite.setAdapter(adaptaterQuantite);
 
             actionLigneProduit.setText("-");
             final LigneCourse ligneCourse = panier.get(position);
