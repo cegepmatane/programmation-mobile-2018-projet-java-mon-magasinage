@@ -72,6 +72,7 @@ public class VueModifierCourse extends AppCompatActivity {
     protected ListViewProduitAdaptater listViewProduitAdaptater;
     protected ListViewLigneCourseAdaptater listViewLigneCourseAdaptater;
     protected TextView recapitualtifPanier;
+    private LignesCourse ligneCourseDeSauvegarde;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +112,8 @@ public class VueModifierCourse extends AppCompatActivity {
         spinnerMagasin.setSelection(magasinDAO.getListeMagasins().retournerPositionMagasinDansListe(courseAModifier.getMonMagasin().getId()));
 
         recapitualtifPanier.setText("Produits : "+courseAModifier.getMesLignesCourse().recupererQuantiteTotal());
+        ligneCourseDeSauvegarde= courseAModifier.getMesLignesCourse().creerListeParValeur();
+
         listeProduits = new Produits();
         listViewProduitAdaptater = new ListViewProduitAdaptater(listeProduits, courseAModifier, VueModifierCourse.this);
         listViewLigneCourseAdaptater = new ListViewLigneCourseAdaptater(courseAModifier.getMesLignesCourse(),courseAModifier, VueModifierCourse.this);
@@ -151,6 +154,7 @@ public class VueModifierCourse extends AppCompatActivity {
                     JobScheduler mSchedular = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);
                     mSchedular.schedule(jobInfo.build());
                     Log.d("notif", "start notif");
+                    ligneCourseDeSauvegarde = courseAModifier.getMesLignesCourse();
                     finish();
                 }else {
                     Toast message = Toast.makeText(getApplicationContext(), //display toast message
@@ -287,4 +291,8 @@ public class VueModifierCourse extends AppCompatActivity {
         dateNotification.setText(sdf.format(dateNotificationCalendar.getTime()));
     }
 
+    public void onStop(){
+        courseAModifier.setMesLignesCourse(ligneCourseDeSauvegarde);
+        super.onStop();
+    }
 }

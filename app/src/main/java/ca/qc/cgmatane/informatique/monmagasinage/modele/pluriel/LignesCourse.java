@@ -45,4 +45,10 @@ public class LignesCourse extends ArrayList<LigneCourse>{
         }
         return  quantite;
     }
+
+    public LignesCourse creerListeParValeur(){
+        LignesCourse result= new LignesCourse();
+        result.addAll(this);
+        return  result;
+    }
 }
