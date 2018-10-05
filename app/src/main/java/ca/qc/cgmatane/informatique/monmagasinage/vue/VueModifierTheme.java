@@ -54,7 +54,7 @@ public class VueModifierTheme extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 EnumerationTheme enumerationTheme = EnumerationTheme.getMesThemes().get(position);
                 if(enumerationTheme != null){
-                    EnumerationTheme.setThemeSelectionne(enumerationTheme);
+                    EnumerationTheme.setThemeSelectionne(enumerationTheme, getApplicationContext());
                 }
             }
 

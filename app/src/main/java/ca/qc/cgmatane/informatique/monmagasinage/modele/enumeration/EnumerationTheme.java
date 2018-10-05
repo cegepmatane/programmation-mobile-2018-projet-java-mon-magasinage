@@ -8,23 +8,33 @@ import android.util.Xml;
 import android.widget.ArrayAdapter;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 
@@ -87,8 +97,42 @@ public enum EnumerationTheme {
     }
 
 
-    public static void setThemeSelectionne(EnumerationTheme themeSelectionne) {
+    public static void setThemeSelectionne(EnumerationTheme themeSelectionne, Context context) {
         EnumerationTheme.themeSelectionne = themeSelectionne;
+
+        try {
+            InputStream in = context.getAssets().open("enregistrementStyle.xml");
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document doc = documentBuilder.parse(in);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+
+            DOMSource source = new DOMSource(doc);
+            Node noeux = source.getNode();
+            //if (noeux.getNodeName())
+            //System.out.println(noeux.getNodeName());
+            noeux.setTextContent(themeSelectionne.getIdNomTheme());
+            source.setNode(noeux);
+            //StreamResult streamResult = new StreamResult(System.out);
+            FileOutputStream ouputFile = new FileOutputStream("/sdcard/Android/data/ca.qc.cgmatane.informatique.monmagasinage/enregistrementStyle.xml");
+            StreamResult streamResult = new StreamResult(ouputFile);
+            transformer.transform(source, streamResult);
+
+            ouputFile.close();
+
+            System.out.println("nouvelle valeur :");
+            //recupererThemeSelectionnee(context);
+
+        } catch (IOException | ParserConfigurationException | SAXException e) {
+            e.printStackTrace();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /***
@@ -160,7 +204,7 @@ public enum EnumerationTheme {
         getMesThemes();
 
         try {
-            InputStream in = context.getAssets().open("enregistrementStyle.xml");
+            InputStream in = context.getAssets().open("/sdcard/Android/data/ca.qc.cgmatane.informatique.monmagasinage/enregistrementStyle.xml");
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document doc = documentBuilder.parse(in);
@@ -171,9 +215,17 @@ public enum EnumerationTheme {
                 System.out.println("noeux valeur : "+nodeList.item(i).getTextContent());
                 appliquerStyle(nodeList.item(i).getTextContent().replace("\"", "").replace("\n", "").replace(" ", ""));
             }
-            System.out.println("fin noeux");
 
         } catch (IOException e) {
+            try {
+                System.out.println("create file");
+                FileOutputStream ouputFile = new FileOutputStream("/sdcard/Android/data/ca.qc.cgmatane.informatique.monmagasinage/enregistrementStyle.xml");
+                ouputFile.write(new StringBuilder().append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n").append("<themeSelectionne>\n").append("    <string name=\"themeSelectionne\" id=\"1\">\"AppTheme\"</string>\n").append("</themeSelectionne>").toString().getBytes());
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
