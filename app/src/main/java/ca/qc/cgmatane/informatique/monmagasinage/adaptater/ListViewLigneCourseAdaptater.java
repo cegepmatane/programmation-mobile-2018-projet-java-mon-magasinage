@@ -67,11 +67,10 @@ public class ListViewLigneCourseAdaptater extends BaseAdapter {
 
             spinnerUnite.setAdapter(listeUnites.recuperAdapterPourSpinner(context));
             spinnerQuantite.setAdapter(adaptaterQuantite);
-
             actionLigneProduit.setText("-");
+
             final LigneCourse ligneCourse = panier.get(position);
             if(ligneCourse != null && ligneCourse.getProduit() != null){
-                //TODO gérer les unité
                 textViewNomProduit.setText(ligneCourse.getProduit().getNom().toLowerCase());
                 spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(ligneCourse.getUnite().getId()));
                 spinnerQuantite.setSelection(ligneCourse.getQuantite()-1);
@@ -82,14 +81,43 @@ public class ListViewLigneCourseAdaptater extends BaseAdapter {
                         envoyerMessagePourActualisation("panier");
                     }
                 });
-            }
 
+                spinnerQuantite.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if(position+1 != ligneCourse.getQuantite()){
+                            ligneCourse.setQuantite(position+1);
+                            envoyerMessagePourActualisation("panier");
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                spinnerUnite.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if(listeUnites.get(position) != ligneCourse.getUnite()){
+                            ligneCourse.setUnite(listeUnites.get(position));
+                            envoyerMessagePourActualisation("panier");
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+            }
 
             return convertView;
         }
         return convertView;
-
     }
+
     private void envoyerMessagePourActualisation(String message) {
         Log.d("sender", "Broadcasting message");
         Intent intent = new Intent("event_recharger_affichage");
