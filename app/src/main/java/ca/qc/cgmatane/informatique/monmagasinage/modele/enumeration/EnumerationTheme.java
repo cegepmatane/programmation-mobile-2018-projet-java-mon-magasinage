@@ -1,32 +1,22 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Xml;
 import android.widget.ArrayAdapter;
-
+import ca.qc.cgmatane.informatique.monmagasinage.R;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
-import ca.qc.cgmatane.informatique.monmagasinage.R;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public enum EnumerationTheme {
     DEFAULT("Thème par defaut", R.style.AppTheme, R.style.AppTheme_NoActionBar,"AppTheme"),

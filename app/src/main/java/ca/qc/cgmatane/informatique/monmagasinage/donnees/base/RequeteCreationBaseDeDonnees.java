@@ -1,10 +1,6 @@
 package ca.qc.cgmatane.informatique.monmagasinage.donnees.base;
 
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.LigneCourse;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Unite;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.*;
 
 public interface RequeteCreationBaseDeDonnees {
     /** Course */

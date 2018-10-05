@@ -2,16 +2,15 @@ package ca.qc.cgmatane.informatique.monmagasinage.donnees;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.CourseSQL;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CourseDAO implements CourseSQL{
     private MagasinDAO magasinDAO;

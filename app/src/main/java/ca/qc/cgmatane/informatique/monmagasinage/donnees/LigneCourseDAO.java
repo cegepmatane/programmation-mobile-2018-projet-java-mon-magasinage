@@ -3,8 +3,6 @@ package ca.qc.cgmatane.informatique.monmagasinage.donnees;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteTransactionListener;
-
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.LigneCourse;

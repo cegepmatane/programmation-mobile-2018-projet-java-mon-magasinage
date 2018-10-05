@@ -7,34 +7,23 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
-
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.util.HashMap;
-
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
-import ca.qc.cgmatane.informatique.monmagasinage.vue.CarteMagasin;
-import ca.qc.cgmatane.informatique.monmagasinage.vue.VueAjouterCourse;
-import ca.qc.cgmatane.informatique.monmagasinage.vue.VueListeMagasin;
-import ca.qc.cgmatane.informatique.monmagasinage.vue.VueModifierCourse;
-import ca.qc.cgmatane.informatique.monmagasinage.vue.VueModifierTheme;
+import ca.qc.cgmatane.informatique.monmagasinage.vue.*;
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 
 public class ListeCourse extends AppCompatActivity {
 

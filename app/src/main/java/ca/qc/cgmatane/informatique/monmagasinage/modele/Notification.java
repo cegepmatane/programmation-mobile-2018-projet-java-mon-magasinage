@@ -6,17 +6,11 @@ import android.app.PendingIntent;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.content.Intent;
-import android.os.PersistableBundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.ListView;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import ca.qc.cgmatane.informatique.monmagasinage.ListeCourse;
 
-import static java.nio.file.Paths.get;
+import java.time.format.DateTimeFormatter;
 
 public class Notification extends JobService {
 

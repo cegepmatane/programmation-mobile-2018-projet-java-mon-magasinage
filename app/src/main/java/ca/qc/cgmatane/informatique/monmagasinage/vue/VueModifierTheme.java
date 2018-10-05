@@ -1,12 +1,11 @@
 package ca.qc.cgmatane.informatique.monmagasinage.vue;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
-
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 

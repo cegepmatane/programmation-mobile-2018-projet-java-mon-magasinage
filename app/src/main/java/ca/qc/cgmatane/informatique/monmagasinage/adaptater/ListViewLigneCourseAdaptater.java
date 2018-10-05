@@ -7,24 +7,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import android.widget.*;
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.UniteDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.LigneCourse;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Produits;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Unites;
-import ca.qc.cgmatane.informatique.monmagasinage.vue.VueAjouterCourse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListViewLigneCourseAdaptater extends BaseAdapter {
     private Unites listeUnites;
