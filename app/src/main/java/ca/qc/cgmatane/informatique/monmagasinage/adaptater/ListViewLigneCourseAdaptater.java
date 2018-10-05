@@ -84,7 +84,7 @@ public class ListViewLigneCourseAdaptater extends BaseAdapter {
                 actionLigneProduit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        courseActuelle.getMesLignesCourse().remove(courseActuelle.getMesLignesCourse().trouverAvecIdProduit(ligneCourse.getProduit().getId()));
+                        courseActuelle.getMesLignesCourse().remove(ligneCourse);
                         envoyerMessagePourActualisation("panier");
                     }
                 });
