@@ -32,7 +32,7 @@ public class LigneCourseDAO {
         return instance;
     }
 
-    public boolean enregistrerListeLigneCoursePourUneCourse(LignesCourse lignesCourses){
+    public boolean enregistrerListeLigneCoursePourUneCourse(int idCourse, LignesCourse lignesCourses){
         if(lignesCourses.size() <1) return true;
 
         SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
@@ -42,7 +42,7 @@ public class LigneCourseDAO {
             db.delete(LigneCourse.NOM_TABLE, LigneCourse.CHAMP_ID_COURSE +"="+lignesCourses.get(0).getCourse().getId() , null);
             for (LigneCourse ligneCourse: lignesCourses){
                 ContentValues values = new ContentValues();
-                values.put(LigneCourse.CHAMP_ID_COURSE, ligneCourse.getCourse().getId());
+                values.put(LigneCourse.CHAMP_ID_COURSE, idCourse);
                 values.put(LigneCourse.CHAMP_ID_PRODUIT, ligneCourse.getProduit().getId());
                 values.put(LigneCourse.CHAMP_COCHE, ligneCourse.isCoche());
                 values.put(LigneCourse.CHAMP_ID_UNITE, ligneCourse.getUnite().getId());
@@ -69,13 +69,14 @@ public class LigneCourseDAO {
 
         Cursor curseurLignesCourse = accesseurBaseDeDonnees.getReadableDatabase().
                 rawQuery(String.format("select * from %s WHERE %s=%s",LigneCourse.NOM_TABLE, LigneCourse.CHAMP_ID_COURSE, course.getId()), null);
-
+        System.out.println(" QUANTITE PANIER : "+ curseurLignesCourse.getCount());
         int indexIdProduit = curseurLignesCourse.getColumnIndex(LigneCourse.CHAMP_ID_PRODUIT);
         int indexCoche = curseurLignesCourse.getColumnIndex(LigneCourse.CHAMP_COCHE);
         int indexIdUnite = curseurLignesCourse.getColumnIndex(LigneCourse.CHAMP_ID_UNITE);
         int indexQuantite = curseurLignesCourse.getColumnIndex(LigneCourse.CHAMP_QUANTITE);
 
         for(curseurLignesCourse.moveToFirst();!curseurLignesCourse.isAfterLast();curseurLignesCourse.moveToNext()){
+            System.out.println(" QUANTITE PANIER : je passe dans le for");
             LigneCourse ligneCourse= new LigneCourse();
             ligneCourse.setCourse(course);
             ligneCourse.setProduit(listeProduits.trouverAvecId(curseurLignesCourse.getInt(indexIdProduit)));
@@ -84,6 +85,7 @@ public class LigneCourseDAO {
             ligneCourse.setCoche(curseurLignesCourse.getInt(indexCoche)>0);
             course.getMesLignesCourse().add(ligneCourse);
         }
+        System.out.println(" QUANTITE PANIER : "+ course.getMesLignesCourse().recupererQuantiteTotal());
         curseurLignesCourse.close();
     }
 }

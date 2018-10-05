@@ -88,6 +88,7 @@ public class VueModifierCourse extends AppCompatActivity {
         int idCourse = Integer.parseInt(parametreIdCourse);
 
         courseAModifier = courseDAO.getListeCourses().trouverAvecId(idCourse);
+        if(courseAModifier.getMesLignesCourse().size()<1)
         ligneCourseDAO.chargerListeLigneCoursePourUneCourse(courseAModifier);
 
         nomCourse = findViewById(R.id.vue_modifier_course_nom_course);

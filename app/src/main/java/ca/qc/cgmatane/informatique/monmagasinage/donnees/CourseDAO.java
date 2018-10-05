@@ -102,7 +102,7 @@ public class CourseDAO implements CourseSQL{
 
         if (dateRealisation != null && !"".equals(dateRealisation))
             dateRealisationFormatted = LocalDateTime.parse(dateRealisation, formatter);
-        if(ligneCourseDAO.enregistrerListeLigneCoursePourUneCourse(ligneCourses)){
+        if(ligneCourseDAO.enregistrerListeLigneCoursePourUneCourse(newId, ligneCourses)){
             Course course = new Course(newId, nom, dateNotificationFormatted, dateRealisationFormatted);
             course.setMonMagasin(magasin);
             course.setMesLignesCourse(ligneCourses);
@@ -136,18 +136,15 @@ public class CourseDAO implements CourseSQL{
         if (dateRealisation != null && !"".equals(dateRealisation))
             dateRealisationFormatted = LocalDateTime.parse(dateRealisation, formatter);
 
-        Course course = new Course(id,
-                nom,
-                dateNotificationFormatted,
-                dateRealisationFormatted);
-        course.setMonMagasin(magasin);
-
         Course courseAmodifier = this.getListeCourses().trouverAvecId(id);
-        courseAmodifier.setNom(nom);
-        courseAmodifier.setDateNotification(dateNotificationFormatted);
-        courseAmodifier.setDateRealisation(dateRealisationFormatted);
-        courseAmodifier.setCourseOriginal(null);
-        courseAmodifier.setMonMagasin(magasin);
+        if(ligneCourseDAO.enregistrerListeLigneCoursePourUneCourse(courseAmodifier.getId(), courseAmodifier.getMesLignesCourse())){
+            courseAmodifier.setNom(nom);
+            courseAmodifier.setDateNotification(dateNotificationFormatted);
+            courseAmodifier.setDateRealisation(dateRealisationFormatted);
+            courseAmodifier.setCourseOriginal(null);
+            courseAmodifier.setMonMagasin(magasin);
+        }
+
     }
 
     public Courses getListeCourses() {

@@ -84,6 +84,7 @@ public class VueAjouterCourse extends AppCompatActivity {
         actualiserAffichageAvecListeProduits();
 
         spinnerMagasin.setAdapter(magasinDAO.getListeMagasins().recuperereListeMagasinPourSpinner(this));
+
         /** Validation*/
         actionNaviguerEnregistrerCourse.setOnClickListener(new View.OnClickListener() {
             @Override
