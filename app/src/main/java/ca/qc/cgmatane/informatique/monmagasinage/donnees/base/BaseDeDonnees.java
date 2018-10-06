@@ -4,8 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBaseDeDonnees, RequeteInsertionEchafautBaseDeDonnees {
-    private static final int VERSION_BDD = 5;
+public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBaseDeDonnees, RequeteInsertionEchafautBaseDeDonnees, RequeteInsertionProduit {
+    private static final int VERSION_BDD = 9;
     private static BaseDeDonnees instance = null;
 
     public static BaseDeDonnees getInstance(Context contexte)
@@ -81,7 +81,27 @@ public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBa
         db.execSQL(INSERT_COURSE_2);
         db.execSQL(INSERT_COURSE_3);
 
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_1);
-        db.execSQL(INSERT_LIGNE_COURSE_1);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_2);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_3);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_4);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_5);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_6);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_7);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_8);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_9);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_10);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_12);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_13);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_14);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_15);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_16);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_21);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_22);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_23);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_24);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_25);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_26);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_27);
+        db.execSQL(INSERT_FRUIT_ET_LEGUMES_28);
     }
 }
