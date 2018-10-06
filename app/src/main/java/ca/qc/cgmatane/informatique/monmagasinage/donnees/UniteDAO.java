@@ -1,7 +1,6 @@
 package ca.qc.cgmatane.informatique.monmagasinage.donnees;
 
 import android.database.Cursor;
-
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Unite;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Unites;

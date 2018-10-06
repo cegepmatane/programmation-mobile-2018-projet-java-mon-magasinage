@@ -1,9 +1,8 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel;
 
-import java.util.ArrayList;
-
 import ca.qc.cgmatane.informatique.monmagasinage.modele.LigneCourse;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
+
+import java.util.ArrayList;
 
 public class LignesCourse extends ArrayList<LigneCourse>{
 
@@ -44,5 +43,11 @@ public class LignesCourse extends ArrayList<LigneCourse>{
             quantite += ligneCourse.getQuantite();
         }
         return  quantite;
+    }
+
+    public LignesCourse creerListeParValeur(){
+        LignesCourse result= new LignesCourse();
+        result.addAll(this);
+        return  result;
     }
 }

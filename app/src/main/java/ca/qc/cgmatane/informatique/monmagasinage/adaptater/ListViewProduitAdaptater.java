@@ -7,24 +7,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import android.widget.*;
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.UniteDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.LigneCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Produits;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Unites;
-import ca.qc.cgmatane.informatique.monmagasinage.vue.VueAjouterCourse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListViewProduitAdaptater extends BaseAdapter {
     private Unites listeUnites;
@@ -33,7 +26,7 @@ public class ListViewProduitAdaptater extends BaseAdapter {
     private Activity context;
 
     private Course course;
-
+    private ArrayAdapter<String> adaptaterQuantite;
     public ListViewProduitAdaptater(Produits listeProduits, Course pcourse, Activity context) {
         this.listeProduits = listeProduits;
         this.layoutInflater = LayoutInflater.from(context);
@@ -41,7 +34,14 @@ public class ListViewProduitAdaptater extends BaseAdapter {
 
         listeUnites = UniteDAO.getInstance().getListeUnite();
         course = pcourse;
+
+        List<String> listPourSpinner = new ArrayList<String>();
+        for (int i = 1;i<10;i++){
+            listPourSpinner.add(i + "");
+        }
+        adaptaterQuantite= new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listPourSpinner);
     }
+
 
     @Override
     public int getCount() {
@@ -69,12 +69,7 @@ public class ListViewProduitAdaptater extends BaseAdapter {
             Button actionLigneProduit = (Button) convertView.findViewById(R.id.ligne_listview_produit_button_action);
 
             spinnerUnite.setAdapter(listeUnites.recuperAdapterPourSpinner(context));
-            List<String> listPourSpinner = new ArrayList<String>();
-            for (int i = 1;i<10;i++){
-                listPourSpinner.add(i + "");
-            }
-            //TODO à faire ailleur pour eviter de la faire à chaque ligne
-            spinnerQuantite.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listPourSpinner));
+            spinnerQuantite.setAdapter(adaptaterQuantite);
 
             final Produit produitSelectionne = listeProduits.get(position);
             if (produitSelectionne != null){
@@ -122,7 +117,7 @@ public class ListViewProduitAdaptater extends BaseAdapter {
 
     private void envoyerMessagePourActualisation(String message) {
         Log.d("sender", "Broadcasting message");
-        Intent intent = new Intent(VueAjouterCourse.EVENT_RECHARGER_AFFICHAGE);
+        Intent intent = new Intent("event_recharger_affichage");
         // You can also include some extra data.
         intent.putExtra("message", message);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);

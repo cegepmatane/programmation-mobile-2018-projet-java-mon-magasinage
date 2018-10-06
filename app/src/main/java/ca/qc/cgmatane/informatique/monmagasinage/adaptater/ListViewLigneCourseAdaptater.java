@@ -7,24 +7,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import android.widget.*;
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.UniteDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.LigneCourse;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Produits;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Unites;
-import ca.qc.cgmatane.informatique.monmagasinage.vue.VueAjouterCourse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListViewLigneCourseAdaptater extends BaseAdapter {
     private Unites listeUnites;
@@ -32,6 +24,7 @@ public class ListViewLigneCourseAdaptater extends BaseAdapter {
     private LayoutInflater layoutInflater = null;
     private Activity context;
     private Course courseActuelle;
+    private ArrayAdapter<String> adaptaterQuantite;
 
     public ListViewLigneCourseAdaptater(LignesCourse ligneCourses, Course course, Activity context) {
         this.layoutInflater = LayoutInflater.from(context);
@@ -39,6 +32,12 @@ public class ListViewLigneCourseAdaptater extends BaseAdapter {
         listeUnites = UniteDAO.getInstance().getListeUnite();
         panier = ligneCourses;
         courseActuelle = course;
+
+        List<String> listPourSpinner = new ArrayList<String>();
+        for (int i = 1;i<10;i++){
+            listPourSpinner.add(i + "");
+        }
+        adaptaterQuantite= new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listPourSpinner);
     }
 
     @Override
@@ -67,38 +66,61 @@ public class ListViewLigneCourseAdaptater extends BaseAdapter {
             Button actionLigneProduit = (Button) convertView.findViewById(R.id.ligne_listview_produit_button_action);
 
             spinnerUnite.setAdapter(listeUnites.recuperAdapterPourSpinner(context));
-            List<String> listPourSpinner = new ArrayList<String>();
-            for (int i = 1;i<10;i++){
-                listPourSpinner.add(i + "");
-            }
-            //TODO à faire ailleur pour eviter de la faire à chaque ligne
-            spinnerQuantite.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listPourSpinner));
-
+            spinnerQuantite.setAdapter(adaptaterQuantite);
             actionLigneProduit.setText("-");
+
             final LigneCourse ligneCourse = panier.get(position);
             if(ligneCourse != null && ligneCourse.getProduit() != null){
-                //TODO gérer les unité
                 textViewNomProduit.setText(ligneCourse.getProduit().getNom().toLowerCase());
                 spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(ligneCourse.getUnite().getId()));
                 spinnerQuantite.setSelection(ligneCourse.getQuantite()-1);
                 actionLigneProduit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        courseActuelle.getMesLignesCourse().remove(courseActuelle.getMesLignesCourse().trouverAvecIdProduit(ligneCourse.getProduit().getId()));
+                        courseActuelle.getMesLignesCourse().remove(ligneCourse);
                         envoyerMessagePourActualisation("panier");
+                    }
+                });
+
+                spinnerQuantite.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if(position+1 != ligneCourse.getQuantite()){
+                            ligneCourse.setQuantite(position+1);
+                            envoyerMessagePourActualisation("panier");
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                spinnerUnite.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if(listeUnites.get(position) != ligneCourse.getUnite()){
+                            ligneCourse.setUnite(listeUnites.get(position));
+                            envoyerMessagePourActualisation("panier");
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
                     }
                 });
             }
 
-
             return convertView;
         }
         return convertView;
-
     }
+
     private void envoyerMessagePourActualisation(String message) {
         Log.d("sender", "Broadcasting message");
-        Intent intent = new Intent(VueAjouterCourse.EVENT_RECHARGER_AFFICHAGE);
+        Intent intent = new Intent("event_recharger_affichage");
         // You can also include some extra data.
         intent.putExtra("message", message);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);

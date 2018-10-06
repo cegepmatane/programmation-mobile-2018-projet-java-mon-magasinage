@@ -1,10 +1,10 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele;
 
+import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-
-import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
 
 public class Course {
     public static final String NOM_TABLE = "course";

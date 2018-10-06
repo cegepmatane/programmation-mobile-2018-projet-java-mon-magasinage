@@ -1,28 +1,20 @@
 package ca.qc.cgmatane.informatique.monmagasinage.vue;
 
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
-
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.MagasinDAO;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Magasins;
+
+import java.util.HashMap;
 
 
 public class VueListeMagasin extends AppCompatActivity {

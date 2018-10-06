@@ -2,16 +2,15 @@ package ca.qc.cgmatane.informatique.monmagasinage.donnees;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.CourseSQL;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CourseDAO implements CourseSQL{
     private MagasinDAO magasinDAO;
@@ -102,7 +101,7 @@ public class CourseDAO implements CourseSQL{
 
         if (dateRealisation != null && !"".equals(dateRealisation))
             dateRealisationFormatted = LocalDateTime.parse(dateRealisation, formatter);
-        if(ligneCourseDAO.enregistrerListeLigneCoursePourUneCourse(ligneCourses)){
+        if(ligneCourseDAO.enregistrerListeLigneCoursePourUneCourse(newId, ligneCourses)){
             Course course = new Course(newId, nom, dateNotificationFormatted, dateRealisationFormatted);
             course.setMonMagasin(magasin);
             course.setMesLignesCourse(ligneCourses);
@@ -136,18 +135,15 @@ public class CourseDAO implements CourseSQL{
         if (dateRealisation != null && !"".equals(dateRealisation))
             dateRealisationFormatted = LocalDateTime.parse(dateRealisation, formatter);
 
-        Course course = new Course(id,
-                nom,
-                dateNotificationFormatted,
-                dateRealisationFormatted);
-        course.setMonMagasin(magasin);
-
         Course courseAmodifier = this.getListeCourses().trouverAvecId(id);
-        courseAmodifier.setNom(nom);
-        courseAmodifier.setDateNotification(dateNotificationFormatted);
-        courseAmodifier.setDateRealisation(dateRealisationFormatted);
-        courseAmodifier.setCourseOriginal(null);
-        courseAmodifier.setMonMagasin(magasin);
+        if(ligneCourseDAO.enregistrerListeLigneCoursePourUneCourse(courseAmodifier.getId(), courseAmodifier.getMesLignesCourse())){
+            courseAmodifier.setNom(nom);
+            courseAmodifier.setDateNotification(dateNotificationFormatted);
+            courseAmodifier.setDateRealisation(dateRealisationFormatted);
+            courseAmodifier.setCourseOriginal(null);
+            courseAmodifier.setMonMagasin(magasin);
+        }
+
     }
 
     public Courses getListeCourses() {
