@@ -11,23 +11,14 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParserException;
 
-<<<<<<< HEAD
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-=======
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
->>>>>>> f5680cd79dd340381210a4fa8cb040c5f28cc89d
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
-<<<<<<< HEAD
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -38,10 +29,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import ca.qc.cgmatane.informatique.monmagasinage.R;
-
-=======
->>>>>>> f5680cd79dd340381210a4fa8cb040c5f28cc89d
 public enum EnumerationTheme {
     DEFAULT("Thème par defaut", R.style.AppTheme, R.style.AppTheme_NoActionBar,"AppTheme"),
     SOMBRE("Thème sombre", R.style.ThemeSombre, R.style.ThemeSombreNoActionBar, "ThemeSombre"),
