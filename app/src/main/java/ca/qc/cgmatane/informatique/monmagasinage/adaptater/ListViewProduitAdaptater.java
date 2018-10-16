@@ -96,12 +96,12 @@ public class ListViewProduitAdaptater extends ArrayAdapter<Produit> {
             result=convertView;
 
         }
-        Animation animation = AnimationUtils.loadAnimation(monContext, (position > lastPosition) ? R.anim.haut_vers_le_bas : R.anim.bas_vers_le_haut);
-        result.startAnimation(animation);
+        /*Animation animation = AnimationUtils.loadAnimation(monContext, (position > lastPosition) ? R.anim.haut_vers_le_bas : R.anim.bas_vers_le_haut);
+        result.startAnimation(animation);*/
         lastPosition = position;
 
 
-            vueBloque.textViewNomProduit.setText(produitSelectionne.getNom().toLowerCase());
+            vueBloque.textViewNomProduit.setText(produitSelectionne.getNom());
             LigneCourse ligneCourse = course.getMesLignesCourse().trouverAvecIdProduit(produitSelectionne.getId());
 
             if(ligneCourse!= null ){

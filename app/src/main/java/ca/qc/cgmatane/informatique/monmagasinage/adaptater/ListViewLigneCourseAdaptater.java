@@ -95,14 +95,14 @@ public class ListViewLigneCourseAdaptater extends ArrayAdapter<LigneCourse> {
             vueBloque = (VueBloque) convertView.getTag();
             result=convertView;
         }
-        Animation animation = AnimationUtils.loadAnimation(monContext, (position > lastPosition) ? R.anim.haut_vers_le_bas : R.anim.bas_vers_le_haut);
-        result.startAnimation(animation);
+        /*Animation animation = AnimationUtils.loadAnimation(monContext, (position > lastPosition) ? R.anim.haut_vers_le_bas : R.anim.bas_vers_le_haut);
+        result.startAnimation(animation);*/
         lastPosition = position;
 
 
 
         if(ligneCourse != null &&  ligneCourse.getProduit() != null){
-            vueBloque.textViewNomProduit.setText(((LigneCourse) ligneCourse).getProduit().getNom().toLowerCase());
+            vueBloque.textViewNomProduit.setText(((LigneCourse) ligneCourse).getProduit().getNom());
             vueBloque.spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(ligneCourse.getUnite().getId()));
             vueBloque.spinnerQuantite.setSelection(ligneCourse.getQuantite()-1);
             vueBloque.actionLigneProduit.setOnClickListener(new View.OnClickListener() {

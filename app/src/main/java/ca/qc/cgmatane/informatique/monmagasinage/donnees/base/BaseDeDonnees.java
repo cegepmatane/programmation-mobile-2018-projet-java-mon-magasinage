@@ -1,11 +1,13 @@
 package ca.qc.cgmatane.informatique.monmagasinage.donnees.base;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
 
 public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBaseDeDonnees, RequeteInsertionEchafautBaseDeDonnees, RequeteInsertionProduit {
-    private static final int VERSION_BDD = 9;
+    private static final int VERSION_BDD = 17;
     private static BaseDeDonnees instance = null;
 
     public static BaseDeDonnees getInstance(Context contexte)
@@ -81,27 +83,22 @@ public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBa
         db.execSQL(INSERT_COURSE_2);
         db.execSQL(INSERT_COURSE_3);
 
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_2);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_3);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_4);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_5);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_6);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_7);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_8);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_9);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_10);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_12);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_13);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_14);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_15);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_16);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_21);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_22);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_23);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_24);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_25);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_26);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_27);
-        db.execSQL(INSERT_FRUIT_ET_LEGUMES_28);
+        insertionProduit(db);
+    }
+
+    private void insertionProduit(SQLiteDatabase db){
+        db.beginTransaction();
+        ContentValues values = new ContentValues(1);
+        for (Produit produit : mesFruitsEtLegumes){
+            values.put(Produit.CHAMP_ID, produit.getId());
+            values.put(Produit.CHAMP_NOM, produit.getNom());
+            values.put(Produit.CHAMP_QUANTITE_DEFAUT, produit.getQuantiteDefaut());
+            values.put(Produit.CHAMP_RECURRENCE_ACHAT, produit.getRecurenceAchat());
+            values.put(Produit.CHAMP_UNITE_DEFAUT, 1);
+            db.insert(Produit.NOM_TABLE, null, values);
+        }
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
     }
 }
