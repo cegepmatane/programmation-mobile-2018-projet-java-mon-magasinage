@@ -13,6 +13,7 @@ public class UniteDAO {
     private UniteDAO() {
         accesseurBaseDeDonnees = BaseDeDonnees.getInstance();
         listeUnite = new Unites();
+        listerUnites();
     }
 
     public static UniteDAO getInstance(){

@@ -8,8 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.*;
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.UniteDAO;
@@ -28,7 +26,7 @@ public class ListViewLigneCourseAdaptater extends ArrayAdapter<LigneCourse> {
     private Course courseActuelle;
     private ArrayAdapter<String> adaptaterQuantite;
 
-    private static class VueBloque {
+    private static class VueBloqueLigneCourse {
         TextView textViewNomProduit;
         Spinner spinnerQuantite;
         Spinner spinnerUnite;
@@ -36,7 +34,7 @@ public class ListViewLigneCourseAdaptater extends ArrayAdapter<LigneCourse> {
     }
 
     public ListViewLigneCourseAdaptater(LignesCourse ligneCourses, Course course, Activity context) {
-        super(context, R.layout.ligne_listview_produit);
+        super(context, R.layout.ligne_listview_panier);
         this.monContext = context;
 
         panier = ligneCourses;
@@ -70,29 +68,27 @@ public class ListViewLigneCourseAdaptater extends ArrayAdapter<LigneCourse> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LigneCourse ligneCourse = (LigneCourse) this.getItem(position);
-        VueBloque vueBloque; // view lookup cache stored in tag
+        VueBloqueLigneCourse vueBloqueLigneCourse; // view lookup cache stored in tag
 
         final View result;
         if (convertView == null) {
-/*
-            convertView = layoutInflater.inflate(R.layout.ligne_listview_produit, null);
-*/
-            vueBloque = new VueBloque();
+
+            vueBloqueLigneCourse = new VueBloqueLigneCourse();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.ligne_listview_produit, parent, false);
+            convertView = inflater.inflate(R.layout.ligne_listview_panier, parent, false);
 
-            vueBloque.textViewNomProduit = convertView.findViewById(R.id.ligne_listview_produit_nom_produit);
-            vueBloque.spinnerQuantite = convertView.findViewById(R.id.ligne_listview_produit_spinner_quantite);
-            vueBloque.spinnerUnite = convertView.findViewById(R.id.ligne_listview_produit_spinner_unite);
-            vueBloque.actionLigneProduit = convertView.findViewById(R.id.ligne_listview_produit_button_action);
+            vueBloqueLigneCourse.textViewNomProduit = convertView.findViewById(R.id.ligne_listview_panier_nom_produit);
+            vueBloqueLigneCourse.spinnerQuantite = convertView.findViewById(R.id.ligne_listview_panier_spinner_quantite);
+            vueBloqueLigneCourse.spinnerUnite = convertView.findViewById(R.id.ligne_listview_panier_spinner_unite);
+            vueBloqueLigneCourse.actionLigneProduit = convertView.findViewById(R.id.ligne_listview_panier_button_action);
 
-            vueBloque.spinnerUnite.setAdapter(listeUnites.recuperAdapterPourSpinner(monContext));
-            vueBloque.spinnerQuantite.setAdapter(adaptaterQuantite);
-            vueBloque.actionLigneProduit.setText("-");
+            vueBloqueLigneCourse.spinnerUnite.setAdapter(listeUnites.recuperAdapterPourSpinner(monContext));
+            vueBloqueLigneCourse.spinnerQuantite.setAdapter(adaptaterQuantite);
+            vueBloqueLigneCourse.actionLigneProduit.setText("-");
             result = convertView;
-            convertView.setTag(vueBloque);
+            convertView.setTag(vueBloqueLigneCourse);
         }else{
-            vueBloque = (VueBloque) convertView.getTag();
+            vueBloqueLigneCourse = (VueBloqueLigneCourse) convertView.getTag();
             result=convertView;
         }
         /*Animation animation = AnimationUtils.loadAnimation(monContext, (position > lastPosition) ? R.anim.haut_vers_le_bas : R.anim.bas_vers_le_haut);
@@ -102,10 +98,10 @@ public class ListViewLigneCourseAdaptater extends ArrayAdapter<LigneCourse> {
 
 
         if(ligneCourse != null &&  ligneCourse.getProduit() != null){
-            vueBloque.textViewNomProduit.setText(((LigneCourse) ligneCourse).getProduit().getNom());
-            vueBloque.spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(ligneCourse.getUnite().getId()));
-            vueBloque.spinnerQuantite.setSelection(ligneCourse.getQuantite()-1);
-            vueBloque.actionLigneProduit.setOnClickListener(new View.OnClickListener() {
+            vueBloqueLigneCourse.textViewNomProduit.setText(((LigneCourse) ligneCourse).getProduit().getNom());
+            vueBloqueLigneCourse.spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(ligneCourse.getUnite().getId()));
+            vueBloqueLigneCourse.spinnerQuantite.setSelection(ligneCourse.getQuantite()-1);
+            vueBloqueLigneCourse.actionLigneProduit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     courseActuelle.getMesLignesCourse().remove(ligneCourse);
@@ -113,7 +109,7 @@ public class ListViewLigneCourseAdaptater extends ArrayAdapter<LigneCourse> {
                 }
             });
 
-            vueBloque.spinnerQuantite.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            vueBloqueLigneCourse.spinnerQuantite.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     if(position+1 != ligneCourse.getQuantite()){
@@ -128,7 +124,7 @@ public class ListViewLigneCourseAdaptater extends ArrayAdapter<LigneCourse> {
                 }
             });
 
-            vueBloque.spinnerUnite.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            vueBloqueLigneCourse.spinnerUnite.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     if(listeUnites.get(position) != ligneCourse.getUnite()){

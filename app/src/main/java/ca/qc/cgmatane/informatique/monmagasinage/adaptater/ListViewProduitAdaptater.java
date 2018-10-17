@@ -23,17 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListViewProduitAdaptater extends ArrayAdapter<Produit> {
-    private Unites listeUnites;
     private Produits listeProduits;
     private Context monContext;
 
     private Course course;
-    private ArrayAdapter<String> adaptaterQuantite;
 
     private static class VueBloque {
         TextView textViewNomProduit;
-        Spinner spinnerQuantite;
-        Spinner spinnerUnite;
         Button actionLigneProduit;
     }
     public ListViewProduitAdaptater(Produits listeProduits, Course pcourse, Activity context) {
@@ -41,14 +37,7 @@ public class ListViewProduitAdaptater extends ArrayAdapter<Produit> {
         this.listeProduits = listeProduits;
         this.monContext = context;
 
-        listeUnites = UniteDAO.getInstance().getListeUnite();
         course = pcourse;
-
-        List<String> listPourSpinner = new ArrayList<String>();
-        for (int i = 1;i<10;i++){
-            listPourSpinner.add(i + "");
-        }
-        adaptaterQuantite= new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listPourSpinner);
     }
 
 
@@ -82,12 +71,8 @@ public class ListViewProduitAdaptater extends ArrayAdapter<Produit> {
             convertView = inflater.inflate(R.layout.ligne_listview_produit, parent, false);
 
             vueBloque.textViewNomProduit = convertView.findViewById(R.id.ligne_listview_produit_nom_produit);
-            vueBloque.spinnerQuantite =  convertView.findViewById(R.id.ligne_listview_produit_spinner_quantite);
-            vueBloque.spinnerUnite = convertView.findViewById(R.id.ligne_listview_produit_spinner_unite);
             vueBloque.actionLigneProduit = convertView.findViewById(R.id.ligne_listview_produit_button_action);
 
-            vueBloque.spinnerUnite.setAdapter(listeUnites.recuperAdapterPourSpinner(monContext));
-            vueBloque.spinnerQuantite.setAdapter(adaptaterQuantite);
 
             result=convertView;
             convertView.setTag(vueBloque);
@@ -107,11 +92,8 @@ public class ListViewProduitAdaptater extends ArrayAdapter<Produit> {
             if(ligneCourse!= null ){
                 //Le produit est dans le panier
                 vueBloque.actionLigneProduit.setText("-");
-                vueBloque.spinnerQuantite.setSelection(ligneCourse.getQuantite()-1);
-                vueBloque.spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(ligneCourse.getUnite().getId()));
                 convertView.setBackgroundColor(0xFFB4E2B1);
-                vueBloque.spinnerQuantite.setEnabled(false);
-                vueBloque.spinnerUnite.setEnabled(false);
+
                 vueBloque.actionLigneProduit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -123,16 +105,14 @@ public class ListViewProduitAdaptater extends ArrayAdapter<Produit> {
             }else {
                 //Le produit n'est pas dans le panier
                 vueBloque.actionLigneProduit.setText("+");
-                vueBloque.spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(produitSelectionne.getUniteDefaut().getId()));
-                vueBloque.spinnerQuantite.setSelection(produitSelectionne.getQuantiteDefaut()-1);
                 convertView.setBackgroundColor(0x000000);
-                vueBloque.spinnerQuantite.setEnabled(true);
-                vueBloque.spinnerUnite.setEnabled(true);
+
                 vueBloque.actionLigneProduit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        LigneCourse ligneCourse = new LigneCourse(course, produitSelectionne, vueBloque.spinnerQuantite.getSelectedItemPosition()+1, false);
-                        ligneCourse.setUnite(listeUnites.get(vueBloque.spinnerUnite.getSelectedItemPosition()));
+                        LigneCourse ligneCourse = new LigneCourse(course, produitSelectionne, produitSelectionne.getQuantiteDefaut(), false);
+                        ligneCourse.setUnite(produitSelectionne.getUniteDefaut());
+
                         course.getMesLignesCourse().add(ligneCourse);
                         envoyerMessagePourActualisation("produits");
                     }
