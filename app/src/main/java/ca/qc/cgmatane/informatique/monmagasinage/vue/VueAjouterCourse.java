@@ -200,6 +200,8 @@ public class VueAjouterCourse extends AppCompatActivity {
             dateNotificationCalendar.set(Calendar.HOUR, hourOfDay);
             dateNotificationCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             dateNotificationCalendar.set(Calendar.MINUTE, minute);
+            dateNotificationCalendar.set(Calendar.SECOND,0);
+            dateNotificationCalendar.set(Calendar.MILLISECOND,0);
             actualiserLabelDate();
         }
 
