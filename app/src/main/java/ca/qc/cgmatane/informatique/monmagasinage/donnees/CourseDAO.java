@@ -80,7 +80,7 @@ public class CourseDAO implements CourseSQL{
         return this.listeCourses;
     }
 
-    public void creerCourse(String nom, String dateNotification, String dateRealisation, int idOriginal, Magasin magasin, LignesCourse ligneCourses)
+    public int creerCourse(String nom, String dateNotification, String dateRealisation, int idOriginal, Magasin magasin, LignesCourse ligneCourses)
     {
 
         ContentValues values = new ContentValues();
@@ -107,7 +107,7 @@ public class CourseDAO implements CourseSQL{
             course.setMesLignesCourse(ligneCourses);
             this.listeCourses.add(course);
         }
-
+        return newId;
     }
 
 
