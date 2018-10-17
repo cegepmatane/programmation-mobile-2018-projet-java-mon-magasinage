@@ -5,9 +5,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Produits;
 
 public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBaseDeDonnees, RequeteInsertionEchafautBaseDeDonnees, RequeteInsertionProduit {
-    private static final int VERSION_BDD = 17;
+    private static final int VERSION_BDD = 20;
     private static BaseDeDonnees instance = null;
 
     public static BaseDeDonnees getInstance(Context contexte)
@@ -89,13 +90,17 @@ public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBa
     private void insertionProduit(SQLiteDatabase db){
         db.beginTransaction();
         ContentValues values = new ContentValues(1);
-        for (Produit produit : mesFruitsEtLegumes){
-            values.put(Produit.CHAMP_ID, produit.getId());
-            values.put(Produit.CHAMP_NOM, produit.getNom());
-            values.put(Produit.CHAMP_QUANTITE_DEFAUT, produit.getQuantiteDefaut());
-            values.put(Produit.CHAMP_RECURRENCE_ACHAT, produit.getRecurenceAchat());
-            values.put(Produit.CHAMP_UNITE_DEFAUT, 1);
-            db.insert(Produit.NOM_TABLE, null, values);
+        int idProduit=1;
+        for (Produits listeProduits: tousMesProduits){
+            for (Produit produit : listeProduits){
+                values.put(Produit.CHAMP_ID, idProduit);
+                values.put(Produit.CHAMP_NOM, produit.getNom());
+                values.put(Produit.CHAMP_QUANTITE_DEFAUT, produit.getQuantiteDefaut());
+                values.put(Produit.CHAMP_RECURRENCE_ACHAT, produit.getRecurenceAchat());
+                values.put(Produit.CHAMP_UNITE_DEFAUT, 1);
+                db.insert(Produit.NOM_TABLE, null, values);
+                idProduit++;
+            }
         }
 
         db.setTransactionSuccessful();
