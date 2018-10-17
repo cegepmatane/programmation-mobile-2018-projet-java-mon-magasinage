@@ -2,11 +2,15 @@ package ca.qc.cgmatane.informatique.monmagasinage.vue;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,6 +24,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.donnees.MagasinDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.ProduitDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.LigneCourse;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Notification;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
@@ -41,15 +46,17 @@ public class VueAjouterCourse extends AppCompatActivity {
     private Course courseActuelle;
 
     /** Affichage*/
-    protected final Calendar myCalendar = Calendar.getInstance(TimeZone.getDefault());
     protected EditText dateNotification;
-    protected Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
     protected ListView listeviewProduits;
     protected String rechercheUtilisateur ="";
     protected ToggleButton actionTogglePanier;
     protected ListViewProduitAdaptater listViewProduitAdaptater;
     protected ListViewLigneCourseAdaptater listViewLigneCourseAdaptater;
     protected TextView recapitualtifPanier;
+
+    /** Notification*/
+    private final Calendar dateNotificationCalendar = Calendar.getInstance(TimeZone.getDefault());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         EnumerationTheme.changerTheme(this);
@@ -79,12 +86,35 @@ public class VueAjouterCourse extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!"".equals(nomCourse.getText().toString())){
-                    courseDAO.creerCourse(nomCourse.getText().toString(),
+                    int nouvelleId = courseDAO.creerCourse(nomCourse.getText().toString(),
                             dateNotification.getText().toString(),
                             "",
                             0,
                             magasinDAO.getListeMagasins().get(spinnerMagasin.getSelectedItemPosition()), courseActuelle.getMesLignesCourse());
 
+
+                    /** Creation des Notifications*/
+                    ComponentName nomServiceNotification = new ComponentName(getApplicationContext(),
+                            Notification.class);
+
+                    long offset = dateNotificationCalendar.getTimeInMillis()-Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis();
+
+                    Log.d("timee date nottification", String.valueOf(dateNotificationCalendar.getTimeInMillis()));
+                    Log.d("timee current", String.valueOf(Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis()));
+                    Log.d("timee offsetNotificationTime", String.valueOf(offset));
+
+                    PersistableBundle bundle = new PersistableBundle();
+                    bundle.putString("titre", nomCourse.getText().toString());
+                    bundle.putString("text", "va faire tes courses");
+
+                    JobInfo.Builder jobInfo = new JobInfo.Builder(nouvelleId, nomServiceNotification);
+                    jobInfo.setMinimumLatency(offset);
+                    //jobInfo.setOverrideDeadline(6000);
+                    jobInfo.setExtras(bundle);
+
+                    JobScheduler mSchedular = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);
+                    mSchedular.schedule(jobInfo.build());
+                    Log.d("notif", "start notif");
                     finish();
                 }else {
                     Toast message = Toast.makeText(getApplicationContext(), //display toast message
@@ -134,8 +164,9 @@ public class VueAjouterCourse extends AppCompatActivity {
             public void onClick(View v) {
 
                 new DatePickerDialog(VueAjouterCourse.this, date,
-                        calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH)).show();
+                        dateNotificationCalendar.get(Calendar.YEAR),
+                        dateNotificationCalendar.get(Calendar.MONTH),
+                        dateNotificationCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
@@ -166,9 +197,9 @@ public class VueAjouterCourse extends AppCompatActivity {
     final TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            myCalendar.set(Calendar.HOUR, hourOfDay);
-            myCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            myCalendar.set(Calendar.MINUTE, minute);
+            dateNotificationCalendar.set(Calendar.HOUR, hourOfDay);
+            dateNotificationCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            dateNotificationCalendar.set(Calendar.MINUTE, minute);
             actualiserLabelDate();
         }
 
@@ -179,13 +210,13 @@ public class VueAjouterCourse extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, monthOfYear);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            dateNotificationCalendar.set(Calendar.YEAR, year);
+            dateNotificationCalendar.set(Calendar.MONTH, monthOfYear);
+            dateNotificationCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
             TimePickerDialog mTimePicker;
-            mTimePicker = new TimePickerDialog(VueAjouterCourse.this, time, calendar.get(Calendar.HOUR),
-                    calendar.get(Calendar.MINUTE), true);//Yes 24 hour time
+            mTimePicker = new TimePickerDialog(VueAjouterCourse.this, time, dateNotificationCalendar.get(Calendar.HOUR),
+                    dateNotificationCalendar.get(Calendar.MINUTE), true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
             mTimePicker.show();
 
@@ -196,7 +227,7 @@ public class VueAjouterCourse extends AppCompatActivity {
     private void actualiserLabelDate(){
         String myFormat = "yyyy-MM-dd-HH:mm"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        dateNotification.setText(sdf.format(myCalendar.getTime()));
+        dateNotification.setText(sdf.format(dateNotificationCalendar.getTime()));
     }
 
     private void actualiserAffichageAvecListeProduits() {
