@@ -32,6 +32,7 @@
         <activity android:name=".vue.VueModifierMagasin" />
         <activity android:name=".vue.VueAjouterMagasin" />
         <activity android:name=".vue.VueAjouterCourse" />
+        <activity android:name=".vue.VueFaireCourse" />
         <activity android:name=".vue.VueAjouterProduitListeCourse" />
         <activity android:name=".vue.VueModifierCourse" />
         <activity android:name=".vue.VueModifierTheme" />
