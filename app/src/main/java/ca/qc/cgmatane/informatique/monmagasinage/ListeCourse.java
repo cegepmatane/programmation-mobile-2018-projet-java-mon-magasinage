@@ -29,6 +29,7 @@ public class ListeCourse extends AppCompatActivity {
 
     private static final int ACTIVITE_RESULTAT_MODIFIER_COURSE = 1;
     private static final int ACTIVITE_RESULTAT_MODIFIER_THEME = 2;
+    private static final int ACTIVITE_RESULTAT_FAIRE_COURSE = 3;
 
     /** Données*/
     protected Courses listeCourse;
@@ -94,6 +95,12 @@ public class ListeCourse extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View vue, int position, long id) {
 //                inserer ici redirection vers vue todo courses
+                Course course = listeCourse.get(position);
+                Intent intentionNaviguerFaireCourse = new Intent(ListeCourse.this, VueFaireCourse.class);
+                intentionNaviguerFaireCourse.putExtra(Course.CHAMP_ID_COURSE, course.getId()+"");
+
+                startActivityForResult(intentionNaviguerFaireCourse, ACTIVITE_RESULTAT_FAIRE_COURSE);
+
                 Toast message = Toast.makeText(getApplicationContext(), //display toast message
                         "Redirection vers liste faireCourses", Toast.LENGTH_SHORT);
                 message.show();
@@ -206,6 +213,9 @@ public class ListeCourse extends AppCompatActivity {
                 break;
             case ACTIVITE_RESULTAT_MODIFIER_THEME:
                 recreate();
+                break;
+            case ACTIVITE_RESULTAT_FAIRE_COURSE:
+                actualisationAffichage();
                 break;
         }
     }

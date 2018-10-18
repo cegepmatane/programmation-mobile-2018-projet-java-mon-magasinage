@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="left|center">
+
+        <CheckBox
+            android:id="@+id/ligne_listview_faire_course_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/ligne_listview_faire_course_nom_produit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="nom produit"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:id="@+id/ligne_listview_faire_course_quantite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantité"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/ligne_listview_faire_course_unite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unité"
+            android:textSize="18sp" />
+
+    </TableRow>
+</TableLayout>
