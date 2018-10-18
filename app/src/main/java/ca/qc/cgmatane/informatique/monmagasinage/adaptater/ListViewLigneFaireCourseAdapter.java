@@ -11,17 +11,16 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.LigneCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Unites;
 
 public class ListViewLigneFaireCourseAdapter extends ArrayAdapter<LigneCourse> {
-    private Course course;
-    private Unites listeUnites;
     private Course courseActuelle;
     private Context monContext;
-    private ArrayAdapter<String> adaptaterQuantite;
+
     private static class VueBloqueFaireCourse {
         TextView textViewNomProduit;
         TextView textViewQuantite;
@@ -32,37 +31,16 @@ public class ListViewLigneFaireCourseAdapter extends ArrayAdapter<LigneCourse> {
         super(context, R.layout.ligne_listview_faire_course);
         this.monContext = context;
         courseActuelle = course;
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
     }
+
+    @Override
+    public int getCount() {
+        return courseActuelle.getMesLignesCourse().size();
+    }
+
     @Override
     public LigneCourse getItem(int position) {
-        return course.getMesLignesCourse().get(position);
+        return courseActuelle.getMesLignesCourse().get(position);
     }
 
     @Override
@@ -75,15 +53,9 @@ public class ListViewLigneFaireCourseAdapter extends ArrayAdapter<LigneCourse> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LigneCourse ligneCourse = (LigneCourse) this.getItem(position);
-        System.out.println("ozifijoizejfoizjfoizjfoizejfzeoijfzeojfzio");
-        System.out.println("ozifijoizejfoizjfoizjfoizejfzeoijfzeojfzio");
-        System.out.println("ozifijoizejfoizjfoizjfoizejfzeoijfzeojfzio");
-        System.out.println("ozifijoizejfoizjfoizjfoizejfzeoijfzeojfzio");
-        System.out.println("ozifijoizejfoizjfoizjfoizejfzeoijfzeojfzio");
-        System.out.println("ozifijoizejfoizjfoizjfoizejfzeoijfzeojfzio");
-        System.out.println("ozifijoizejfoizjfoizjfoizejfzeoijfzeojfzio");
-        System.out.println("ozifijoizejfoizjfoizjfoizejfzeoijfzeojfzio");
+
         VueBloqueFaireCourse vueBloqueFaireCourse;
+
         final View result;
         if (convertView == null) {
             //convertView = layoutInflater.inflate(R.layout.ligne_listview_produit, null);
@@ -107,11 +79,11 @@ public class ListViewLigneFaireCourseAdapter extends ArrayAdapter<LigneCourse> {
         result.startAnimation(animation);
         lastPosition = position;
 
-
-        vueBloqueFaireCourse.textViewNomProduit.setText(ligneCourse.getProduit().getNom());
-        vueBloqueFaireCourse.textViewUnite.setText(ligneCourse.getUnite().getLibelle());
-        vueBloqueFaireCourse.textViewQuantite.setText(ligneCourse.getQuantite());
-     /*   vueBloqueFaireCourse.checkBoxLigneProduit.setSelected(ligneCourse.isCoche());
+        if(ligneCourse !=null) {
+            vueBloqueFaireCourse.textViewNomProduit.setText(ligneCourse.getProduit().getNom());
+            vueBloqueFaireCourse.textViewUnite.setText(ligneCourse.getUnite().getLibelle());
+            vueBloqueFaireCourse.textViewQuantite.setText(ligneCourse.getQuantite()+"");
+            vueBloqueFaireCourse.checkBoxLigneProduit.setSelected(ligneCourse.isCoche());
         vueBloqueFaireCourse.checkBoxLigneProduit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +91,8 @@ public class ListViewLigneFaireCourseAdapter extends ArrayAdapter<LigneCourse> {
                         "Check", Toast.LENGTH_SHORT);
                 message.show();
             }
-        });*/
+        });
+        }
         return convertView;
     }
 }
