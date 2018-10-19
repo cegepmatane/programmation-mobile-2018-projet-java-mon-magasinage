@@ -45,6 +45,7 @@ public class Notification extends JobService {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(),"channel1")
                 .setSmallIcon(R.mipmap.mon_magasinage_icon_circle)
+                .setBadgeIconType(R.mipmap.mon_magasinage_icon_circle)
                 .setContentTitle(titre)
                 .setContentText(text)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

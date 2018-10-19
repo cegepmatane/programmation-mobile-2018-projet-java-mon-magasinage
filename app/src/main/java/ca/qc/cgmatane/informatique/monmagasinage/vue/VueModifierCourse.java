@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
+import android.app.job.JobService;
 import android.content.*;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -130,13 +131,17 @@ public class VueModifierCourse extends AppCompatActivity {
                     bundle.putString("titre", nomCourse.getText().toString());
                     bundle.putString("text", "va faire tes courses");
 
+                    //suppresion ancienne notification
+                    JobScheduler mSchedular = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);
+                    mSchedular.cancel(courseAModifier.getId());
+
+                    //creation nouvelle notification
                     JobInfo.Builder jobInfo = new JobInfo.Builder(1, nomServiceNotification);
                     jobInfo.setMinimumLatency(offset);
-                    //jobInfo.setOverrideDeadline(6000);
                     jobInfo.setExtras(bundle);
 
-                    JobScheduler mSchedular = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);
                     mSchedular.schedule(jobInfo.build());
+
                     Log.d("notif", "start notif");
                     ligneCourseDeSauvegarde = courseAModifier.getMesLignesCourse();
                     finish();
@@ -242,9 +247,10 @@ public class VueModifierCourse extends AppCompatActivity {
     final TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            dateNotificationCalendar.set(Calendar.HOUR, hourOfDay);
             dateNotificationCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             dateNotificationCalendar.set(Calendar.MINUTE, minute);
+            dateNotificationCalendar.set(Calendar.SECOND,0);
+            dateNotificationCalendar.set(Calendar.MILLISECOND,0);
             updateLabel();
         }
     };
