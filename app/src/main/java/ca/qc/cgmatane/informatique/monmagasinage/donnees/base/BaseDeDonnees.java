@@ -8,7 +8,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Produits;
 
 public class BaseDeDonnees extends SQLiteOpenHelper implements RequeteCreationBaseDeDonnees, RequeteInsertionEchafautBaseDeDonnees, RequeteInsertionProduit {
-    private static final int VERSION_BDD = 24;
+    private static final int VERSION_BDD = 25;
     private static BaseDeDonnees instance = null;
 
     public static BaseDeDonnees getInstance(Context contexte)
