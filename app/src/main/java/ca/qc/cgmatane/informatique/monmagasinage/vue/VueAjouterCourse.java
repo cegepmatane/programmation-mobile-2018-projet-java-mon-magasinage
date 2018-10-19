@@ -159,6 +159,7 @@ public class VueAjouterCourse extends AppCompatActivity {
             }
         });
 
+        /** changement de la date de notification*/
         dateNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -216,7 +217,7 @@ public class VueAjouterCourse extends AppCompatActivity {
             dateNotificationCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
             TimePickerDialog mTimePicker;
-            mTimePicker = new TimePickerDialog(VueAjouterCourse.this, time, dateNotificationCalendar.get(Calendar.HOUR),
+            mTimePicker = new TimePickerDialog(VueAjouterCourse.this, time, dateNotificationCalendar.get(Calendar.HOUR_OF_DAY),
                     dateNotificationCalendar.get(Calendar.MINUTE), true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
             mTimePicker.show();

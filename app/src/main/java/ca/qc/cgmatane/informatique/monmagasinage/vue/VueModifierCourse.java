@@ -265,7 +265,7 @@ public class VueModifierCourse extends AppCompatActivity {
             dateNotificationCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
             TimePickerDialog mTimePicker;
-            mTimePicker = new TimePickerDialog(VueModifierCourse.this, time, currentTimeCalendar.get(Calendar.HOUR),
+            mTimePicker = new TimePickerDialog(VueModifierCourse.this, time, currentTimeCalendar.get(Calendar.HOUR_OF_DAY),
                     currentTimeCalendar.get(Calendar.MINUTE), true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
             mTimePicker.show();
