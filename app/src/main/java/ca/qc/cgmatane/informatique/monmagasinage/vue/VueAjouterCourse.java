@@ -197,9 +197,10 @@ public class VueAjouterCourse extends AppCompatActivity {
     final TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            dateNotificationCalendar.set(Calendar.HOUR, hourOfDay);
+            //dateNotificationCalendar.set(Calendar.HOUR, hourOfDay);
             dateNotificationCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             dateNotificationCalendar.set(Calendar.MINUTE, minute);
+            //dateNotificationCalendar.set(Calendar.AM_PM ,Calendar.PM);
             dateNotificationCalendar.set(Calendar.SECOND,0);
             dateNotificationCalendar.set(Calendar.MILLISECOND,0);
             actualiserLabelDate();
