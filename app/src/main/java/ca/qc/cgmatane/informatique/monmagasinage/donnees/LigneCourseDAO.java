@@ -96,11 +96,31 @@ public class LigneCourseDAO {
             ContentValues values = new ContentValues();
             values.put(LigneCourse.CHAMP_COCHE, !ligneCourse.isCoche());
             db.update(LigneCourse.NOM_TABLE, values, LigneCourse.CHAMP_ID_COURSE+"="+ligneCourse.getCourse().getId() + " AND " + LigneCourse.CHAMP_ID_PRODUIT+"="+ligneCourse.getProduit().getId(), null);
-            System.out.println(" TOUT MARCHE : "+ ligneCourse.isCoche());
-
             db.setTransactionSuccessful();
             db.endTransaction();
             ligneCourse.setCoche(!ligneCourse.isCoche());
+        } catch (Exception e) {
+            db.endTransaction();
+            e.printStackTrace();
+        }
+    }
+
+    /***
+     * Décoche toutes les lignescourse d'une course
+     * @param course
+     */
+    public void deocherUneCourseEntiere(Course course){
+        SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
+        try {
+            db.beginTransaction();
+            for(LigneCourse ligneCourse: course.getMesLignesCourse()){
+                ContentValues values = new ContentValues();
+                values.put(LigneCourse.CHAMP_COCHE, false);
+                db.update(LigneCourse.NOM_TABLE, values, LigneCourse.CHAMP_ID_COURSE+"="+ligneCourse.getCourse().getId() + " AND " + LigneCourse.CHAMP_ID_PRODUIT+"="+ligneCourse.getProduit().getId(), null);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
         } catch (Exception e) {
             db.endTransaction();
             e.printStackTrace();

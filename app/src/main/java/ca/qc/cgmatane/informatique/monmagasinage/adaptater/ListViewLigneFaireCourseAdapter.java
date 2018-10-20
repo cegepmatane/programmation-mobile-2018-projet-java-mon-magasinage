@@ -90,9 +90,6 @@ public class ListViewLigneFaireCourseAdapter extends ArrayAdapter<LigneCourse> {
         vueBloqueFaireCourse.checkBoxLigneProduit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast message = Toast.makeText(monContext, //display toast message
-                        "Check", Toast.LENGTH_SHORT);
-                message.show();
                 ligneCourseDAO.setCocherUneLigneCourse(ligneCourse);
             }
         });
