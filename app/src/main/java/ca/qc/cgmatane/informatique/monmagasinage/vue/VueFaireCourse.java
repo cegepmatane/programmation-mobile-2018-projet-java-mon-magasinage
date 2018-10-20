@@ -26,18 +26,19 @@ public class VueFaireCourse extends AppCompatActivity {
         setContentView(R.layout.vue_faire_course);
 
         Bundle parametres = this.getIntent().getExtras();
+        assert parametres != null;
         String parametreIdCourse = (String) parametres.get(Course.CHAMP_ID_COURSE);
         int idCourse = Integer.parseInt(parametreIdCourse);
 
         courseDAO = CourseDAO.getInstance();
-        ligneCourseDAO = ligneCourseDAO.getInstance();
+        ligneCourseDAO = LigneCourseDAO.getInstance();
 
+        listViewPanier =(ListView) findViewById(R.id.vue_faire_course_list_view_panier);
         courseActuelle = courseDAO.getListeCourses().trouverAvecId(idCourse);
         ligneCourseDAO.chargerListeLigneCoursePourUneCourse(courseActuelle);
-        listViewPanier =(ListView) findViewById(R.id.vue_faire_course_list_view_panier);
 
-        Toast message = Toast.makeText(getApplicationContext(), ""+courseActuelle.getMesLignesCourse().size(), Toast.LENGTH_SHORT);
-        message.show();
+     /*   Toast message = Toast.makeText(getApplicationContext(), ""+courseActuelle.getMesLignesCourse().size(), Toast.LENGTH_SHORT);
+        message.show();*/
         listViewLigneFaireCourseAdapter = new ListViewLigneFaireCourseAdapter(courseActuelle, VueFaireCourse.this);
         listViewPanier.setAdapter(listViewLigneFaireCourseAdapter);
     }
