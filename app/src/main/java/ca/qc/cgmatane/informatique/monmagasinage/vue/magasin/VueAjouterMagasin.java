@@ -1,4 +1,4 @@
-package ca.qc.cgmatane.informatique.monmagasinage.vue;
+package ca.qc.cgmatane.informatique.monmagasinage.vue.magasin;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

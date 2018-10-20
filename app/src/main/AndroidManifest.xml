@@ -10,6 +10,7 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -28,12 +29,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".vue.VueListeMagasin" />
-        <activity android:name=".vue.VueModifierMagasin" />
-        <activity android:name=".vue.VueAjouterMagasin" />
+        <activity android:name=".vue.magasin.VueListeMagasin" />
+        <activity android:name=".vue.magasin.VueModifierMagasin" />
+        <activity android:name=".vue.magasin.VueAjouterMagasin" />
         <activity android:name=".vue.VueAjouterCourse" />
         <activity android:name=".vue.VueFaireCourse" />
-        <activity android:name=".vue.VueAjouterProduitListeCourse" />
         <activity android:name=".vue.VueModifierCourse" />
         <activity android:name=".vue.VueModifierTheme" />
         <!--
@@ -50,7 +50,7 @@
 
 
         <activity
-            android:name="ca.qc.cgmatane.informatique.monmagasinage.vue.CarteMagasin"
+            android:name="ca.qc.cgmatane.informatique.monmagasinage.vue.magasin.CarteMagasin"
             android:label="@string/title_activity_carte_magasin" />
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
         
