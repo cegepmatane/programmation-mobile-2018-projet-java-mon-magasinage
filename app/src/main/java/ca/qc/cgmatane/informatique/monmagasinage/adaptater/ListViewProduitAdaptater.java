@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
+
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.UniteDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
@@ -32,6 +33,7 @@ public class ListViewProduitAdaptater extends ArrayAdapter<Produit> {
         TextView textViewNomProduit;
         Button actionLigneProduit;
     }
+
     public ListViewProduitAdaptater(Produits listeProduits, Course pcourse, Activity context) {
         super(context, R.layout.ligne_listview_produit);
         this.listeProduits = listeProduits;
@@ -74,50 +76,62 @@ public class ListViewProduitAdaptater extends ArrayAdapter<Produit> {
             vueBloque.actionLigneProduit = convertView.findViewById(R.id.ligne_listview_produit_button_action);
 
 
-            result=convertView;
+            result = convertView;
             convertView.setTag(vueBloque);
-        }else {
+        } else {
             vueBloque = (VueBloque) convertView.getTag();
-            result=convertView;
+            result = convertView;
 
         }
         /*Animation animation = AnimationUtils.loadAnimation(monContext, (position > lastPosition) ? R.anim.haut_vers_le_bas : R.anim.bas_vers_le_haut);
         result.startAnimation(animation);*/
         lastPosition = position;
 
-
+        if (produitSelectionne.getNom().length() > 30) {
+            String nomReduit = produitSelectionne.getNom().substring(0, 30);
+            vueBloque.textViewNomProduit.setText(nomReduit + "...");
+        } else {
             vueBloque.textViewNomProduit.setText(produitSelectionne.getNom());
-            LigneCourse ligneCourse = course.getMesLignesCourse().trouverAvecIdProduit(produitSelectionne.getId());
-
-            if(ligneCourse!= null ){
-                //Le produit est dans le panier
-                vueBloque.actionLigneProduit.setText("-");
-                convertView.setBackgroundColor(0xFFB4E2B1);
-
-                vueBloque.actionLigneProduit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        course.getMesLignesCourse().remove(ligneCourse);
-                        envoyerMessagePourActualisation("produits");
-                    }
-                });
-
-            }else {
-                //Le produit n'est pas dans le panier
-                vueBloque.actionLigneProduit.setText("+");
-                convertView.setBackgroundColor(0x000000);
-
-                vueBloque.actionLigneProduit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        LigneCourse ligneCourse = new LigneCourse(course, produitSelectionne, produitSelectionne.getQuantiteDefaut(), false);
-                        ligneCourse.setUnite(produitSelectionne.getUniteDefaut());
-
-                        course.getMesLignesCourse().add(ligneCourse);
-                        envoyerMessagePourActualisation("produits");
-                    }
-                });
+        }
+        LigneCourse ligneCourse = course.getMesLignesCourse().trouverAvecIdProduit(produitSelectionne.getId());
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast message = Toast.makeText(monContext, //display toast message
+                        produitSelectionne.getNom(), Toast.LENGTH_SHORT);
+                message.show();
             }
+        });
+
+        if (ligneCourse != null) {
+            //Le produit est dans le panier
+            vueBloque.actionLigneProduit.setText("-");
+            convertView.setBackgroundColor(0xFFB4E2B1);
+
+            vueBloque.actionLigneProduit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    course.getMesLignesCourse().remove(ligneCourse);
+                    envoyerMessagePourActualisation("produits");
+                }
+            });
+
+        } else {
+            //Le produit n'est pas dans le panier
+            vueBloque.actionLigneProduit.setText("+");
+            convertView.setBackgroundColor(0x000000);
+
+            vueBloque.actionLigneProduit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LigneCourse ligneCourse = new LigneCourse(course, produitSelectionne, produitSelectionne.getQuantiteDefaut(), false);
+                    ligneCourse.setUnite(produitSelectionne.getUniteDefaut());
+
+                    course.getMesLignesCourse().add(ligneCourse);
+                    envoyerMessagePourActualisation("produits");
+                }
+            });
+        }
 
         // Return the completed view to render on screen
         return convertView;
