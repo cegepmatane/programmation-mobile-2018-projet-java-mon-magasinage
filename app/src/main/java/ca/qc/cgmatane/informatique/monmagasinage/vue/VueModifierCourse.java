@@ -64,6 +64,8 @@ public class VueModifierCourse extends AppCompatActivity {
         EnumerationTheme.changerTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_modifier_course);
+        getSupportActionBar().setTitle("Modifier une course");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         courseDAO = CourseDAO.getInstance();
         magasinDAO = MagasinDAO.getInstance();
@@ -195,6 +197,12 @@ public class VueModifierCourse extends AppCompatActivity {
                 return true;
             }
         });
+        barreDeRecherche.setActivated(true);
+        barreDeRecherche.setQueryHint("Nom du produit");
+        barreDeRecherche.onActionViewExpanded();
+        barreDeRecherche.setIconified(false);
+        barreDeRecherche.clearFocus();
+
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter(VueAjouterCourse.EVENT_RECHARGER_AFFICHAGE));
@@ -285,5 +293,10 @@ public class VueModifierCourse extends AppCompatActivity {
     public void onStop(){
         courseAModifier.setMesLignesCourse(ligneCourseDeSauvegarde);
         super.onStop();
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }

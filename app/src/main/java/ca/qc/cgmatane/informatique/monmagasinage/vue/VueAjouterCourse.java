@@ -62,6 +62,8 @@ public class VueAjouterCourse extends AppCompatActivity {
         EnumerationTheme.changerTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_ajouter_course);
+        getSupportActionBar().setTitle("Ajouter une course");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final EditText nomCourse = findViewById(R.id.vue_ajouter_course_nom_course);
         dateNotification = findViewById(R.id.vue_ajouter_course_date_notification);
@@ -159,6 +161,12 @@ public class VueAjouterCourse extends AppCompatActivity {
             }
         });
 
+        barreDeRecherche.setActivated(true);
+        barreDeRecherche.setQueryHint("Nom du produit");
+        barreDeRecherche.onActionViewExpanded();
+        barreDeRecherche.setIconified(false);
+        barreDeRecherche.clearFocus();
+
         /** changement de la date de notification*/
         dateNotification.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,4 +261,10 @@ public class VueAjouterCourse extends AppCompatActivity {
         listViewLigneCourseAdaptater.setPanier(ligneCourses);
         listeviewProduits.setAdapter(listViewLigneCourseAdaptater);
     }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
+
 }

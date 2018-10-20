@@ -102,8 +102,8 @@ public class ListViewLigneCourseAdaptater extends ArrayAdapter<LigneCourse> {
 
             vueBloqueLigneCourse.textViewNomProduit.setText(((LigneCourse) ligneCourse).getProduit().getNom());
 
-            if (ligneCourse.getProduit().getNom().length() > 15) {
-                String nomReduit = ligneCourse.getProduit().getNom().substring(0, 15);
+            if (ligneCourse.getProduit().getNom().length() > 13) {
+                String nomReduit = ligneCourse.getProduit().getNom().substring(0, 13);
                 vueBloqueLigneCourse.textViewNomProduit.setText(nomReduit + "...");
             } else {
                 vueBloqueLigneCourse.textViewNomProduit.setText(ligneCourse.getProduit().getNom());
