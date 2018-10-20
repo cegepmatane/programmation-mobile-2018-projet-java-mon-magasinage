@@ -42,9 +42,6 @@ public class ListeCourse extends AppCompatActivity {
     private static final int ACTIVITE_RESULTAT_MODIFIER_COURSE = 1;
     private static final int ACTIVITE_RESULTAT_MODIFIER_THEME = 2;
     private static final int ACTIVITE_RESULTAT_FAIRE_COURSE = 3;
-    private SensorManager mSensorManager;
-    private Sensor mAccelerometer;
-    private ShakeDetector mShakeDetector;
 
     /**
      * Données
@@ -69,19 +66,6 @@ public class ListeCourse extends AppCompatActivity {
         EnumerationTheme.recupererThemeSelectionnee(getApplicationContext());
         this.setTheme(EnumerationTheme.getThemeSelectionne().getIdLienSansActionBar());
 
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mAccelerometer = mSensorManager
-                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mShakeDetector = new ShakeDetector();
-        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
-
-            @Override
-            public void onShake(int count) {
-                Toast message = Toast.makeText(getApplicationContext(), //display toast message
-                        "Shake shake shake", Toast.LENGTH_SHORT);
-                message.show();
-            }
-        });
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_liste_course);
@@ -282,15 +266,5 @@ public class ListeCourse extends AppCompatActivity {
                 break;
         }
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-        mSensorManager.registerListener(mShakeDetector, mAccelerometer,	SensorManager.SENSOR_DELAY_UI);
-    }
 
-    @Override
-    public void onPause() {
-        mSensorManager.unregisterListener(mShakeDetector);
-        super.onPause();
-    }
 }
