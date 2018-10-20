@@ -64,7 +64,8 @@ public class LigneCourseDAO {
     public void chargerListeLigneCoursePourUneCourse(Course course){
         Produits listeProduits = produitDAO.getListeProduits();
         Unites listeUnites = uniteDAO.getListeUnite();
-
+        course.getMesLignesCourse().clear();
+        
         Cursor curseurLignesCourse = accesseurBaseDeDonnees.getReadableDatabase().
                 rawQuery(String.format("select * from %s WHERE %s=%s",LigneCourse.NOM_TABLE, LigneCourse.CHAMP_ID_COURSE, course.getId()), null);
         System.out.println(" QUANTITE PANIER : "+ curseurLignesCourse.getCount());
