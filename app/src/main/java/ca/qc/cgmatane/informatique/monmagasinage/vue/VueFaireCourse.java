@@ -2,6 +2,7 @@ package ca.qc.cgmatane.informatique.monmagasinage.vue;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationT
 public class VueFaireCourse extends AppCompatActivity {
 
     private static final int ACTIVITE_RESULTAT_PRISE_PHOTO = 1;
+    private static final int ACTIVITE_RESULTAT_NAVIGUER_VERS_VALIDER_COURSE = 2;
 
     private Course courseActuelle;
     protected ListViewLigneFaireCourseAdapter listViewLigneFaireCourseAdapter;
@@ -56,12 +58,10 @@ public class VueFaireCourse extends AppCompatActivity {
         courseActuelle = courseDAO.getListeCourses().trouverAvecId(idCourse);
         ligneCourseDAO.chargerListeLigneCoursePourUneCourse(courseActuelle);
 
-     /*   Toast message = Toast.makeText(getApplicationContext(), ""+courseActuelle.getMesLignesCourse().size(), Toast.LENGTH_SHORT);
-        message.show();*/
         listViewLigneFaireCourseAdapter = new ListViewLigneFaireCourseAdapter(courseActuelle, VueFaireCourse.this);
         listViewPanier.setAdapter(listViewLigneFaireCourseAdapter);
 
-        // Secouer
+        // Evenement sur le secoué ou shake
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mShakeDetector = new ShakeDetector();
@@ -86,15 +86,20 @@ public class VueFaireCourse extends AppCompatActivity {
     }
 
     private void dispatchTakePictureIntent(){
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, ACTIVITE_RESULTAT_PRISE_PHOTO);
+        Intent intentionFairePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (intentionFairePhoto.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intentionFairePhoto, ACTIVITE_RESULTAT_PRISE_PHOTO);
         }
     }
 
     protected void onActivityResult(int activite, int resultat, Intent donnees){
         switch (activite){
             case ACTIVITE_RESULTAT_PRISE_PHOTO:
+                Intent intentionNaviguerVersVueValiderCourse = new Intent(VueFaireCourse.this, VueValiderFaireCourse.class);
+                Bundle extras = donnees.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                intentionNaviguerVersVueValiderCourse.putExtra("photo", imageBitmap);
+                startActivityForResult(intentionNaviguerVersVueValiderCourse, ACTIVITE_RESULTAT_NAVIGUER_VERS_VALIDER_COURSE);
                 break;
 
         }
@@ -114,7 +119,7 @@ public class VueFaireCourse extends AppCompatActivity {
         super.onPause();
     }
 
-    protected void rechargerActivite(){
+    private void rechargerActivite(){
         Intent refresh = new Intent(this, VueFaireCourse.class);
         refresh.putExtra(Course.CHAMP_ID_COURSE, courseActuelle.getId() + "");
         startActivity(refresh);
