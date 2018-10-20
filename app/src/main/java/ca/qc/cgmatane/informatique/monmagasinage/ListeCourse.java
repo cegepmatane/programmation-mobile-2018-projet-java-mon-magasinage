@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -25,6 +26,9 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class ListeCourse extends AppCompatActivity {
 
     private static final int ACTIVITE_RESULTAT_MODIFIER_COURSE = 1;
@@ -34,6 +38,8 @@ public class ListeCourse extends AppCompatActivity {
     /** Données*/
     protected Courses listeCourse;
     protected CourseDAO courseDAO;
+    protected boolean undo;
+    Timer timer = new Timer();
 
     /** Composants graphiques*/
     protected SwipeMenuListView vueListViewCourse;
@@ -149,9 +155,29 @@ public class ListeCourse extends AppCompatActivity {
                         startActivityForResult(intentionNaviguerModifierCourse, ACTIVITE_RESULTAT_MODIFIER_COURSE);
                         break;
                     case 1:
-                        Toast message = Toast.makeText(getApplicationContext(), //display toast message
-                                "Redirection vers suppression de la course", Toast.LENGTH_SHORT);
-                        message.show();
+                        Course courseActuelle = listeCourse.get(position);
+                        listeCourse.remove(courseActuelle);
+                        actualisationAffichage();
+
+                        Snackbar mySnackbar = Snackbar.make(vueListViewCourse, "Course supprimée", 2000).setAction("UNDO", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                undo = true;
+                                listeCourse.add(courseActuelle);
+                                actualisationAffichage();
+                                Snackbar snackbar1 = Snackbar.make(vueListViewCourse, "Course restaurée", 2000);
+                                snackbar1.show();
+                            }
+                        });
+                        mySnackbar.show();
+                        timer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                if (!undo){
+                                    courseDAO.supprimerCourse(courseActuelle);}// Your database code here
+                            }
+                        }, 2*1000);
+
                         break;
                 }
                 // false : close the menu; true : not close the menu
