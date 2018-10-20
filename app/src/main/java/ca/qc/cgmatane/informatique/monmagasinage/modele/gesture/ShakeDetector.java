@@ -1,4 +1,4 @@
-package ca.qc.cgmatane.informatique.monmagasinage.modele;
+package ca.qc.cgmatane.informatique.monmagasinage.modele.gesture;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;

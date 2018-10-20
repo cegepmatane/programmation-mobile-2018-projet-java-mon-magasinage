@@ -17,7 +17,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.adaptater.ListViewLigneFaireCou
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.LigneCourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.ShakeDetector;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.gesture.ShakeDetector;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 
 public class VueFaireCourse extends AppCompatActivity {

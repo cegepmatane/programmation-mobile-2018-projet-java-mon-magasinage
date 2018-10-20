@@ -1,11 +1,8 @@
 package ca.qc.cgmatane.informatique.monmagasinage;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,7 +19,6 @@ import android.widget.Toast;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.ShakeDetector;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.*;
