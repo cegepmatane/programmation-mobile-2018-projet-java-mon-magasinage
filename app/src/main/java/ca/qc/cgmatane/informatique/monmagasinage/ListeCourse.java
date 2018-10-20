@@ -1,8 +1,11 @@
 package ca.qc.cgmatane.informatique.monmagasinage;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.ShakeDetector;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.*;
@@ -36,6 +40,9 @@ public class ListeCourse extends AppCompatActivity {
     private static final int ACTIVITE_RESULTAT_MODIFIER_COURSE = 1;
     private static final int ACTIVITE_RESULTAT_MODIFIER_THEME = 2;
     private static final int ACTIVITE_RESULTAT_FAIRE_COURSE = 3;
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private ShakeDetector mShakeDetector;
 
     /**
      * Données
@@ -59,6 +66,20 @@ public class ListeCourse extends AppCompatActivity {
 
         EnumerationTheme.recupererThemeSelectionnee(getApplicationContext());
         this.setTheme(EnumerationTheme.getThemeSelectionne().getIdLienSansActionBar());
+
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager
+                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector();
+        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+
+            @Override
+            public void onShake(int count) {
+                Toast message = Toast.makeText(getApplicationContext(), //display toast message
+                        "Shake shake shake", Toast.LENGTH_SHORT);
+                message.show();
+            }
+        });
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_liste_course);
@@ -126,6 +147,7 @@ public class ListeCourse extends AppCompatActivity {
 
             }
         });
+
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
             @Override
@@ -257,5 +279,16 @@ public class ListeCourse extends AppCompatActivity {
                 actualisationAffichage();
                 break;
         }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer,	SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    public void onPause() {
+        mSensorManager.unregisterListener(mShakeDetector);
+        super.onPause();
     }
 }
