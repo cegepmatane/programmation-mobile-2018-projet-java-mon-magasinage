@@ -90,6 +90,15 @@ public class ListeCourse extends AppCompatActivity {
                 return true;
             }
         });
+        vueListViewCourse.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast message = Toast.makeText(getApplicationContext(), //display toast message
+                        "Redirection vers historique de la course", Toast.LENGTH_SHORT);
+                message.show();
+                return true;
+            }
+        });
 
         vueListViewCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -101,9 +110,7 @@ public class ListeCourse extends AppCompatActivity {
 
                 startActivityForResult(intentionNaviguerFaireCourse, ACTIVITE_RESULTAT_FAIRE_COURSE);
 
-                Toast message = Toast.makeText(getApplicationContext(), //display toast message
-                        "Redirection vers liste faireCourses", Toast.LENGTH_SHORT);
-                message.show();
+
             }
         });
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -121,7 +128,7 @@ public class ListeCourse extends AppCompatActivity {
                         getApplicationContext());
                 historyItem.setBackground(new ColorDrawable(Color.LTGRAY));
                 historyItem.setWidth(170);
-                historyItem.setIcon(R.drawable.ic_history);
+                historyItem.setIcon(R.drawable.ic_delete);
                 menu.addMenuItem(historyItem);
             }
         };
@@ -143,7 +150,7 @@ public class ListeCourse extends AppCompatActivity {
                         break;
                     case 1:
                         Toast message = Toast.makeText(getApplicationContext(), //display toast message
-                                "Redirection vers historique de la course", Toast.LENGTH_SHORT);
+                                "Redirection vers suppression de la course", Toast.LENGTH_SHORT);
                         message.show();
                         break;
                 }
