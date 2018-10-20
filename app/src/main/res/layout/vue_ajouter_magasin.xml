@@ -6,7 +6,7 @@
               android:layout_margin="10dp"
               android:orientation="vertical"
               android:padding="8dp"
-              tools:context=".vue.VueAjouterMagasin"
+              tools:context=".vue.magasin.VueAjouterMagasin"
               tools:layout_editor_absoluteX="8dp"
               tools:layout_editor_absoluteY="8dp">
 

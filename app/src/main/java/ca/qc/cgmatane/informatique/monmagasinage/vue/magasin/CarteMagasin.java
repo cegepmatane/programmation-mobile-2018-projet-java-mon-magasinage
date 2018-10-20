@@ -1,4 +1,4 @@
-package ca.qc.cgmatane.informatique.monmagasinage.vue;
+package ca.qc.cgmatane.informatique.monmagasinage.vue.magasin;
 
 import android.content.pm.PackageManager;
 import android.location.Location;

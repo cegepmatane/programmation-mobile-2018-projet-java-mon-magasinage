@@ -6,7 +6,7 @@
               android:layout_margin="10dp"
               android:orientation="vertical"
               android:padding="8dp"
-              tools:context=".vue.VueModifierMagasin">
+              tools:context=".vue.magasin.VueModifierMagasin">
 
 
     <ScrollView

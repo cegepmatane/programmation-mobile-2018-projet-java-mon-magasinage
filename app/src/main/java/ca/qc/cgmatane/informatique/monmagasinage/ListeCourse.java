@@ -23,6 +23,8 @@ import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationT
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.*;
 
+import ca.qc.cgmatane.informatique.monmagasinage.vue.magasin.CarteMagasin;
+import ca.qc.cgmatane.informatique.monmagasinage.vue.magasin.VueListeMagasin;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
