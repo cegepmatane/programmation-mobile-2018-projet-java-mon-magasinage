@@ -4,117 +4,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-                                             android:focusable="true"
-                                             android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".vue.VueAjouterCourse">
 
-    <TextView
-        android:id="@+id/vue_modifier_course_titre"
+
+    <EditText
+        android:id="@+id/vue_modifier_course_nom_course"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Mofication de ma liste"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:ems="10"
+        android:focusedByDefault="false"
+        android:hint="Nom de la liste"
+        android:inputType="textPersonName"
+        android:text=""
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-            android:id="@+id/vue_modifier_course_nom_course"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:focusedByDefault="false"
-            android:hint="Nom de la liste"
-            android:inputType="textPersonName"
-            android:text=""
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_titre"
-    />
-
     <Spinner
         android:id="@+id/vue_modifier_course_spinner_produit"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_width="167dp"
+        android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_nom_course" />
-
-    <TextView
-        android:id="@+id/vue_modifier_course_date_notification_label"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/date_de_la_notification"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_spinner_produit" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/vue_modifier_course_nom_course"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/vue_modifier_course_date_notification"
-        android:layout_width="0dp"
+        android:layout_width="214dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:focusable="false"
         android:hint="@string/date_de_la_notification"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_date_notification_label" />
+        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_nom_course" />
+
 
     <SearchView
         android:id="@+id/vue_modifier_course_barre_recherche"
-        android:layout_width="182dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="225dp"
+        android:layout_height="45dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_date_notification" />
 
     <TextView
         android:id="@+id/vue_modifier_course_recapitulatif_panier"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="18dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:text="Produits : 0"
-        app:layout_constraintStart_toEndOf="@+id/vue_modifier_course_barre_recherche"
-        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_date_notification" />
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.893"
+        app:layout_constraintStart_toEndOf="@+id/vue_modifier_course_date_notification"
+        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_spinner_produit" />
 
     <ToggleButton
         android:id="@+id/vue_modifier_course_toggle_panier"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:text="Afficher Panier"
         android:textOff="@string/panier"
         android:textOn="@string/produits"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_date_notification" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/vue_modifier_course_barre_recherche"
+        app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_recapitulatif_panier" />
 
     <ListView
         android:id="@+id/vue_modifier_course_liste_produits"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/vue_modifier_course_action_enregistrer"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_barre_recherche"></ListView>
 
@@ -122,9 +101,9 @@
         android:id="@+id/vue_modifier_course_action_enregistrer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/enregistrer_la_course"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

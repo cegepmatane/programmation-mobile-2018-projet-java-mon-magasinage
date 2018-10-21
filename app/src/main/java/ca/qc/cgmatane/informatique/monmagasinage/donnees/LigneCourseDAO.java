@@ -64,17 +64,16 @@ public class LigneCourseDAO {
     public void chargerListeLigneCoursePourUneCourse(Course course){
         Produits listeProduits = produitDAO.getListeProduits();
         Unites listeUnites = uniteDAO.getListeUnite();
+        course.getMesLignesCourse().clear();
 
         Cursor curseurLignesCourse = accesseurBaseDeDonnees.getReadableDatabase().
                 rawQuery(String.format("select * from %s WHERE %s=%s",LigneCourse.NOM_TABLE, LigneCourse.CHAMP_ID_COURSE, course.getId()), null);
-        System.out.println(" QUANTITE PANIER : "+ curseurLignesCourse.getCount());
         int indexIdProduit = curseurLignesCourse.getColumnIndex(LigneCourse.CHAMP_ID_PRODUIT);
         int indexCoche = curseurLignesCourse.getColumnIndex(LigneCourse.CHAMP_COCHE);
         int indexIdUnite = curseurLignesCourse.getColumnIndex(LigneCourse.CHAMP_ID_UNITE);
         int indexQuantite = curseurLignesCourse.getColumnIndex(LigneCourse.CHAMP_QUANTITE);
 
         for(curseurLignesCourse.moveToFirst();!curseurLignesCourse.isAfterLast();curseurLignesCourse.moveToNext()){
-            System.out.println(" QUANTITE PANIER : je passe dans le for");
             LigneCourse ligneCourse= new LigneCourse();
             ligneCourse.setCourse(course);
             ligneCourse.setProduit(listeProduits.trouverAvecId(curseurLignesCourse.getInt(indexIdProduit)));
@@ -83,7 +82,48 @@ public class LigneCourseDAO {
             ligneCourse.setCoche(curseurLignesCourse.getInt(indexCoche)>0);
             course.getMesLignesCourse().add(ligneCourse);
         }
-        System.out.println(" QUANTITE PANIER : "+ course.getMesLignesCourse().recupererQuantiteTotal());
         curseurLignesCourse.close();
+    }
+
+    /***
+     * Permet de cocher pu décocher une ligne course
+     * @param ligneCourse
+     */
+    public void setCocherUneLigneCourse(LigneCourse ligneCourse){
+        SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
+        try {
+            db.beginTransaction();
+            ContentValues values = new ContentValues();
+            values.put(LigneCourse.CHAMP_COCHE, !ligneCourse.isCoche());
+            db.update(LigneCourse.NOM_TABLE, values, LigneCourse.CHAMP_ID_COURSE+"="+ligneCourse.getCourse().getId() + " AND " + LigneCourse.CHAMP_ID_PRODUIT+"="+ligneCourse.getProduit().getId(), null);
+            db.setTransactionSuccessful();
+            db.endTransaction();
+            ligneCourse.setCoche(!ligneCourse.isCoche());
+        } catch (Exception e) {
+            db.endTransaction();
+            e.printStackTrace();
+        }
+    }
+
+    /***
+     * Décoche toutes les lignescourse d'une course
+     * @param course
+     */
+    public void deocherUneCourseEntiere(Course course){
+        SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
+        try {
+            db.beginTransaction();
+            for(LigneCourse ligneCourse: course.getMesLignesCourse()){
+                ContentValues values = new ContentValues();
+                values.put(LigneCourse.CHAMP_COCHE, false);
+                db.update(LigneCourse.NOM_TABLE, values, LigneCourse.CHAMP_ID_COURSE+"="+ligneCourse.getCourse().getId() + " AND " + LigneCourse.CHAMP_ID_PRODUIT+"="+ligneCourse.getProduit().getId(), null);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+        } catch (Exception e) {
+            db.endTransaction();
+            e.printStackTrace();
+        }
     }
 }

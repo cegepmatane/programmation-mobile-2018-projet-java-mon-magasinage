@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,16 +15,23 @@ import android.widget.AdapterView;
 import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.*;
+
+import ca.qc.cgmatane.informatique.monmagasinage.vue.magasin.CarteMagasin;
+import ca.qc.cgmatane.informatique.monmagasinage.vue.magasin.VueListeMagasin;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ListeCourse extends AppCompatActivity {
 
@@ -31,21 +39,29 @@ public class ListeCourse extends AppCompatActivity {
     private static final int ACTIVITE_RESULTAT_MODIFIER_THEME = 2;
     private static final int ACTIVITE_RESULTAT_FAIRE_COURSE = 3;
 
-    /** Données*/
+    /**
+     * Données
+     */
     protected Courses listeCourse;
     protected CourseDAO courseDAO;
+    protected boolean undo;
+    Timer timer = new Timer();
 
-    /** Composants graphiques*/
+    /**
+     * Composants graphiques
+     */
     protected SwipeMenuListView vueListViewCourse;
     protected SearchView vueBarreRechercheCourse;
 
-    protected String rechercheUtilisateur ="";
+    protected String rechercheUtilisateur = "";
     protected Courses listeCourseAffichage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         EnumerationTheme.recupererThemeSelectionnee(getApplicationContext());
         this.setTheme(EnumerationTheme.getThemeSelectionne().getIdLienSansActionBar());
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_liste_course);
@@ -90,6 +106,15 @@ public class ListeCourse extends AppCompatActivity {
                 return true;
             }
         });
+        vueListViewCourse.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast message = Toast.makeText(getApplicationContext(), //display toast message
+                        "Redirection vers historique de la course", Toast.LENGTH_SHORT);
+                message.show();
+                return true;
+            }
+        });
 
         vueListViewCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -97,15 +122,14 @@ public class ListeCourse extends AppCompatActivity {
 //                inserer ici redirection vers vue todo courses
                 Course course = listeCourse.get(position);
                 Intent intentionNaviguerFaireCourse = new Intent(ListeCourse.this, VueFaireCourse.class);
-                intentionNaviguerFaireCourse.putExtra(Course.CHAMP_ID_COURSE, course.getId()+"");
+                intentionNaviguerFaireCourse.putExtra(Course.CHAMP_ID_COURSE, course.getId() + "");
 
                 startActivityForResult(intentionNaviguerFaireCourse, ACTIVITE_RESULTAT_FAIRE_COURSE);
 
-                Toast message = Toast.makeText(getApplicationContext(), //display toast message
-                        "Redirection vers liste faireCourses", Toast.LENGTH_SHORT);
-                message.show();
+
             }
         });
+
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
             @Override
@@ -121,7 +145,7 @@ public class ListeCourse extends AppCompatActivity {
                         getApplicationContext());
                 historyItem.setBackground(new ColorDrawable(Color.LTGRAY));
                 historyItem.setWidth(170);
-                historyItem.setIcon(R.drawable.ic_history);
+                historyItem.setIcon(R.drawable.ic_delete);
                 menu.addMenuItem(historyItem);
             }
         };
@@ -136,15 +160,36 @@ public class ListeCourse extends AppCompatActivity {
 
                         @SuppressWarnings("unchecked")
 //                        HashMap<String,String> course =(HashMap<String,String>) vueListeCourse.getItemAtPosition((int)position);
-                        Course course = listeCourse.get(position);
+                                Course course = listeCourse.get(position);
                         Intent intentionNaviguerModifierCourse = new Intent(ListeCourse.this, VueModifierCourse.class);
-                        intentionNaviguerModifierCourse.putExtra(Course.CHAMP_ID_COURSE, course.getId()+"");
+                        intentionNaviguerModifierCourse.putExtra(Course.CHAMP_ID_COURSE, course.getId() + "");
                         startActivityForResult(intentionNaviguerModifierCourse, ACTIVITE_RESULTAT_MODIFIER_COURSE);
                         break;
                     case 1:
-                        Toast message = Toast.makeText(getApplicationContext(), //display toast message
-                                "Redirection vers historique de la course", Toast.LENGTH_SHORT);
-                        message.show();
+                        Course courseActuelle = listeCourse.get(position);
+                        listeCourse.remove(courseActuelle);
+                        actualisationAffichage();
+
+                        Snackbar mySnackbar = Snackbar.make(vueListViewCourse, "Course supprimée", 2000).setAction("Annuler", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                undo = true;
+                                listeCourse.add(courseActuelle);
+                                actualisationAffichage();
+                                Snackbar snackbar1 = Snackbar.make(vueListViewCourse, "Course restaurée", 2000);
+                                snackbar1.show();
+                            }
+                        });
+                        mySnackbar.show();
+                        timer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                if (!undo) {
+                                    courseDAO.supprimerCourse(courseActuelle);
+                                }
+                            }
+                        }, 2 * 1000);
+
                         break;
                 }
                 // false : close the menu; true : not close the menu
@@ -152,7 +197,6 @@ public class ListeCourse extends AppCompatActivity {
             }
         });
     }
-
 
 
     @Override
@@ -173,13 +217,11 @@ public class ListeCourse extends AppCompatActivity {
             Intent intentionNaviguerVueGestionMagasin = new Intent(this, VueListeMagasin.class);
             startActivity(intentionNaviguerVueGestionMagasin);
             return true;
-        }
-        else if(id == R.id.action_changer_theme){
+        } else if (id == R.id.action_changer_theme) {
             Intent intentionNaviguerChangerTheme = new Intent(this, VueModifierTheme.class);
             startActivityForResult(intentionNaviguerChangerTheme, ACTIVITE_RESULTAT_MODIFIER_THEME);
             return true;
-        }
-        else if(id == R.id.action_carte_magasin){
+        } else if (id == R.id.action_carte_magasin) {
             //TODO à modifier navigation de puis la vue princpal pour tester l'implementation
             Intent intentionNaviguerCarteMagasin = new Intent(this, CarteMagasin.class);
             startActivity(intentionNaviguerCarteMagasin);
@@ -190,8 +232,8 @@ public class ListeCourse extends AppCompatActivity {
 
     private void actualisationAffichage() {
         listeCourseAffichage.clear();
-        for(Course course: listeCourse){
-            if(course.getNom().toLowerCase().contains(rechercheUtilisateur.toLowerCase())){
+        for (Course course : listeCourse) {
+            if (course.getNom().toLowerCase().contains(rechercheUtilisateur.toLowerCase())) {
                 listeCourseAffichage.add(course);
             }
         }
@@ -199,15 +241,16 @@ public class ListeCourse extends AppCompatActivity {
         afficherToutesLesCourses();
     }
 
-    private void afficherToutesLesCourses(){
+    private void afficherToutesLesCourses() {
         SimpleAdapter adapterListeCourses = new SimpleAdapter(this, listeCourseAffichage.recuperereListePourAdapteur(), android.R.layout.two_line_list_item,
                 new String[]{Course.CHAMP_NOM, Course.CHAMP_DATE_NOTIFICATION},
-                new int[]{ android.R.id.text1, android.R.id.text2});
+                new int[]{android.R.id.text1, android.R.id.text2});
 
         vueListViewCourse.setAdapter(adapterListeCourses);
     }
-    protected void onActivityResult(int activite, int resultat, Intent donnees){
-        switch (activite){
+
+    protected void onActivityResult(int activite, int resultat, Intent donnees) {
+        switch (activite) {
             case ACTIVITE_RESULTAT_MODIFIER_COURSE:
                 actualisationAffichage();
                 break;
@@ -219,4 +262,5 @@ public class ListeCourse extends AppCompatActivity {
                 break;
         }
     }
+
 }

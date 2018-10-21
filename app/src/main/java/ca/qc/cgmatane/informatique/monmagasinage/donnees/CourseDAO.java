@@ -153,4 +153,10 @@ public class CourseDAO implements CourseSQL{
     public void setListeCourses(Courses listeCourses) {
         this.listeCourses = listeCourses;
     }
+
+    public void supprimerCourse(Course courseActuelle) {
+        accesseurBaseDeDonnees.getWritableDatabase().delete(Course.NOM_TABLE,
+                Course.CHAMP_ID_COURSE+"="+courseActuelle.getId(),
+                null);
+    }
 }

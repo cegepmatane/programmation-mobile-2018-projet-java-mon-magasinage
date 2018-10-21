@@ -1,41 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ca.qc.cgmatane.informatique.monmagasinage">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+          xmlns:tools="http://schemas.android.com/tools"
+          package="ca.qc.cgmatane.informatique.monmagasinage">
+
+    <uses-permission android:name="android.permission.INTERNET" tools:remove="android:maxSdkVersion"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:remove="android:maxSdkVersion"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:remove="18"/>
+    <uses-permission android:name="android.permission.CAMERA" tools:remove="android:maxSdkVersion"/>
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality. 
     -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" tools:remove="android:maxSdkVersion"/>
 
+  <!--  <uses-feature
+            android:name="android.hardware.camera"
+            android:required="true"/>
+-->
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/mon_magasinage_icon"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/mon_magasinage_icon_circle"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name=".ListeCourse"
+            android:allowBackup="true"
+            android:icon="@mipmap/mon_magasinage_icon"
             android:label="@string/app_name"
-            android:theme="@style/ThemeSombre">
+            android:roundIcon="@mipmap/mon_magasinage_icon_circle"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+        <activity
+                android:name=".ListeCourse"
+                android:label="@string/app_name"
+                android:theme="@style/ThemeSombre">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".vue.VueListeMagasin" />
-        <activity android:name=".vue.VueModifierMagasin" />
-        <activity android:name=".vue.VueAjouterMagasin" />
-        <activity android:name=".vue.VueAjouterCourse" />
-        <activity android:name=".vue.VueFaireCourse" />
-        <activity android:name=".vue.VueAjouterProduitListeCourse" />
-        <activity android:name=".vue.VueModifierCourse" />
-        <activity android:name=".vue.VueModifierTheme" />
+        <activity android:name=".vue.magasin.VueListeMagasin"/>
+        <activity android:name=".vue.magasin.VueModifierMagasin"/>
+        <activity android:name=".vue.magasin.VueAjouterMagasin"/>
+        <activity android:name=".vue.VueAjouterCourse"/>
+        <activity android:name=".vue.VueFaireCourse"/>
+        <activity android:name=".vue.VueModifierCourse"/>
+        <activity android:name=".vue.VueModifierTheme"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -45,17 +52,34 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-
+                android:name="com.google.android.geo.API_KEY"
+                android:value="@string/google_maps_key"/>
 
         <activity
-            android:name="ca.qc.cgmatane.informatique.monmagasinage.vue.CarteMagasin"
-            android:label="@string/title_activity_carte_magasin" />
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-        
-        <service android:name=".modele.Notification"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
+                android:name=".vue.magasin.CarteMagasin"
+                android:label="@string/title_activity_carte_magasin"/>
+
+        <uses-library
+                android:name="org.apache.http.legacy"
+                android:required="false"/>
+
+        <service
+                android:name=".modele.Notification"
+                android:permission="android.permission.BIND_JOB_SERVICE"/>
+
+        <activity android:name=".vue.VueValiderFaireCourse">
+        </activity>
+
+        <provider
+                android:name="android.support.v4.content.FileProvider"
+                android:authorities="ca.qc.cgmatane.informatique.monmagasinage.provider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths">
+            </meta-data>
+        </provider>
 
     </application>
 

@@ -98,7 +98,24 @@ public class ListViewLigneCourseAdaptater extends ArrayAdapter<LigneCourse> {
 
 
         if(ligneCourse != null &&  ligneCourse.getProduit() != null){
+
+
             vueBloqueLigneCourse.textViewNomProduit.setText(((LigneCourse) ligneCourse).getProduit().getNom());
+
+            if (ligneCourse.getProduit().getNom().length() > 13) {
+                String nomReduit = ligneCourse.getProduit().getNom().substring(0, 13);
+                vueBloqueLigneCourse.textViewNomProduit.setText(nomReduit + "...");
+            } else {
+                vueBloqueLigneCourse.textViewNomProduit.setText(ligneCourse.getProduit().getNom());
+            }
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast message = Toast.makeText(monContext, //display toast message
+                            ligneCourse.getProduit().getNom(), Toast.LENGTH_SHORT);
+                    message.show();
+                }
+            });
             vueBloqueLigneCourse.spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(ligneCourse.getUnite().getId()));
             vueBloqueLigneCourse.spinnerQuantite.setSelection(ligneCourse.getQuantite()-1);
             vueBloqueLigneCourse.actionLigneProduit.setOnClickListener(new View.OnClickListener() {

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import android.widget.Toast;
 import ca.qc.cgmatane.informatique.monmagasinage.R;
+import ca.qc.cgmatane.informatique.monmagasinage.donnees.LigneCourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.LigneCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Unites;
@@ -20,6 +21,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Unites;
 public class ListViewLigneFaireCourseAdapter extends ArrayAdapter<LigneCourse> {
     private Course courseActuelle;
     private Context monContext;
+    protected LigneCourseDAO ligneCourseDAO;
 
     private static class VueBloqueFaireCourse {
         TextView textViewNomProduit;
@@ -31,6 +33,7 @@ public class ListViewLigneFaireCourseAdapter extends ArrayAdapter<LigneCourse> {
         super(context, R.layout.ligne_listview_faire_course);
         this.monContext = context;
         courseActuelle = course;
+        ligneCourseDAO = LigneCourseDAO.getInstance();
     }
 
     @Override
@@ -83,13 +86,11 @@ public class ListViewLigneFaireCourseAdapter extends ArrayAdapter<LigneCourse> {
             vueBloqueFaireCourse.textViewNomProduit.setText(ligneCourse.getProduit().getNom());
             vueBloqueFaireCourse.textViewUnite.setText(ligneCourse.getUnite().getLibelle());
             vueBloqueFaireCourse.textViewQuantite.setText(ligneCourse.getQuantite()+"");
-            vueBloqueFaireCourse.checkBoxLigneProduit.setSelected(ligneCourse.isCoche());
+            vueBloqueFaireCourse.checkBoxLigneProduit.setChecked(ligneCourse.isCoche());
         vueBloqueFaireCourse.checkBoxLigneProduit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast message = Toast.makeText(monContext, //display toast message
-                        "Check", Toast.LENGTH_SHORT);
-                message.show();
+                ligneCourseDAO.setCocherUneLigneCourse(ligneCourse);
             }
         });
         }
