@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -33,7 +34,9 @@ import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationT
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 public class VueFaireCourse extends AppCompatActivity {
@@ -49,12 +52,16 @@ public class VueFaireCourse extends AppCompatActivity {
     protected LigneCourseDAO ligneCourseDAO;
     protected Button actionTerminerCourse;
 
-    /** Secouer*/
+    /**
+     * Secouer
+     */
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
 
-    /** Photo */
+    /**
+     * Photo
+     */
     protected String mCurrentPhotoPath;
 
     @Override
@@ -71,7 +78,7 @@ public class VueFaireCourse extends AppCompatActivity {
         courseDAO = CourseDAO.getInstance();
         ligneCourseDAO = LigneCourseDAO.getInstance();
 
-        listViewPanier =(ListView) findViewById(R.id.vue_faire_course_list_view_panier);
+        listViewPanier = (ListView) findViewById(R.id.vue_faire_course_list_view_panier);
         actionTerminerCourse = findViewById(R.id.vue_faire_course_terminer);
 
         courseActuelle = courseDAO.getListeCourses().trouverAvecId(idCourse);
@@ -99,7 +106,8 @@ public class VueFaireCourse extends AppCompatActivity {
         actionTerminerCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prendrePhoto();
+                demanderPermission();
+
             }
         });
     }
@@ -110,74 +118,82 @@ public class VueFaireCourse extends AppCompatActivity {
             startActivityForResult(intentionFairePhoto, ACTIVITE_RESULTAT_PRISE_PHOTO);
         }
     }
-*/
-    public void prendrePhoto(){
+  */
+    /*public void prendrePhoto() {
         Intent intentionFairePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (intentionFairePhoto.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intentionFairePhoto, ACTIVITE_RESULTAT_PRISE_PHOTO);
         }
-    }
+    }*/
 
-    protected void onActivityResult(int activite, int resultat, Intent donnees){
+    protected void onActivityResult(int activite, int resultat, Intent donnees) {
 
         if (activite == ACTIVITE_RESULTAT_PRISE_PHOTO && resultat == RESULT_OK) {
+            galleryAddPic();
 
-            Bitmap imageBitmap = (Bitmap) donnees.getExtras().get("data");
-            sauvegarderPhoto(imageBitmap);
-            /*Intent intentionNaviguerVersVueValiderCourse = new Intent(VueFaireCourse.this, VueValiderFaireCourse.class);
-            intentionNaviguerVersVueValiderCourse.putExtra("photo", imageBitmap);
-            startActivityForResult(intentionNaviguerVersVueValiderCourse, ACTIVITE_RESULTAT_NAVIGUER_VERS_VALIDER_COURSE);*/
-
-       /*
-        Intent intentionNaviguerVersVueValiderCourse = new Intent(VueFaireCourse.this, VueValiderFaireCourse.class);
-        Bundle extras = donnees.getExtras();
-        Bitmap imageBitmap = (Bitmap) extras.get("data");
-        if(imageBitmap != null){
-            intentionNaviguerVersVueValiderCourse.putExtra("photo", imageBitmap);
-            startActivityForResult(intentionNaviguerVersVueValiderCourse, ACTIVITE_RESULTAT_NAVIGUER_VERS_VALIDER_COURSE);
-        }*/
-
+            Toast message = Toast.makeText(getApplicationContext(), //display toast message
+                    "Photo enregistrée dans "+mCurrentPhotoPath, Toast.LENGTH_SHORT);
+            message.show();
         }
 
 
     }
 
-    private void sauvegarderPhoto(Bitmap photoEnBitmap){
-        String root = Environment.getExternalStorageDirectory().toString();
-        File monDossier = new File (root + "/imageMonMagasinage");
-        monDossier.mkdir();
-        String nomFichier = "TiquetCourse"+courseActuelle.getId() + ".jpg";
-        ImageSaver imageSaver = new ImageSaver(this, nomFichier);
-        imageSaver.save(photoEnBitmap);
-       /* String nomFichier = "TiquetCourse"+courseActuelle.getId() *//*+ "-"+courseActuelle.getNom().replace(" ","_")*//* + ".jpg";
-        File fichier = new File (monDossier, nomFichier);
-        if(fichier.exists()){
-            fichier.delete();
+    private File sauvegarderPhoto() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+
+    private void prendrePhoto() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = sauvegarderPhoto();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Toast message = Toast.makeText(getApplicationContext(), //display toast message
+                        "Erreur sur l'enregistrement de la photo", Toast.LENGTH_SHORT);
+                message.show();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "ca.qc.cgmatane.informatique.monmagasinage.provider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, ACTIVITE_RESULTAT_PRISE_PHOTO);
+            }
         }
-        FileOutputStream out = null;
+    }
 
-        try{
-            out = new FileOutputStream(fichier);
-            photoEnBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-
-            out.flush();
-            out.close();
-            Toast message = Toast.makeText(getApplicationContext(), //display toast message
-                    "j'ai ma photo", Toast.LENGTH_SHORT);
-            message.show();
-        }catch (Exception e){
-            e.printStackTrace();
-            Toast message = Toast.makeText(getApplicationContext(), //display toast message
-                    "Erreur sur l'enregistrement de la photo", Toast.LENGTH_SHORT);
-            message.show();
-        }*/
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         // Add the following line to register the Session Manager Listener onResume
-        mSensorManager.registerListener(mShakeDetector, mAccelerometer,	SensorManager.SENSOR_DELAY_UI);
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
@@ -187,25 +203,27 @@ public class VueFaireCourse extends AppCompatActivity {
         super.onPause();
     }
 
-    private void rechargerActivite(){
+    private void rechargerActivite() {
         Intent refresh = new Intent(this, VueFaireCourse.class);
         refresh.putExtra(Course.CHAMP_ID_COURSE, courseActuelle.getId() + "");
         startActivity(refresh);
         this.finish();
     }
 
-    protected void demanderPermission(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if(checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(VueFaireCourse.this, new String[]{Manifest.permission.CAMERA},1);
+    protected void demanderPermission() {
+        if (ContextCompat.checkSelfPermission(VueFaireCourse.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        /*    if (ContextCompat.checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {*/
+                ActivityCompat.requestPermissions(VueFaireCourse.this, new String[]{Manifest.permission.CAMERA}, 1);
             }
-        }
-        if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(VueFaireCourse.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUETE_PERMISSION_WRITE_STORAGE);
-        }
-        else {
-            prendrePhoto();
-            }
-        }
 
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this,
+                    "External storage permission required to save images",
+                    Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(VueFaireCourse.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        } else {
+            prendrePhoto();
+        }
+    }
+    
 }
