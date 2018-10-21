@@ -141,8 +141,9 @@ public class VueFaireCourse extends AppCompatActivity {
 
     private File sauvegarderPhoto() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+     //   String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//        String imageFileName = "JPEG_" + timeStamp + "_";
+        String imageFileName = "tiquet_course"+courseActuelle.getId()+"_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
@@ -225,5 +226,5 @@ public class VueFaireCourse extends AppCompatActivity {
             prendrePhoto();
         }
     }
-    
+
 }
