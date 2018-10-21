@@ -146,6 +146,29 @@ public class CourseDAO implements CourseSQL{
 
     }
 
+    /***
+     * Cloture une course ajoutant une date de réalisation et en créant une nouvelle course lié à cette derniere
+     * @param courseACloturer
+     */
+    public void cloturerCourse(Course courseACloturer){
+
+        modifierCourse(courseACloturer.getId(),
+                courseACloturer.getNom(),
+                courseACloturer.getDateNotification().format(formatter),
+                LocalDateTime.now().format(formatter),
+                courseACloturer.getIdCourseOriginal(),
+                courseACloturer.getMonMagasin());
+
+        creerCourse(courseACloturer.getNom(),
+                null,
+                null ,
+                courseACloturer.getId(),
+                courseACloturer.getMonMagasin(),
+                courseACloturer.getMesLignesCourse());
+        
+        listeCourses.remove(courseACloturer);
+    }
+
     public Courses getListeCourses() {
         return listeCourses;
     }
