@@ -198,6 +198,16 @@ public class VueModifierCourse extends AppCompatActivity {
                 return true;
             }
         });
+
+        dateNotification.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    dateNotification.setText("");
+                    return true;
+                }
+            }
+        );
+
         barreDeRecherche.setActivated(true);
         barreDeRecherche.setQueryHint("Nom du produit");
         barreDeRecherche.onActionViewExpanded();

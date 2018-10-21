@@ -29,8 +29,14 @@ public class Notification extends JobService {
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
+
+         PersistableBundle bundle = jobParameters.getExtras();
+         String titre = (String) bundle.get("titre");
+         String text = (String) bundle.get("text");
+         int id = (int) bundle.get("id");
+
         NotificationChannel channel1 = new NotificationChannel(
-                "channel1",
+                "channel"+Integer.toString(id),
                 "channel1",
                 NotificationManager.IMPORTANCE_DEFAULT
         );
@@ -38,12 +44,7 @@ public class Notification extends JobService {
 
         manager.createNotificationChannel(channel1);
 
-         PersistableBundle bundle = jobParameters.getExtras();
-         String titre = (String) bundle.get("titre");
-         String text = (String) bundle.get("text");
-         int id = (int) bundle.get("id");
-
-         //creation des propriétés de la notification
+        //creation des propriétés de la notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(),"channel1")
                 .setSmallIcon(R.mipmap.mon_magasinage_icon_circle)
                 .setBadgeIconType(R.mipmap.mon_magasinage_icon_circle)

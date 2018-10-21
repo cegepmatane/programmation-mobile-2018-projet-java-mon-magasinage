@@ -60,13 +60,11 @@ public class ListeCourse extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         EnumerationTheme.recupererThemeSelectionnee(getApplicationContext());
-        this.setTheme(EnumerationTheme.getThemeSelectionne().getIdLienSansActionBar());
+        this.setTheme(EnumerationTheme.getThemeSelectionne().getIdLien());
 
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_liste_course);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         /** Instanciation des composants graphiques*/
         vueListViewCourse = findViewById(R.id.vue_liste_course_listeview);
@@ -106,6 +104,11 @@ public class ListeCourse extends AppCompatActivity {
                 return true;
             }
         });
+        vueBarreRechercheCourse.setActivated(true);
+        vueBarreRechercheCourse.setQueryHint("Nom de la course");
+        vueBarreRechercheCourse.onActionViewExpanded();
+        vueBarreRechercheCourse.setIconified(false);
+        vueBarreRechercheCourse.clearFocus();
         vueListViewCourse.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -262,5 +265,4 @@ public class ListeCourse extends AppCompatActivity {
                 break;
         }
     }
-
 }

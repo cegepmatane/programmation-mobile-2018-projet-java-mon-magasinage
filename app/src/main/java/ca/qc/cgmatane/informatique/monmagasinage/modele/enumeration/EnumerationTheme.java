@@ -107,8 +107,7 @@ public enum EnumerationTheme {
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
-            
-            Log.d("set theme value", themeSelectionne.getIdNomTheme());
+
 
             Node noeuxAModifier = doc.getElementById("1");
             Node child = noeuxAModifier.getChildNodes().item(0);
@@ -120,7 +119,6 @@ public enum EnumerationTheme {
             StreamResult streamResult = new StreamResult(ouputFile);
             transformer.transform(source, streamResult);
 
-            //Log.d("output file : ", source.toString());
             ouputFile.close();
 
             System.out.println("nouvelle valeur :");
@@ -217,7 +215,6 @@ public enum EnumerationTheme {
 
         } catch (IOException e) {
             try {
-                Log.e("erreur d chargement du fichier", e.toString());
                 System.out.println("create file");
                 File file = new File("/sdcard/Android/data/ca.qc.cgmatane.informatique.monmagasinage/enregistrementStyle.xml");
                 File folder = new File("/sdcard/Android/data/ca.qc.cgmatane.informatique.monmagasinage/");
@@ -225,7 +222,6 @@ public enum EnumerationTheme {
                     folder.mkdirs();
                 }
                 file.createNewFile();
-                Log.d("file creation", "created");
                 FileOutputStream ouputFile = new FileOutputStream("/sdcard/Android/data/ca.qc.cgmatane.informatique.monmagasinage/enregistrementStyle.xml");
                 ouputFile.write(new StringBuilder().append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n").append("<themeSelectionne>\n").append("    <string name=\"themeSelectionne\" id=\"1\">AppTheme</string>\n").append("</themeSelectionne>").toString().getBytes());
                 ouputFile.close();
