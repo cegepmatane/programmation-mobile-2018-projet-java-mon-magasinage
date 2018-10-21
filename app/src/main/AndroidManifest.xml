@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:remove="android:maxSdkVersion"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:remove="18"/>
     <uses-permission android:name="android.permission.CAMERA" tools:remove="android:maxSdkVersion"/>
+    <uses-permission android:name="android.permission.VIBRATE" tools:remove="android:maxSdkVersion"/>
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use

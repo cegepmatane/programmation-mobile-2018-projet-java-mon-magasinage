@@ -43,6 +43,7 @@ public class Notification extends JobService {
          String text = (String) bundle.get("text");
          int id = (int) bundle.get("id");
 
+         //creation des propriétés de la notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(),"channel1")
                 .setSmallIcon(R.mipmap.mon_magasinage_icon_circle)
                 .setBadgeIconType(R.mipmap.mon_magasinage_icon_circle)
@@ -52,18 +53,23 @@ public class Notification extends JobService {
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setAutoCancel(true);
 
+        //creation de l'intent de redirection
         Intent notificationIntent = new Intent(getApplicationContext(), VueFaireCourse.class);
         notificationIntent.putExtra(Course.CHAMP_ID_COURSE, Integer.toString(id));
 
+        //suppresion auto de la notif apres redirection
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
+        //transformation de l'intent pour ajout au builder
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(notificationIntent);
         PendingIntent resultPendingIntent =
                 stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        builder.addAction(R.mipmap.mon_magasinage_icon_circle,"click",resultPendingIntent);
+        //ajout de l'intent au builder
+        builder.setContentIntent(resultPendingIntent);
+        builder.setVibrate(new long[] { 10000, 10000, 10000, 10000, 10000 });
         manager.notify(1,builder.build());
         return false;
     }
