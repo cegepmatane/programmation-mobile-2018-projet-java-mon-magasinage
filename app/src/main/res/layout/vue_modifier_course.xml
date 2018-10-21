@@ -25,7 +25,7 @@
 
     <Spinner
         android:id="@+id/vue_modifier_course_spinner_produit"
-        android:layout_width="167dp"
+        android:layout_width="189dp"
         android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -73,13 +73,13 @@
         android:layout_width="wrap_content"
         android:layout_height="41dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="Afficher Panier"
         android:textOff="@string/panier"
         android:textOn="@string/produits"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.854"
         app:layout_constraintStart_toEndOf="@+id/vue_modifier_course_barre_recherche"
         app:layout_constraintTop_toBottomOf="@+id/vue_modifier_course_recapitulatif_panier" />
 
