@@ -23,13 +23,13 @@ public interface RequeteInsertionEchafautBaseDeDonnees {
 
     /** Course*/
     final static String INSERT_COURSE_1=String.format("insert into %s (%s, %s, %s, %s, %s) VALUES ('%s', '%s', '%s', %s, %s)",
-            Course.NOM_TABLE,  Course.CHAMP_NOM, Course.CHAMP_DATE_NOTIFICATION, Course.CHAMP_DATE_REALISATION, Course.CHAMP_ID_COURSE_ORIGINAL, Course.CHAMP_ID_MAGASIN, "Une course exeptionnelle", "2016-01-01-10:20", "2016-01-01-10:20", null, 1);
+            Course.NOM_TABLE,  Course.CHAMP_NOM, Course.CHAMP_DATE_NOTIFICATION, Course.CHAMP_DATE_REALISATION, Course.CHAMP_ID_COURSE_ORIGINAL, Course.CHAMP_ID_MAGASIN, "Une course exeptionnelle", "2016-01-01-10:20", "", null, 1);
 
     final static String INSERT_COURSE_2=String.format("insert into %s (%s, %s, %s, %s, %s) VALUES ('%s', '%s', '%s', %s, %s)",
-            Course.NOM_TABLE,  Course.CHAMP_NOM, Course.CHAMP_DATE_NOTIFICATION, Course.CHAMP_DATE_REALISATION, Course.CHAMP_ID_COURSE_ORIGINAL, Course.CHAMP_ID_MAGASIN,  "Course du mardi", "2016-01-01-10:20", "2016-01-01-10:20", null,  1);
+            Course.NOM_TABLE,  Course.CHAMP_NOM, Course.CHAMP_DATE_NOTIFICATION, Course.CHAMP_DATE_REALISATION, Course.CHAMP_ID_COURSE_ORIGINAL, Course.CHAMP_ID_MAGASIN,  "Course du mardi", "2016-01-01-10:20", "", null,  1);
 
     final static String INSERT_COURSE_3=String.format("insert into %s (%s, %s, %s, %s, %s) VALUES ('%s', '%s', '%s', %s, %s)",
-            Course.NOM_TABLE,  Course.CHAMP_NOM, Course.CHAMP_DATE_NOTIFICATION, Course.CHAMP_DATE_REALISATION, Course.CHAMP_ID_COURSE_ORIGINAL, Course.CHAMP_ID_MAGASIN,  "Course du samedi", "2016-01-01-10:20", "2016-01-01-10:20", null,  1);
+            Course.NOM_TABLE,  Course.CHAMP_NOM, Course.CHAMP_DATE_NOTIFICATION, Course.CHAMP_DATE_REALISATION, Course.CHAMP_ID_COURSE_ORIGINAL, Course.CHAMP_ID_MAGASIN,  "Course du samedi", "2016-01-01-10:20", "", null,  1);
 
     /** Unite */
     final static String INSERT_UNITE=String.format("insert into %s (%s, %s) VALUES (%s, '%s'), (%s, '%s'), (%s, '%s'), (%s, '%s'), (%s, '%s'), (%s, '%s'), (%s, '%s'), (%s, '%s')",

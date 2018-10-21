@@ -76,7 +76,7 @@ public class ListeCourse extends AppCompatActivity {
         BaseDeDonnees.getInstance(this); // Initialiser l'intance avec une activity
         courseDAO = CourseDAO.getInstance();
 //        listeCourse = simulerListeCourse();
-        listeCourse = courseDAO.listerCourses();
+        listeCourse = courseDAO.listerCoursesActuelles();
         listeCourseAffichage = new Courses();
 
         /** Affichage*/
@@ -119,7 +119,7 @@ public class ListeCourse extends AppCompatActivity {
         vueListViewCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View vue, int position, long id) {
-//                inserer ici redirection vers vue todo courses
+
                 Course course = listeCourse.get(position);
                 Intent intentionNaviguerFaireCourse = new Intent(ListeCourse.this, VueFaireCourse.class);
                 intentionNaviguerFaireCourse.putExtra(Course.CHAMP_ID_COURSE, course.getId() + "");

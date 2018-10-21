@@ -4,12 +4,9 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
-import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -27,17 +24,11 @@ import ca.qc.cgmatane.informatique.monmagasinage.adaptater.ListViewLigneFaireCou
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.LigneCourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.gesture.ImageSaver;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.gesture.ShakeDetector;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
 
 public class VueFaireCourse extends AppCompatActivity {
 
@@ -130,10 +121,11 @@ public class VueFaireCourse extends AppCompatActivity {
 
         if (activite == ACTIVITE_RESULTAT_PRISE_PHOTO && resultat == RESULT_OK) {
             galleryAddPic();
-
+            courseDAO.cloturerCourse(courseActuelle);
             Toast message = Toast.makeText(getApplicationContext(), //display toast message
                     "Photo enregistrée dans "+mCurrentPhotoPath, Toast.LENGTH_SHORT);
             message.show();
+            finish();
         }
 
 

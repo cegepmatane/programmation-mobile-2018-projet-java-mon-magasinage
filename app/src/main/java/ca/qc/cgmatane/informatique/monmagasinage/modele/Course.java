@@ -25,6 +25,10 @@ public class Course {
     private Magasin monMagasin;
     private LignesCourse mesLignesCourse;
 
+    public Course(int id) {
+        this.id = id;
+    }
+
     public Course(int id, String nom, LocalDateTime dateNotification, LocalDateTime dateRealisation) {
         this.id = id;
         this.nom = nom;
@@ -112,5 +116,16 @@ public class Course {
         }
 
         return coursePourAdapteur;
+    }
+
+    /***
+     *
+     * @return l'id de la course orignal string, 0 si n'existe pas
+     */
+    public int getIdCourseOriginal(){
+        if(courseOriginal != null){
+            return  courseOriginal.getId();
+        }
+        return 0;
     }
 }

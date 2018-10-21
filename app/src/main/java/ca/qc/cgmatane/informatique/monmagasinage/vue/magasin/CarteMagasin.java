@@ -103,7 +103,7 @@ public class CarteMagasin extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        //TODO test
+
         Magasins listeMagasins = MagasinDAO.getInstance().getListeMagasins();
         for(Magasin magasin: listeMagasins){
             LatLng latLng = new LatLng(magasin.getCoorX(), magasin.getCoorY());
