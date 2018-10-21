@@ -60,12 +60,12 @@ public class CourseDAO implements CourseSQL{
 
             LocalDateTime dateNotification;
             LocalDateTime dateRealisation;
-            if(!str_dateNotification.equals("")){
+            if(null != str_dateNotification && !str_dateNotification.equals("")){
                 dateNotification = LocalDateTime.parse(str_dateNotification, formatter);
             }else {
                 dateNotification =null;
             }
-            if(!str_dateRealisation.equals("")){
+            if(null != str_dateRealisation && !str_dateRealisation.equals("")){
                  dateRealisation = LocalDateTime.parse(str_dateRealisation, formatter);
             }else {
                  dateRealisation = null;
@@ -85,11 +85,11 @@ public class CourseDAO implements CourseSQL{
 
     public Courses listerToutesLesCourses(){
         Cursor curseurCourses = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_COURSE, null);
-        this.listeCourses.clear();
+        //this.listeCourses.clear();
 
         magasinDAO.listerMagasins();//Chargement des magasins
         Course course;
-
+        Courses listeDeToutesLesCourses= new Courses();
         int indexId = curseurCourses.getColumnIndex(Course.CHAMP_ID_COURSE);
         int indexNom = curseurCourses.getColumnIndex(Course.CHAMP_NOM);
         int indexDateNotification = curseurCourses.getColumnIndex(Course.CHAMP_DATE_NOTIFICATION);
@@ -108,12 +108,12 @@ public class CourseDAO implements CourseSQL{
 
             LocalDateTime dateNotification;
             LocalDateTime dateRealisation;
-            if(!str_dateNotification.equals("")){
+            if(null != str_dateNotification && !str_dateNotification.equals("")){
                 dateNotification = LocalDateTime.parse(str_dateNotification, formatter);
             }else {
                 dateNotification =null;
             }
-            if(!str_dateRealisation.equals("")){
+            if(null != str_dateRealisation && !str_dateRealisation.equals("")){
                 dateRealisation = LocalDateTime.parse(str_dateRealisation, formatter);
             }else {
                 dateRealisation = null;
@@ -123,13 +123,12 @@ public class CourseDAO implements CourseSQL{
             course.setMonMagasin(magasinDAO.getListeMagasins().trouverAvecId(id_magasin));
             if(id_course_original != 0)
                 course.setCourseOriginal(new Course(indexId)); // Ajout d'une course fictive uniquement pour sauvegarder l'id
-
-            this.listeCourses.add(course);
+            listeDeToutesLesCourses.add(course);
         }
 
         curseurCourses.close();
 
-        return this.listeCourses;
+        return listeDeToutesLesCourses;
     }
 
     public int creerCourse(String nom, String dateNotification, String dateRealisation, int idOriginal, Magasin magasin, LignesCourse ligneCourses)
