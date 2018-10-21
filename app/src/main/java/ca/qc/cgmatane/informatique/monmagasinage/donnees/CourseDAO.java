@@ -47,7 +47,7 @@ public class CourseDAO implements CourseSQL{
         int indexDateNotification = curseurCourses.getColumnIndex(Course.CHAMP_DATE_NOTIFICATION);
         int indexDateRealisation = curseurCourses.getColumnIndex(Course.CHAMP_DATE_REALISATION);
         int indexIdMagasin = curseurCourses.getColumnIndex(Course.CHAMP_ID_MAGASIN);
-        //TODO à gérer plus tard
+        //On ne gere pas l'historique des courses ici
         int indexIdCourseOriginal = curseurCourses.getColumnIndex(Course.CHAMP_ID_COURSE_ORIGINAL);
 
         for(curseurCourses.moveToFirst();!curseurCourses.isAfterLast();curseurCourses.moveToNext()){
@@ -56,6 +56,7 @@ public class CourseDAO implements CourseSQL{
             String str_dateNotification = curseurCourses.getString(indexDateNotification);
             String str_dateRealisation = curseurCourses.getString(indexDateRealisation);
             int id_magasin = curseurCourses.getInt(indexIdMagasin);
+            int id_course_original = curseurCourses.getInt(indexIdCourseOriginal);
 
             LocalDateTime dateNotification;
             LocalDateTime dateRealisation;
@@ -72,6 +73,8 @@ public class CourseDAO implements CourseSQL{
 
             course = new Course(id_course, nom, dateNotification, dateRealisation);
             course.setMonMagasin(magasinDAO.getListeMagasins().trouverAvecId(id_magasin));
+            if(id_course_original != 0)
+                course.setCourseOriginal(new Course(indexId)); // Ajout d'une course fictive uniquement pour sauvegarder l'id
             this.listeCourses.add(course);
         }
 
@@ -92,7 +95,7 @@ public class CourseDAO implements CourseSQL{
         int indexDateNotification = curseurCourses.getColumnIndex(Course.CHAMP_DATE_NOTIFICATION);
         int indexDateRealisation = curseurCourses.getColumnIndex(Course.CHAMP_DATE_REALISATION);
         int indexIdMagasin = curseurCourses.getColumnIndex(Course.CHAMP_ID_MAGASIN);
-        //TODO à gérer plus tard
+
         int indexIdCourseOriginal = curseurCourses.getColumnIndex(Course.CHAMP_ID_COURSE_ORIGINAL);
 
         for(curseurCourses.moveToFirst();!curseurCourses.isAfterLast();curseurCourses.moveToNext()){
@@ -101,6 +104,7 @@ public class CourseDAO implements CourseSQL{
             String str_dateNotification = curseurCourses.getString(indexDateNotification);
             String str_dateRealisation = curseurCourses.getString(indexDateRealisation);
             int id_magasin = curseurCourses.getInt(indexIdMagasin);
+            int id_course_original = curseurCourses.getInt(indexIdCourseOriginal);
 
             LocalDateTime dateNotification;
             LocalDateTime dateRealisation;
@@ -117,6 +121,9 @@ public class CourseDAO implements CourseSQL{
 
             course = new Course(id_course, nom, dateNotification, dateRealisation);
             course.setMonMagasin(magasinDAO.getListeMagasins().trouverAvecId(id_magasin));
+            if(id_course_original != 0)
+                course.setCourseOriginal(new Course(indexId)); // Ajout d'une course fictive uniquement pour sauvegarder l'id
+
             this.listeCourses.add(course);
         }
 
@@ -206,10 +213,13 @@ public class CourseDAO implements CourseSQL{
                 courseACloturer.getIdCourseOriginal(),
                 courseACloturer.getMonMagasin());
 
+        int id_course_original = courseACloturer.getId();
+        if(courseACloturer.getIdCourseOriginal() != 0)
+            id_course_original=courseACloturer.getIdCourseOriginal();
         creerCourse(courseACloturer.getNom(),
                 null,
                 null ,
-                courseACloturer.getId(),
+                id_course_original,
                 courseACloturer.getMonMagasin(),
                 courseACloturer.getMesLignesCourse());
 

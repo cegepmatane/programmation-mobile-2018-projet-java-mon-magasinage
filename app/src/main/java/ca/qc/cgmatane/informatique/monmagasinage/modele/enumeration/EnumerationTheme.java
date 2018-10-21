@@ -141,7 +141,7 @@ public enum EnumerationTheme {
      * @return ArrayAdaptater
      */
     public static ArrayAdapter recuperereListeThemesPourSpinner(Context context) {
-        //TODO changer pour eviter de recréé un objet
+
         List<String> listPourSpinner = new ArrayList<String>();
         for (EnumerationTheme theme : EnumerationTheme.getMesThemes()) {
             listPourSpinner.add(theme.getNom());
@@ -152,7 +152,6 @@ public enum EnumerationTheme {
     }
 
     public static EnumerationTheme retournerThemeParPosition(int postition) {
-        //TODO changer pour eviter de recréé un objet
         int i = 0;
         for (EnumerationTheme theme : EnumerationTheme.getMesThemes()) {
             if (postition == i) {

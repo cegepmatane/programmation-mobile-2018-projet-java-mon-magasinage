@@ -111,12 +111,12 @@ public class VueModifierCourse extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!"".equals(nomCourse.getText().toString())){
-                    //TODO ajouter idOriginal
+
                     courseDAO.modifierCourse(courseAModifier.getId(),
                             nomCourse.getText().toString(),
                             dateNotification.getText().toString(),
                             "",
-                            0,
+                            courseAModifier.getIdCourseOriginal(),
                             magasinDAO.getListeMagasins().get(spinnerMagasin.getSelectedItemPosition()));
 
                     //Notification

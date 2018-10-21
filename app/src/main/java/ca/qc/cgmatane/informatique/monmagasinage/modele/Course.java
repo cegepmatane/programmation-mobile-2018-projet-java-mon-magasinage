@@ -25,6 +25,10 @@ public class Course {
     private Magasin monMagasin;
     private LignesCourse mesLignesCourse;
 
+    public Course(int id) {
+        this.id = id;
+    }
+
     public Course(int id, String nom, LocalDateTime dateNotification, LocalDateTime dateRealisation) {
         this.id = id;
         this.nom = nom;

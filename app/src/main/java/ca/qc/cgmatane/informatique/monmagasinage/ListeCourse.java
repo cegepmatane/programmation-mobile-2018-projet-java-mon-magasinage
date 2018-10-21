@@ -119,7 +119,7 @@ public class ListeCourse extends AppCompatActivity {
         vueListViewCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View vue, int position, long id) {
-//                inserer ici redirection vers vue todo courses
+
                 Course course = listeCourse.get(position);
                 Intent intentionNaviguerFaireCourse = new Intent(ListeCourse.this, VueFaireCourse.class);
                 intentionNaviguerFaireCourse.putExtra(Course.CHAMP_ID_COURSE, course.getId() + "");
