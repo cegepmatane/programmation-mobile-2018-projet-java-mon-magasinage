@@ -106,6 +106,7 @@ public class VueAjouterCourse extends AppCompatActivity {
                     PersistableBundle bundle = new PersistableBundle();
                     bundle.putString("titre", nomCourse.getText().toString());
                     bundle.putString("text", "va faire tes courses");
+                    bundle.putInt("id", nouvelleId);
 
                     JobInfo.Builder jobInfo = new JobInfo.Builder(nouvelleId, nomServiceNotification);
                     jobInfo.setMinimumLatency(offset);

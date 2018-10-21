@@ -121,7 +121,7 @@ public class VueModifierCourse extends AppCompatActivity {
                     ComponentName nomServiceNotification = new ComponentName(getApplicationContext(),
                             Notification.class);
 
-                    long offset = dateNotificationCalendar.getTimeInMillis()-currentTimeCalendar.getTimeInMillis();
+                    long offset = dateNotificationCalendar.getTimeInMillis()-Calendar.getInstance().getTimeInMillis();
                     //offset /= 6 ;
                     Log.d("timee date nottification", String.valueOf(dateNotificationCalendar.getTimeInMillis()));
                     Log.d("timee current", String.valueOf(currentTimeCalendar.getTimeInMillis()));
@@ -130,6 +130,7 @@ public class VueModifierCourse extends AppCompatActivity {
                     PersistableBundle bundle = new PersistableBundle();
                     bundle.putString("titre", nomCourse.getText().toString());
                     bundle.putString("text", "va faire tes courses");
+                    bundle.putInt("id", courseAModifier.getId());
 
                     //suppresion ancienne notification
                     JobScheduler mSchedular = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);
@@ -275,6 +276,13 @@ public class VueModifierCourse extends AppCompatActivity {
     };
 
     private void updateLabel(){
+        Toast.makeText(this, (String)"alarme ajoutée à "
+                        + dateNotificationCalendar.get(Calendar.HOUR_OF_DAY)
+                        + ":" + dateNotificationCalendar.get(Calendar.MINUTE)
+                        + " le " + dateNotificationCalendar.get(Calendar.DAY_OF_MONTH)
+                        + "/" + dateNotificationCalendar.get(Calendar.MONTH)
+                        + "/" + dateNotificationCalendar.get(Calendar.YEAR),
+                Toast.LENGTH_LONG).show();
         String myFormat = "yyyy-MM-dd-HH:mm"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
