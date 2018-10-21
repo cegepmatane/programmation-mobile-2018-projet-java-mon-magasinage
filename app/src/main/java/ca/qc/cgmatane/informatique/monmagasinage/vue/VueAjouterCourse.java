@@ -101,10 +101,6 @@ public class VueAjouterCourse extends AppCompatActivity {
 
                     long offset = dateNotificationCalendar.getTimeInMillis()-Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis();
 
-                    Log.d("timee date nottification", String.valueOf(dateNotificationCalendar.getTimeInMillis()));
-                    Log.d("timee current", String.valueOf(Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis()));
-                    Log.d("timee offsetNotificationTime", String.valueOf(offset));
-
                     PersistableBundle bundle = new PersistableBundle();
                     bundle.putString("titre", nomCourse.getText().toString());
                     bundle.putString("text", "va faire tes courses");
@@ -117,7 +113,6 @@ public class VueAjouterCourse extends AppCompatActivity {
 
                     JobScheduler mSchedular = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);
                     mSchedular.schedule(jobInfo.build());
-                    Log.d("notif", "start notif");
                     finish();
                 }else {
                     Toast message = Toast.makeText(getApplicationContext(), //display toast message
