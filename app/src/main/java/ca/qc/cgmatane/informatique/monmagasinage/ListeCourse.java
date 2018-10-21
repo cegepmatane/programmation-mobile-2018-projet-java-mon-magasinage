@@ -76,7 +76,7 @@ public class ListeCourse extends AppCompatActivity {
         BaseDeDonnees.getInstance(this); // Initialiser l'intance avec une activity
         courseDAO = CourseDAO.getInstance();
 //        listeCourse = simulerListeCourse();
-        listeCourse = courseDAO.listerCourses();
+        listeCourse = courseDAO.listerCoursesActuelles();
         listeCourseAffichage = new Courses();
 
         /** Affichage*/

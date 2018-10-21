@@ -35,8 +35,8 @@ public class CourseDAO implements CourseSQL{
         this.ligneCourseDAO = LigneCourseDAO.getInstance();
     }
 
-    public Courses listerCourses(){
-        Cursor curseurCourses = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_COURSE, null);
+    public Courses listerCoursesActuelles(){
+        Cursor curseurCourses = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_COURSE_ACTUELLES,new String [] {String.valueOf("")} );
         this.listeCourses.clear();
 
         magasinDAO.listerMagasins();//Chargement des magasins
@@ -68,6 +68,51 @@ public class CourseDAO implements CourseSQL{
                  dateRealisation = LocalDateTime.parse(str_dateRealisation, formatter);
             }else {
                  dateRealisation = null;
+            }
+
+            course = new Course(id_course, nom, dateNotification, dateRealisation);
+            course.setMonMagasin(magasinDAO.getListeMagasins().trouverAvecId(id_magasin));
+            this.listeCourses.add(course);
+        }
+
+        curseurCourses.close();
+
+        return this.listeCourses;
+    }
+
+    public Courses listerToutesLesCourses(){
+        Cursor curseurCourses = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(LISTER_COURSE, null);
+        this.listeCourses.clear();
+
+        magasinDAO.listerMagasins();//Chargement des magasins
+        Course course;
+
+        int indexId = curseurCourses.getColumnIndex(Course.CHAMP_ID_COURSE);
+        int indexNom = curseurCourses.getColumnIndex(Course.CHAMP_NOM);
+        int indexDateNotification = curseurCourses.getColumnIndex(Course.CHAMP_DATE_NOTIFICATION);
+        int indexDateRealisation = curseurCourses.getColumnIndex(Course.CHAMP_DATE_REALISATION);
+        int indexIdMagasin = curseurCourses.getColumnIndex(Course.CHAMP_ID_MAGASIN);
+        //TODO à gérer plus tard
+        int indexIdCourseOriginal = curseurCourses.getColumnIndex(Course.CHAMP_ID_COURSE_ORIGINAL);
+
+        for(curseurCourses.moveToFirst();!curseurCourses.isAfterLast();curseurCourses.moveToNext()){
+            int id_course= curseurCourses.getInt(indexId);
+            String nom= curseurCourses.getString(indexNom);
+            String str_dateNotification = curseurCourses.getString(indexDateNotification);
+            String str_dateRealisation = curseurCourses.getString(indexDateRealisation);
+            int id_magasin = curseurCourses.getInt(indexIdMagasin);
+
+            LocalDateTime dateNotification;
+            LocalDateTime dateRealisation;
+            if(!str_dateNotification.equals("")){
+                dateNotification = LocalDateTime.parse(str_dateNotification, formatter);
+            }else {
+                dateNotification =null;
+            }
+            if(!str_dateRealisation.equals("")){
+                dateRealisation = LocalDateTime.parse(str_dateRealisation, formatter);
+            }else {
+                dateRealisation = null;
             }
 
             course = new Course(id_course, nom, dateNotification, dateRealisation);
@@ -151,10 +196,12 @@ public class CourseDAO implements CourseSQL{
      * @param courseACloturer
      */
     public void cloturerCourse(Course courseACloturer){
-
+        String dateNotification="";
+        if(null != courseACloturer.getDateNotification())
+        dateNotification= courseACloturer.getDateNotification().format(formatter);
         modifierCourse(courseACloturer.getId(),
                 courseACloturer.getNom(),
-                courseACloturer.getDateNotification().format(formatter),
+                dateNotification,
                 LocalDateTime.now().format(formatter),
                 courseACloturer.getIdCourseOriginal(),
                 courseACloturer.getMonMagasin());
@@ -165,7 +212,7 @@ public class CourseDAO implements CourseSQL{
                 courseACloturer.getId(),
                 courseACloturer.getMonMagasin(),
                 courseACloturer.getMesLignesCourse());
-        
+
         listeCourses.remove(courseACloturer);
     }
 

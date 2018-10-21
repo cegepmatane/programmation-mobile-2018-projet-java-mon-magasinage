@@ -125,7 +125,7 @@ public class VueFaireCourse extends AppCompatActivity {
             Toast message = Toast.makeText(getApplicationContext(), //display toast message
                     "Photo enregistrée dans "+mCurrentPhotoPath, Toast.LENGTH_SHORT);
             message.show();
-
+            finish();
         }
 
 
