@@ -14,6 +14,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.R;
 
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.historique.dummy.CourseContent;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.historique.dummy.DummyContent;
@@ -30,7 +31,6 @@ import java.util.List;
  * item details side-by-side using two vertical panes.
  */
 public class VueHistoriqueCourse extends Activity {
-
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -40,6 +40,7 @@ public class VueHistoriqueCourse extends Activity {
     protected Courses mesCourses;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        EnumerationTheme.changerTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
 

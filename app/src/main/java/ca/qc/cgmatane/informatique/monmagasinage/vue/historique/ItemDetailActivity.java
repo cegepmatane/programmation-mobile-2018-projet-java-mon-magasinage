@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.view.MenuItem;
 import ca.qc.cgmatane.informatique.monmagasinage.R;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 
 /**
  * An activity representing a single Item detail screen. This
@@ -17,6 +18,8 @@ public class ItemDetailActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        EnumerationTheme.changerTheme(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
 
