@@ -118,14 +118,4 @@ public class Course {
         return coursePourAdapteur;
     }
 
-    /***
-     *
-     * @return l'id de la course orignal string, 0 si n'existe pas
-     */
-    public int getIdCourseOriginal(){
-        if(courseOriginal != null){
-            return  courseOriginal.getId();
-        }
-        return 0;
-    }
 }

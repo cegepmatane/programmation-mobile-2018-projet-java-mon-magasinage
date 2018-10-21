@@ -37,7 +37,10 @@ public class VueHistoriqueCourse extends Activity {
      */
     private boolean mTwoPane;
 
+    protected Course courseSelectionnee;
     protected Courses mesCourses;
+
+    CourseDAO courseDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         EnumerationTheme.changerTheme(this);
@@ -51,8 +54,18 @@ public class VueHistoriqueCourse extends Activity {
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
+
+        courseDAO = CourseDAO.getInstance();
+
+        Bundle parametres = this.getIntent().getExtras();
+        assert parametres != null;
+        String parametreIdCourse = (String) parametres.get(Course.CHAMP_ID_COURSE);
+        int idCourse = Integer.parseInt(parametreIdCourse);
+        courseSelectionnee = courseDAO.getListeCourses().trouverAvecId(idCourse);
         mesCourses = new Courses();
-        mesCourses = CourseDAO.getInstance().listerToutesLesCourses();
+//        mesCourses = courseDAO.listerToutesLesCourses();
+        mesCourses = CourseDAO.getInstance().listerHistoriqueDuneCourse(courseSelectionnee);
+
 
         View recyclerView = findViewById(R.id.item_list);
         assert recyclerView != null;

@@ -116,7 +116,7 @@ public class VueModifierCourse extends AppCompatActivity {
                             nomCourse.getText().toString(),
                             dateNotification.getText().toString(),
                             "",
-                            courseAModifier.getIdCourseOriginal(),
+                            courseAModifier.getCourseOriginal().getId(),
                             magasinDAO.getListeMagasins().get(spinnerMagasin.getSelectedItemPosition()));
 
                     //Notification

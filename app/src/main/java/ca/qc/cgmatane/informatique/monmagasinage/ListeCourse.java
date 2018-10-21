@@ -23,6 +23,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationT
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.*;
 
+import ca.qc.cgmatane.informatique.monmagasinage.vue.historique.VueHistoriqueCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.magasin.CarteMagasin;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.magasin.VueListeMagasin;
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -111,10 +112,20 @@ public class ListeCourse extends AppCompatActivity {
         vueBarreRechercheCourse.clearFocus();
         vueListViewCourse.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast message = Toast.makeText(getApplicationContext(), //display toast message
-                        "Redirection vers historique de la course", Toast.LENGTH_SHORT);
-                message.show();
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                Course course = listeCourse.get(position);
+                if(course.getCourseOriginal().getId()==0){
+                    Toast message = Toast.makeText(getApplicationContext(), //display toast message
+                            "Aucun historique pour cette course", Toast.LENGTH_SHORT);
+                    message.show();
+                }else {
+                    Intent intentionNaviguerHistorique = new Intent(ListeCourse.this, VueHistoriqueCourse.class);
+                    intentionNaviguerHistorique.putExtra(Course.CHAMP_ID_COURSE, course.getId() + "");
+                    startActivity(intentionNaviguerHistorique);
+                }
+
+
                 return true;
             }
         });
