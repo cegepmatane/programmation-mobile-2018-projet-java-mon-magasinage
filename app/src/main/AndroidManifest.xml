@@ -67,9 +67,6 @@
                 android:name=".modele.Notification"
                 android:permission="android.permission.BIND_JOB_SERVICE"/>
 
-        <activity android:name=".vue.VueValiderFaireCourse">
-        </activity>
-
         <provider
                 android:name="android.support.v4.content.FileProvider"
                 android:authorities="ca.qc.cgmatane.informatique.monmagasinage.provider"
