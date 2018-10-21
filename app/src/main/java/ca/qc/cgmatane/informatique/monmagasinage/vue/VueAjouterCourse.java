@@ -174,6 +174,16 @@ public class VueAjouterCourse extends AppCompatActivity {
                         dateNotificationCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+        dateNotification.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    dateNotification.setText("");
+                    return true;
+                }
+            }
+        );
+
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter(VueAjouterCourse.EVENT_RECHARGER_AFFICHAGE));
     }
