@@ -60,6 +60,8 @@ public class VueFaireCourse extends AppCompatActivity {
         EnumerationTheme.changerTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_faire_course);
+        getSupportActionBar().setTitle("Effectuer une course");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle parametres = this.getIntent().getExtras();
         assert parametres != null;
@@ -217,6 +219,11 @@ public class VueFaireCourse extends AppCompatActivity {
         } else {
             prendrePhoto();
         }
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 
 }

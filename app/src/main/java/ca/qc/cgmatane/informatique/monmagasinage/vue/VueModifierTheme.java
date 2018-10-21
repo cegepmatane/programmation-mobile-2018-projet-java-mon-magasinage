@@ -17,6 +17,8 @@ public class VueModifierTheme extends AppCompatActivity {
         EnumerationTheme.changerTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_modifier_theme);
+        getSupportActionBar().setTitle("Changer le theme");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         actionModifierTheme = findViewById(R.id.vue_modifier_theme_action_actualiser_theme);
         listeDeroulanteTheme = findViewById(R.id.vue_modifier_theme_spinner_theme);
@@ -40,13 +42,7 @@ public class VueModifierTheme extends AppCompatActivity {
             }
         });
 
-        Button actionQuitter = findViewById(R.id.vue_modifier_theme_action_quitter);
-        actionQuitter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
 
         listeDeroulanteTheme.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -67,5 +63,10 @@ public class VueModifierTheme extends AppCompatActivity {
 
     protected void changerTextAction(){
 
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }

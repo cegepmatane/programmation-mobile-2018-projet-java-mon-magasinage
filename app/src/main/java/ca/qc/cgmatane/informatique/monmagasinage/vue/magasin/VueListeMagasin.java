@@ -36,6 +36,8 @@ public class VueListeMagasin extends AppCompatActivity {
         EnumerationTheme.changerTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_liste_magasin);
+        getSupportActionBar().setTitle("Liste des magasins");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
   /*      BaseDeDonnees.getInstance(getApplicationContext());*/
         accesseurMagasin = MagasinDAO.getInstance();
@@ -145,4 +147,10 @@ public class VueListeMagasin extends AppCompatActivity {
 
         vueListeMagasin.setAdapter(adapterListeCourses);
     }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
+
 }
