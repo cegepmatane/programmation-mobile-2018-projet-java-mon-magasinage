@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import ca.qc.cgmatane.informatique.monmagasinage.R;
+import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.historique.dummy.DummyContent;
 
 /**
@@ -26,7 +28,7 @@ public class ItemDetailFragment extends Fragment {
      * The dummy content this fragment is presenting.
      */
     private DummyContent.DummyItem mItem;
-
+    private Course course;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -42,7 +44,9 @@ public class ItemDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
+            int id_course= Integer.parseInt(getArguments().getString(ARG_ITEM_ID));
             mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            course = CourseDAO.getInstance().trouverParId(id_course);
         }
     }
 
@@ -54,6 +58,9 @@ public class ItemDetailFragment extends Fragment {
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.details);
+        }
+        if (course != null) {
+            ((TextView) rootView.findViewById(R.id.item_detail)).setText(course.getNom());
         }
 
         return rootView;
