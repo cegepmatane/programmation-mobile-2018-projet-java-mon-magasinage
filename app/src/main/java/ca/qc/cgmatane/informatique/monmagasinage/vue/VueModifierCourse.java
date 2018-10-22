@@ -119,30 +119,32 @@ public class VueModifierCourse extends AppCompatActivity {
                             courseAModifier.getCourseOriginal().getId(),
                             magasinDAO.getListeMagasins().get(spinnerMagasin.getSelectedItemPosition()));
 
-                    //Notification
-                    ComponentName nomServiceNotification = new ComponentName(getApplicationContext(),
-                            Notification.class);
+                    if (!"".equals(dateNotification.getText().toString())) {
+                        //Notification
+                        ComponentName nomServiceNotification = new ComponentName(getApplicationContext(),
+                                Notification.class);
 
-                    long offset = dateNotificationCalendar.getTimeInMillis()-Calendar.getInstance().getTimeInMillis();
-                    //offset /= 6 ;
+                        long offset = dateNotificationCalendar.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
+                        //offset /= 6 ;
 
-                    PersistableBundle bundle = new PersistableBundle();
-                    bundle.putString("titre", nomCourse.getText().toString());
-                    bundle.putString("text", "va faire tes courses");
-                    bundle.putInt("id", courseAModifier.getId());
+                        PersistableBundle bundle = new PersistableBundle();
+                        bundle.putString("titre", nomCourse.getText().toString());
+                        bundle.putString("text", "va faire tes courses");
+                        bundle.putInt("id", courseAModifier.getId());
 
-                    //suppresion ancienne notification
-                    JobScheduler mSchedular = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);
-                    mSchedular.cancel(courseAModifier.getId());
+                        //suppresion ancienne notification
+                        JobScheduler mSchedular = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);
+                        mSchedular.cancel(courseAModifier.getId());
 
-                    //creation nouvelle notification
-                    JobInfo.Builder jobInfo = new JobInfo.Builder(1, nomServiceNotification);
-                    jobInfo.setMinimumLatency(offset);
-                    jobInfo.setExtras(bundle);
+                        //creation nouvelle notification
+                        JobInfo.Builder jobInfo = new JobInfo.Builder(1, nomServiceNotification);
+                        jobInfo.setMinimumLatency(offset);
+                        jobInfo.setExtras(bundle);
 
-                    mSchedular.schedule(jobInfo.build());
+                        mSchedular.schedule(jobInfo.build());
+                    }
 
-                    Log.d("notif", "start notif");
+
                     ligneCourseDeSauvegarde = courseAModifier.getMesLignesCourse();
                     finish();
                 }else {

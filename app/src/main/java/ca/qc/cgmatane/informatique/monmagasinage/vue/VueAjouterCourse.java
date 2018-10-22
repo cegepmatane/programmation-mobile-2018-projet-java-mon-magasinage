@@ -95,23 +95,24 @@ public class VueAjouterCourse extends AppCompatActivity {
                             magasinDAO.getListeMagasins().get(spinnerMagasin.getSelectedItemPosition()), courseActuelle.getMesLignesCourse());
 
 
+                    if (!"".equals(dateNotification.getText().toString())) {
                     /** Creation des Notifications*/
                     ComponentName nomServiceNotification = new ComponentName(getApplicationContext(),
                             Notification.class);
+                        long offset = dateNotificationCalendar.getTimeInMillis() - Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis();
 
-                    long offset = dateNotificationCalendar.getTimeInMillis()-Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis();
+                        PersistableBundle bundle = new PersistableBundle();
+                        bundle.putString("titre", nomCourse.getText().toString());
+                        bundle.putString("text", "va faire tes courses");
+                        bundle.putInt("id", nouvelleId);
 
-                    PersistableBundle bundle = new PersistableBundle();
-                    bundle.putString("titre", nomCourse.getText().toString());
-                    bundle.putString("text", "va faire tes courses");
-                    bundle.putInt("id", nouvelleId);
+                        JobInfo.Builder jobInfo = new JobInfo.Builder(nouvelleId, nomServiceNotification);
+                        jobInfo.setMinimumLatency(offset);
+                        jobInfo.setExtras(bundle);
 
-                    JobInfo.Builder jobInfo = new JobInfo.Builder(nouvelleId, nomServiceNotification);
-                    jobInfo.setMinimumLatency(offset);
-                    jobInfo.setExtras(bundle);
-
-                    JobScheduler mSchedular = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);
-                    mSchedular.schedule(jobInfo.build());
+                        JobScheduler mSchedular = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);
+                        mSchedular.schedule(jobInfo.build());
+                    }
                     finish();
                 }else {
                     Toast message = Toast.makeText(getApplicationContext(), //display toast message
