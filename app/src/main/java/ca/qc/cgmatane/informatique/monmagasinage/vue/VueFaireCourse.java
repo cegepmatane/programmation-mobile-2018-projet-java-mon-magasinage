@@ -143,9 +143,17 @@ public class VueFaireCourse extends AppCompatActivity {
                 storageDir      /* directory */
         );
 
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "MonMagasinage");
+
+        if (!mediaStorageDir.exists()){
+            if (!mediaStorageDir.mkdirs()){
+                return null;
+            }
+        }
+
+        return new File(mediaStorageDir.getPath() + File.separator +imageFileName + ".jpg");
+
     }
 
 
@@ -157,6 +165,8 @@ public class VueFaireCourse extends AppCompatActivity {
             File photoFile = null;
             try {
                 photoFile = sauvegarderPhoto();
+                assert photoFile != null;
+                mCurrentPhotoPath = photoFile.getAbsolutePath();
             } catch (IOException ex) {
                 // Error occurred while creating the File
                 Toast message = Toast.makeText(getApplicationContext(), //display toast message
