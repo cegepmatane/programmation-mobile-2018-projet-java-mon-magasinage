@@ -108,7 +108,6 @@ public class VueAjouterCourse extends AppCompatActivity {
 
                     JobInfo.Builder jobInfo = new JobInfo.Builder(nouvelleId, nomServiceNotification);
                     jobInfo.setMinimumLatency(offset);
-                    //jobInfo.setOverrideDeadline(6000);
                     jobInfo.setExtras(bundle);
 
                     JobScheduler mSchedular = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);

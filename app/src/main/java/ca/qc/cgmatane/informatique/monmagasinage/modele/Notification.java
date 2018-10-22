@@ -7,6 +7,7 @@ import android.app.TaskStackBuilder;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.PersistableBundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -48,6 +49,8 @@ public class Notification extends JobService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(),"channel1")
                 .setSmallIcon(R.mipmap.mon_magasinage_icon_circle)
                 .setBadgeIconType(R.mipmap.mon_magasinage_icon_circle)
+                .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                        R.mipmap.mon_magasinage_icon_circle))
                 .setContentTitle(titre)
                 .setContentText(text)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
