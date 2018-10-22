@@ -198,14 +198,16 @@ public class CourseDAO implements CourseSQL{
 
         if (dateRealisation != null && !"".equals(dateRealisation))
             dateRealisationFormatted = LocalDateTime.parse(dateRealisation, formatter);
-        if(ligneCourseDAO.enregistrerListeLigneCoursePourUneCourse(newId, ligneCourses)){
-            Course course = new Course(newId, nom, dateNotificationFormatted, dateRealisationFormatted);
-            course.setMonMagasin(magasin);
-            course.setCourseOriginal(new Course(idOriginal));
-            course.setMesLignesCourse(ligneCourses);
-            this.listeCourses.add(course);
-        }
-        return newId;
+
+        Course course = new Course(newId, nom, dateNotificationFormatted, dateRealisationFormatted);
+        course.setMonMagasin(magasin);
+        course.setCourseOriginal(new Course(idOriginal));
+        course.setMesLignesCourse(ligneCourses);
+        this.listeCourses.add(course);
+        ligneCourses.setCourseDeToutesLesLignes(course);
+        ligneCourseDAO.enregistrerListeLigneCoursePourUneCourse(course.getId(), ligneCourses);
+
+        return course.getId();
     }
 
 
@@ -248,19 +250,15 @@ public class CourseDAO implements CourseSQL{
      * @param courseACloturer
      */
     public void cloturerCourse(Course courseACloturer){
-        String dateNotification="";
-        if(null != courseACloturer.getDateNotification())
-            dateNotification= courseACloturer.getDateNotification().format(formatter);
-        modifierCourse(courseACloturer.getId(),
-                courseACloturer.getNom(),
-                dateNotification,
-                LocalDateTime.now().format(formatter),
-                courseACloturer.getCourseOriginal().getId(),
-                courseACloturer.getMonMagasin());
+
+        ContentValues values = new ContentValues();
+        values.put(Course.CHAMP_DATE_REALISATION, LocalDateTime.now().format(formatter));
+        accesseurBaseDeDonnees.getWritableDatabase().update(Course.NOM_TABLE, values, Course.CHAMP_ID_COURSE+"="+courseACloturer.getId(), null);
 
         int id_course_original = courseACloturer.getId();
         if(courseACloturer.getCourseOriginal().getId() != 0)
             id_course_original=courseACloturer.getCourseOriginal().getId();
+
         creerCourse(courseACloturer.getNom(),
                 "",
                 "" ,

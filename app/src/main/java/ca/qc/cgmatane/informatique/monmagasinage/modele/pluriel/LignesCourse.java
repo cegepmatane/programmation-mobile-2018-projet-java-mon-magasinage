@@ -1,5 +1,6 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel;
 
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.LigneCourse;
 
 import java.util.ArrayList;
@@ -49,5 +50,16 @@ public class LignesCourse extends ArrayList<LigneCourse>{
         LignesCourse result= new LignesCourse();
         result.addAll(this);
         return  result;
+    }
+
+    /***
+     * Change la course pour toutes les lignes de la liste
+     * @param course
+     */
+    public void setCourseDeToutesLesLignes(Course course){
+        for(LigneCourse ligneCourse: this){
+            ligneCourse.setCourse(course);
+
+        };
     }
 }

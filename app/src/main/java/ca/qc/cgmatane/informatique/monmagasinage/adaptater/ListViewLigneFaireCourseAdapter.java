@@ -22,7 +22,7 @@ public class ListViewLigneFaireCourseAdapter extends ArrayAdapter<LigneCourse> {
     private Course courseActuelle;
     private Context monContext;
     protected LigneCourseDAO ligneCourseDAO;
-
+    private boolean activerCoche = true;
     private static class VueBloqueFaireCourse {
         TextView textViewNomProduit;
         TextView textViewQuantite;
@@ -87,6 +87,7 @@ public class ListViewLigneFaireCourseAdapter extends ArrayAdapter<LigneCourse> {
             vueBloqueFaireCourse.textViewUnite.setText(ligneCourse.getUnite().getLibelle());
             vueBloqueFaireCourse.textViewQuantite.setText(ligneCourse.getQuantite()+"");
             vueBloqueFaireCourse.checkBoxLigneProduit.setChecked(ligneCourse.isCoche());
+            vueBloqueFaireCourse.checkBoxLigneProduit.setEnabled(activerCoche);
         vueBloqueFaireCourse.checkBoxLigneProduit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,5 +96,9 @@ public class ListViewLigneFaireCourseAdapter extends ArrayAdapter<LigneCourse> {
         });
         }
         return convertView;
+    }
+
+    public void setActiverCoche(boolean activerCoche) {
+        this.activerCoche = activerCoche;
     }
 }

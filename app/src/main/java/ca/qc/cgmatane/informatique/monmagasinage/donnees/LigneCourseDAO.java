@@ -31,7 +31,6 @@ public class LigneCourseDAO {
     }
 
     public boolean enregistrerListeLigneCoursePourUneCourse(int idCourse, LignesCourse lignesCourses){
-        if(lignesCourses.size() <1) return true;
 
         SQLiteDatabase db = accesseurBaseDeDonnees.getWritableDatabase();
         db.beginTransaction();
