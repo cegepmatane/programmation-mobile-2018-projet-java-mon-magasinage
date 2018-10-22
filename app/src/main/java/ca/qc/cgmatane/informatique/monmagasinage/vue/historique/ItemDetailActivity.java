@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 
@@ -22,12 +25,21 @@ public class ItemDetailActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
+        Toolbar actionbar =  findViewById(R.id.actionBarHistorique1);
 
-        // Show the Up button in the action bar.
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setTitle("Historique de la course");
+        if (null != actionbar) {
+
+            actionbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+
+
         }
+
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity

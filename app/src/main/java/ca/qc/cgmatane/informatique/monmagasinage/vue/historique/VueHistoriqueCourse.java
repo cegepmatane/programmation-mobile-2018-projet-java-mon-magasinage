@@ -5,11 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.app.Activity;
+import android.support.v4.app.NavUtils;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+
+import java.time.format.DateTimeFormatter;
+
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
@@ -36,13 +42,27 @@ public class VueHistoriqueCourse extends Activity {
     protected Course courseSelectionnee;
     protected Courses mesCourses;
 
+
     CourseDAO courseDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         EnumerationTheme.changerTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
+        Toolbar actionbar =  findViewById(R.id.actionBarHistorique);
 
+        actionbar.setTitle("Historique de la course");
+        if (null != actionbar) {
+
+            actionbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+
+
+        }
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
@@ -115,8 +135,9 @@ public class VueHistoriqueCourse extends Activity {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mIdView.setText(mValues.get(position).getId()+"");
-            holder.mContentView.setText(mValues.get(position).getNom());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm");
+            holder.mIdView.setText(mValues.get(position).getNom()+"");
+            holder.mContentView.setText(mValues.get(position).getDateRealisation().format(formatter));
 
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);
@@ -138,4 +159,5 @@ public class VueHistoriqueCourse extends Activity {
             }
         }
     }
+
 }
