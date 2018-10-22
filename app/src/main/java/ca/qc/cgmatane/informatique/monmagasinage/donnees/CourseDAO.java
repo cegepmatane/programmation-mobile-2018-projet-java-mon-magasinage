@@ -251,6 +251,7 @@ public class CourseDAO implements CourseSQL{
         String dateNotification="";
         if(null != courseACloturer.getDateNotification())
             dateNotification= courseACloturer.getDateNotification().format(formatter);
+
         modifierCourse(courseACloturer.getId(),
                 courseACloturer.getNom(),
                 dateNotification,
@@ -261,6 +262,7 @@ public class CourseDAO implements CourseSQL{
         int id_course_original = courseACloturer.getId();
         if(courseACloturer.getCourseOriginal().getId() != 0)
             id_course_original=courseACloturer.getCourseOriginal().getId();
+
         creerCourse(courseACloturer.getNom(),
                 "",
                 "" ,

@@ -5,11 +5,17 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 import ca.qc.cgmatane.informatique.monmagasinage.R;
+import ca.qc.cgmatane.informatique.monmagasinage.adaptater.ListViewLigneFaireCourseAdapter;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
+import ca.qc.cgmatane.informatique.monmagasinage.donnees.LigneCourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
+import ca.qc.cgmatane.informatique.monmagasinage.vue.VueFaireCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.vue.historique.dummy.DummyContent;
+
+import java.time.format.DateTimeFormatter;
 
 /**
  * A fragment representing a single Item detail screen.
@@ -23,6 +29,8 @@ public class ItemDetailFragment extends Fragment {
      * represents.
      */
     public static final String ARG_ITEM_ID = "item_id";
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm");
+
 
     /**
      * The dummy content this fragment is presenting.
@@ -56,11 +64,16 @@ public class ItemDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.item_detail, container, false);
 
         // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.details);
-        }
+
+        //((TextView) rootView.findViewById(R.id.item_detail)).setText("Erreur sur le chargement de la course");
+
         if (course != null) {
-            ((TextView) rootView.findViewById(R.id.item_detail)).setText(course.getNom());
+            ((TextView) rootView.findViewById(R.id.vue_historique_nom_course)).setText(course.getNom());
+            ((TextView) rootView.findViewById(R.id.vue_historique_date_realisation)).setText(course.getDateRealisation().format(formatter));
+            LigneCourseDAO.getInstance().chargerListeLigneCoursePourUneCourse(course);
+            ListViewLigneFaireCourseAdapter listViewLigneFaireCourseAdapter = new ListViewLigneFaireCourseAdapter(course, getActivity());
+            ((ListView) rootView.findViewById(R.id.vue_historique_liste_panier)).setAdapter(listViewLigneFaireCourseAdapter);
+
         }
 
         return rootView;
