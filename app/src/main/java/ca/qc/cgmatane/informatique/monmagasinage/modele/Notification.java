@@ -8,6 +8,7 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.PersistableBundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -51,6 +52,7 @@ public class Notification extends JobService {
                 .setBadgeIconType(R.mipmap.mon_magasinage_icon_circle)
                 .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
                         R.mipmap.mon_magasinage_icon_circle))
+                .setColor(Color.WHITE)
                 .setContentTitle(titre)
                 .setContentText(text)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
