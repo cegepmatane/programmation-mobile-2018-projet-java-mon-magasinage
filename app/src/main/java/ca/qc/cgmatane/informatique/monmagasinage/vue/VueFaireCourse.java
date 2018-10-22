@@ -135,7 +135,7 @@ public class VueFaireCourse extends AppCompatActivity {
         // Create an image file name
      //   String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 //        String imageFileName = "JPEG_" + timeStamp + "_";
-        String imageFileName = "tiquet_course"+courseActuelle.getId()+"_";
+        String imageFileName = "tiquet_course"+courseActuelle.getId();
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
