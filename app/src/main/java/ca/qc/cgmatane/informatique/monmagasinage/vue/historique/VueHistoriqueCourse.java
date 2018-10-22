@@ -16,11 +16,7 @@ import ca.qc.cgmatane.informatique.monmagasinage.donnees.CourseDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Courses;
-import ca.qc.cgmatane.informatique.monmagasinage.vue.historique.dummy.CourseContent;
-import ca.qc.cgmatane.informatique.monmagasinage.vue.historique.dummy.DummyContent;
 
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * An activity representing a list of Items. This activity

@@ -68,9 +68,9 @@ public class CourseDAO implements CourseSQL{
                 dateNotification =null;
             }
             if(null != str_dateRealisation && !str_dateRealisation.equals("")){
-                 dateRealisation = LocalDateTime.parse(str_dateRealisation, formatter);
+                dateRealisation = LocalDateTime.parse(str_dateRealisation, formatter);
             }else {
-                 dateRealisation = null;
+                dateRealisation = null;
             }
 
             course = new Course(id_course, nom, dateNotification, dateRealisation);
@@ -169,7 +169,7 @@ public class CourseDAO implements CourseSQL{
 
             course.setCourseOriginal(new Course(id_course_original)); // Ajout d'une course fictive uniquement pour sauvegarder l'id
             if(course.getId() != maCourse.getId())
-            listeHistoriqueCourse.add(course);
+                listeHistoriqueCourse.add(course);
         }
 
         curseurCourses.close();
@@ -250,7 +250,7 @@ public class CourseDAO implements CourseSQL{
     public void cloturerCourse(Course courseACloturer){
         String dateNotification="";
         if(null != courseACloturer.getDateNotification())
-        dateNotification= courseACloturer.getDateNotification().format(formatter);
+            dateNotification= courseACloturer.getDateNotification().format(formatter);
         modifierCourse(courseACloturer.getId(),
                 courseACloturer.getNom(),
                 dateNotification,
@@ -269,6 +269,53 @@ public class CourseDAO implements CourseSQL{
                 courseACloturer.getMesLignesCourse());
 
         listeCourses.remove(courseACloturer);
+    }
+
+    /***
+     * Renvoi une course en fonction de son id
+     * @return
+     */
+    public Course trouverParId(int idCourse){
+        Cursor curseurCourses = accesseurBaseDeDonnees.getReadableDatabase().rawQuery(TROUVER_PAR_ID, new String[]{String.valueOf(idCourse)});
+
+        Course course =null;
+        int indexId = curseurCourses.getColumnIndex(Course.CHAMP_ID_COURSE);
+        int indexNom = curseurCourses.getColumnIndex(Course.CHAMP_NOM);
+        int indexDateNotification = curseurCourses.getColumnIndex(Course.CHAMP_DATE_NOTIFICATION);
+        int indexDateRealisation = curseurCourses.getColumnIndex(Course.CHAMP_DATE_REALISATION);
+        int indexIdMagasin = curseurCourses.getColumnIndex(Course.CHAMP_ID_MAGASIN);
+        int indexIdCourseOriginal = curseurCourses.getColumnIndex(Course.CHAMP_ID_COURSE_ORIGINAL);
+
+        if(curseurCourses.getCount() > 0) {
+            curseurCourses.moveToNext();
+
+            int id_course = curseurCourses.getInt(indexId);
+            String nom = curseurCourses.getString(indexNom);
+            String str_dateNotification = curseurCourses.getString(indexDateNotification);
+            String str_dateRealisation = curseurCourses.getString(indexDateRealisation);
+            int id_magasin = curseurCourses.getInt(indexIdMagasin);
+            int id_course_original = curseurCourses.getInt(indexIdCourseOriginal);
+
+            LocalDateTime dateNotification;
+            LocalDateTime dateRealisation;
+            if (null != str_dateNotification && !str_dateNotification.equals("")) {
+                dateNotification = LocalDateTime.parse(str_dateNotification, formatter);
+            } else {
+                dateNotification = null;
+            }
+            if (null != str_dateRealisation && !str_dateRealisation.equals("")) {
+                dateRealisation = LocalDateTime.parse(str_dateRealisation, formatter);
+            } else {
+                dateRealisation = null;
+            }
+
+            course = new Course(id_course, nom, dateNotification, dateRealisation);
+            course.setMonMagasin(magasinDAO.getListeMagasins().trouverAvecId(id_magasin));
+            course.setCourseOriginal(new Course(id_course_original)); // Ajout d'une course fictive uniquement pour sauvegarder l'id
+        }
+        curseurCourses.close();
+
+        return course;
     }
 
     public Courses getListeCourses() {
