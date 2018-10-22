@@ -3,23 +3,36 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="ca.qc.cgmatane.informatique.monmagasinage">
 
-    <uses-permission android:name="android.permission.INTERNET" tools:remove="android:maxSdkVersion"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:remove="android:maxSdkVersion"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:remove="18"/>
-    <uses-permission android:name="android.permission.CAMERA" tools:remove="android:maxSdkVersion"/>
-    <uses-permission android:name="android.permission.VIBRATE" tools:remove="android:maxSdkVersion"/>
+    <uses-permission
+            android:name="android.permission.INTERNET"
+            tools:remove="android:maxSdkVersion"/>
+    <uses-permission
+            android:name="android.permission.ACCESS_NETWORK_STATE"
+            tools:remove="android:maxSdkVersion"/>
+    <uses-permission
+            android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+            tools:remove="18"/>
+    <uses-permission
+            android:name="android.permission.CAMERA"
+            tools:remove="android:maxSdkVersion"/>
+    <uses-permission
+            android:name="android.permission.VIBRATE"
+            tools:remove="android:maxSdkVersion"/>
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality. 
     -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" tools:remove="android:maxSdkVersion"/>
+    <uses-permission
+            android:name="android.permission.ACCESS_FINE_LOCATION"
+            tools:remove="android:maxSdkVersion"/>
 
-  <!--  <uses-feature
+    <!--
+      <uses-feature
             android:name="android.hardware.camera"
             android:required="true"/>
--->
+    -->
     <application
             android:allowBackup="true"
             android:icon="@mipmap/mon_magasinage_icon"
@@ -79,6 +92,18 @@
             </meta-data>
         </provider>
 
+        <activity
+                android:name=".vue.historique.VueHistoriqueCourse"
+                android:label="@string/title_item_list">
+        </activity>
+        <activity
+                android:name=".vue.historique.ItemDetailActivity"
+                android:label="@string/title_item_detail"
+                android:parentActivityName=".vue.historique.VueHistoriqueCourse">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="ca.qc.cgmatane.informatique.monmagasinage.vue.historique.VueHistoriqueCourse"/>
+        </activity>
     </application>
 
 </manifest>
