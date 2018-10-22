@@ -24,6 +24,8 @@ public class VueModifierMagasin extends AppCompatActivity{
         EnumerationTheme.changerTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_modifier_magasin);
+        getSupportActionBar().setTitle("Modifier un magasin");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.accesseurMagasins = MagasinDAO.getInstance();
 
@@ -95,5 +97,10 @@ public class VueModifierMagasin extends AppCompatActivity{
     }
     public void naviguerRetourListeMagasins(){
         this.finish();
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }

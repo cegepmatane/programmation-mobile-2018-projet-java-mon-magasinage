@@ -33,6 +33,8 @@ public class VueAjouterMagasin extends AppCompatActivity {
         EnumerationTheme.changerTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_ajouter_magasin);
+        getSupportActionBar().setTitle("Ajouter un magasin");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         champNom = (EditText)findViewById(R.id.vue_ajouter_magasin_champ_nom);
         champAdresse = (EditText)findViewById(R.id.vue_ajouter_magasin_champ_adresse);
         champVille= (EditText)findViewById(R.id.vue_ajouter_magasin_champ_ville);
@@ -104,5 +106,10 @@ public class VueAjouterMagasin extends AppCompatActivity {
         Magasin magasin = new Magasin(nom, adresse, ville, coorX, coorY);
         accesseurMagasin.ajouterMagasin(magasin);
         naviguerRetourListeMagasins();
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }
