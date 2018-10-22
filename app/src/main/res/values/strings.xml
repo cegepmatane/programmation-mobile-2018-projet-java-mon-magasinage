@@ -10,4 +10,6 @@
     <string name="panier">Panier</string>
     <string name="produits">Produits</string>
     <string name="enregistrer_la_course">Enregistrer la course</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
 </resources>

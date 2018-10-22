@@ -116,7 +116,7 @@ public class VueModifierCourse extends AppCompatActivity {
                             nomCourse.getText().toString(),
                             dateNotification.getText().toString(),
                             "",
-                            courseAModifier.getIdCourseOriginal(),
+                            courseAModifier.getCourseOriginal().getId(),
                             magasinDAO.getListeMagasins().get(spinnerMagasin.getSelectedItemPosition()));
 
                     //Notification
@@ -125,9 +125,6 @@ public class VueModifierCourse extends AppCompatActivity {
 
                     long offset = dateNotificationCalendar.getTimeInMillis()-Calendar.getInstance().getTimeInMillis();
                     //offset /= 6 ;
-                    Log.d("timee date nottification", String.valueOf(dateNotificationCalendar.getTimeInMillis()));
-                    Log.d("timee current", String.valueOf(currentTimeCalendar.getTimeInMillis()));
-                    Log.d("offsetNotificationTime", String.valueOf(offset));
 
                     PersistableBundle bundle = new PersistableBundle();
                     bundle.putString("titre", nomCourse.getText().toString());
