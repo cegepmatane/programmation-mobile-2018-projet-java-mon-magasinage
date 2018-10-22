@@ -80,9 +80,15 @@ public class ItemDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.vue_historique_date_realisation)).setText(course.getDateRealisation().format(formatter));
             LigneCourseDAO.getInstance().chargerListeLigneCoursePourUneCourse(course);
             ListViewLigneFaireCourseAdapter listViewLigneFaireCourseAdapter = new ListViewLigneFaireCourseAdapter(course, getActivity());
+            listViewLigneFaireCourseAdapter.setActiverCoche(false);
             ((ListView) rootView.findViewById(R.id.vue_historique_liste_panier)).setAdapter(listViewLigneFaireCourseAdapter);
             ImageView imageView =rootView.findViewById(R.id.vue_historique_image_course);
 
+            if(course.getMesLignesCourse().size() <1){
+                Toast message = Toast.makeText(getActivity(), //display toast message
+                        " Aucun produit enregistré pour cette course", Toast.LENGTH_SHORT);
+                message.show();
+            }
             try {
                 File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
                         Environment.DIRECTORY_PICTURES), "MonMagasinage");

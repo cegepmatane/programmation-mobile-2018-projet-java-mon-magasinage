@@ -48,7 +48,7 @@
     <ImageView
             android:src="@android:drawable/ic_menu_report_image"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="234dp"
             android:id="@+id/vue_historique_image_course"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp"
