@@ -47,7 +47,7 @@ public class Notification extends JobService {
         manager.createNotificationChannel(channel1);
 
         //creation des propriétés de la notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(),"channel1")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(),"channel"+Integer.toString(id))
                 .setSmallIcon(R.mipmap.mon_magasinage_icon_circle)
                 .setBadgeIconType(R.mipmap.mon_magasinage_icon_circle)
                 .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
