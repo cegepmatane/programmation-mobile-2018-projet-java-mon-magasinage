@@ -1,10 +1,10 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele;
 
+import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-
-import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
 
 public class Course {
     public static final String NOM_TABLE = "course";
@@ -24,6 +24,10 @@ public class Course {
     private Course courseOriginal;
     private Magasin monMagasin;
     private LignesCourse mesLignesCourse;
+
+    public Course(int id) {
+        this.id = id;
+    }
 
     public Course(int id, String nom, LocalDateTime dateNotification, LocalDateTime dateRealisation) {
         this.id = id;
@@ -113,4 +117,5 @@ public class Course {
 
         return coursePourAdapteur;
     }
+
 }

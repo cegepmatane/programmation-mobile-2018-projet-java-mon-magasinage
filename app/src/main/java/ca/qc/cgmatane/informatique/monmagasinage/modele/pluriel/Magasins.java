@@ -2,13 +2,11 @@ package ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
 
 public class Magasins extends ArrayList<Magasin>{
 

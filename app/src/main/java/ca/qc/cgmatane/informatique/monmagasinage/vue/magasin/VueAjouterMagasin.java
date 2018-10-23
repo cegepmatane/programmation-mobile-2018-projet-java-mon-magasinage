@@ -1,30 +1,20 @@
-package ca.qc.cgmatane.informatique.monmagasinage.vue;
+package ca.qc.cgmatane.informatique.monmagasinage.vue.magasin;
 
-import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-
-import java.io.IOException;
-import java.util.List;
-
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.MagasinDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.enumeration.EnumerationTheme;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 public class VueAjouterMagasin extends AppCompatActivity {
     protected EditText champNom;
@@ -43,6 +33,8 @@ public class VueAjouterMagasin extends AppCompatActivity {
         EnumerationTheme.changerTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_ajouter_magasin);
+        getSupportActionBar().setTitle("Ajouter un magasin");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         champNom = (EditText)findViewById(R.id.vue_ajouter_magasin_champ_nom);
         champAdresse = (EditText)findViewById(R.id.vue_ajouter_magasin_champ_adresse);
         champVille= (EditText)findViewById(R.id.vue_ajouter_magasin_champ_ville);
@@ -114,5 +106,10 @@ public class VueAjouterMagasin extends AppCompatActivity {
         Magasin magasin = new Magasin(nom, adresse, ville, coorX, coorY);
         accesseurMagasin.ajouterMagasin(magasin);
         naviguerRetourListeMagasins();
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }

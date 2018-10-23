@@ -1,10 +1,10 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel;
 
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 
 public class Courses extends ArrayList<Course> {
 

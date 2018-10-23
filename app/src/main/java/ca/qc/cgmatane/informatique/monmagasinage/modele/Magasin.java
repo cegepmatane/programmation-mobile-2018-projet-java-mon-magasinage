@@ -1,6 +1,5 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele;
 
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 public class Magasin {

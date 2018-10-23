@@ -1,47 +1,47 @@
 package ca.qc.cgmatane.informatique.monmagasinage.adaptater;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.*;
 
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.UniteDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Course;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.LigneCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
-import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.LignesCourse;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Produits;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Unites;
-import ca.qc.cgmatane.informatique.monmagasinage.vue.VueAjouterCourse;
 
-public class ListViewProduitAdaptater extends BaseAdapter {
-    private Unites listeUnites;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ListViewProduitAdaptater extends ArrayAdapter<Produit> {
     private Produits listeProduits;
-    private LayoutInflater layoutInflater = null;
-    private Activity context;
+    private Context monContext;
 
     private Course course;
 
-    public ListViewProduitAdaptater(Produits listeProduits, Course pcourse, Activity context) {
-        this.listeProduits = listeProduits;
-        this.layoutInflater = LayoutInflater.from(context);
-        this.context = context;
+    private static class VueBloque {
+        TextView textViewNomProduit;
+        Button actionLigneProduit;
+    }
 
-        listeUnites = UniteDAO.getInstance().getListeUnite();
+    public ListViewProduitAdaptater(Produits listeProduits, Course pcourse, Activity context) {
+        super(context, R.layout.ligne_listview_produit);
+        this.listeProduits = listeProduits;
+        this.monContext = context;
+
         course = pcourse;
     }
+
 
     @Override
     public int getCount() {
@@ -49,7 +49,7 @@ public class ListViewProduitAdaptater extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Produit getItem(int position) {
         return listeProduits.get(position);
     }
 
@@ -58,74 +58,92 @@ public class ListViewProduitAdaptater extends BaseAdapter {
         return position;
     }
 
+    private int lastPosition = -1;
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Produit produitSelectionne = (Produit) this.getItem(position);
+        VueBloque vueBloque; // view lookup cache stored in tag
+
+        final View result;
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.ligne_listview_produit, null);
+            //convertView = layoutInflater.inflate(R.layout.ligne_listview_produit, null);
+            vueBloque = new VueBloque();
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.ligne_listview_produit, parent, false);
 
-            TextView textViewNomProduit = (TextView) convertView.findViewById(R.id.ligne_listview_produit_nom_produit);
-            Spinner spinnerQuantite = (Spinner) convertView.findViewById(R.id.ligne_listview_produit_spinner_quantite);
-            Spinner spinnerUnite = (Spinner) convertView.findViewById(R.id.ligne_listview_produit_spinner_unite);
-            Button actionLigneProduit = (Button) convertView.findViewById(R.id.ligne_listview_produit_button_action);
+            vueBloque.textViewNomProduit = convertView.findViewById(R.id.ligne_listview_produit_nom_produit);
+            vueBloque.actionLigneProduit = convertView.findViewById(R.id.ligne_listview_produit_button_action);
 
-            spinnerUnite.setAdapter(listeUnites.recuperAdapterPourSpinner(context));
-            List<String> listPourSpinner = new ArrayList<String>();
-            for (int i = 1;i<10;i++){
-                listPourSpinner.add(i + "");
-            }
-            //TODO à faire ailleur pour eviter de la faire à chaque ligne
-            spinnerQuantite.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listPourSpinner));
 
-            final Produit produitSelectionne = listeProduits.get(position);
-            if (produitSelectionne != null){
-                LigneCourse ligneCourse = course.getMesLignesCourse().trouverAvecIdProduit(produitSelectionne.getId());
-                if(ligneCourse != null){
-                    //Le produit est dans le panier
-                    actionLigneProduit.setText("-");
-                    spinnerQuantite.setSelection(ligneCourse.getQuantite()-1);
-                    spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(ligneCourse.getUnite().getId()));
-                    convertView.setBackgroundColor(0xFFB4E2B1);
-                    spinnerQuantite.setEnabled(false);
-                    spinnerUnite.setEnabled(false);
-                    actionLigneProduit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            course.getMesLignesCourse().remove(ligneCourse);
-                            envoyerMessagePourActualisation("produits");
-                        }
-                    });
-                }else {
-                    //Le produit n'est pas dans le panier
-                    actionLigneProduit.setText("+");
-                    spinnerUnite.setSelection(listeUnites.retournerPositionDansLaListe(produitSelectionne.getUniteDefaut().getId()));
-                    spinnerQuantite.setSelection(produitSelectionne.getQuantiteDefaut()-1);
+            result = convertView;
+            convertView.setTag(vueBloque);
+        } else {
+            vueBloque = (VueBloque) convertView.getTag();
+            result = convertView;
 
-                    actionLigneProduit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            LigneCourse ligneCourse = new LigneCourse(course, produitSelectionne, spinnerQuantite.getSelectedItemPosition()+1, false);
-                            ligneCourse.setUnite(listeUnites.get(spinnerUnite.getSelectedItemPosition()));
-                            course.getMesLignesCourse().add(ligneCourse);
-                            envoyerMessagePourActualisation("produits");
-                        }
-                    });
-                }
-                textViewNomProduit.setText(produitSelectionne.getNom().toLowerCase());
-
-                }
-
-            return convertView;
         }
+        /*Animation animation = AnimationUtils.loadAnimation(monContext, (position > lastPosition) ? R.anim.haut_vers_le_bas : R.anim.bas_vers_le_haut);
+        result.startAnimation(animation);*/
+        lastPosition = position;
+
+        if (produitSelectionne.getNom().length() > 30) {
+            String nomReduit = produitSelectionne.getNom().substring(0, 30);
+            vueBloque.textViewNomProduit.setText(nomReduit + "...");
+        } else {
+            vueBloque.textViewNomProduit.setText(produitSelectionne.getNom());
+        }
+        LigneCourse ligneCourse = course.getMesLignesCourse().trouverAvecIdProduit(produitSelectionne.getId());
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast message = Toast.makeText(monContext, //display toast message
+                        produitSelectionne.getNom(), Toast.LENGTH_SHORT);
+                message.show();
+            }
+        });
+
+        if (ligneCourse != null) {
+            //Le produit est dans le panier
+            vueBloque.actionLigneProduit.setText("-");
+            convertView.setBackgroundColor(0xFFB4E2B1);
+
+            vueBloque.actionLigneProduit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    course.getMesLignesCourse().remove(ligneCourse);
+                    envoyerMessagePourActualisation("produits");
+                }
+            });
+
+        } else {
+            //Le produit n'est pas dans le panier
+            vueBloque.actionLigneProduit.setText("+");
+            convertView.setBackgroundColor(0x000000);
+
+            vueBloque.actionLigneProduit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LigneCourse ligneCourse = new LigneCourse(course, produitSelectionne, produitSelectionne.getQuantiteDefaut(), false);
+                    ligneCourse.setUnite(produitSelectionne.getUniteDefaut());
+
+                    course.getMesLignesCourse().add(ligneCourse);
+                    envoyerMessagePourActualisation("produits");
+                }
+            });
+        }
+
+        // Return the completed view to render on screen
         return convertView;
 
     }
 
     private void envoyerMessagePourActualisation(String message) {
         Log.d("sender", "Broadcasting message");
-        Intent intent = new Intent(VueAjouterCourse.EVENT_RECHARGER_AFFICHAGE);
+        Intent intent = new Intent("event_recharger_affichage");
         // You can also include some extra data.
         intent.putExtra("message", message);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(monContext).sendBroadcast(intent);
     }
 
     public Produits getListeProduits() {

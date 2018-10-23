@@ -1,8 +1,8 @@
 package ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel;
 
-import java.util.ArrayList;
-
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Produit;
+
+import java.util.ArrayList;
 
 public class Produits extends ArrayList<Produit>{
     

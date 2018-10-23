@@ -1,7 +1,6 @@
 package ca.qc.cgmatane.informatique.monmagasinage.donnees;
 
 import android.database.Cursor;
-
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.base.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Unite;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel.Unites;
@@ -14,6 +13,7 @@ public class UniteDAO {
     private UniteDAO() {
         accesseurBaseDeDonnees = BaseDeDonnees.getInstance();
         listeUnite = new Unites();
+        listerUnites();
     }
 
     public static UniteDAO getInstance(){

@@ -2,12 +2,10 @@ package ca.qc.cgmatane.informatique.monmagasinage.modele.pluriel;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
+import ca.qc.cgmatane.informatique.monmagasinage.modele.Unite;
 
-import java.net.PortUnreachableException;
 import java.util.ArrayList;
 import java.util.List;
-
-import ca.qc.cgmatane.informatique.monmagasinage.modele.Unite;
 
 public class Unites extends ArrayList<Unite>{
 

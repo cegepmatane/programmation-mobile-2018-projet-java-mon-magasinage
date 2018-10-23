@@ -1,4 +1,4 @@
-package ca.qc.cgmatane.informatique.monmagasinage.vue;
+package ca.qc.cgmatane.informatique.monmagasinage.vue.magasin;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import ca.qc.cgmatane.informatique.monmagasinage.R;
 import ca.qc.cgmatane.informatique.monmagasinage.donnees.MagasinDAO;
 import ca.qc.cgmatane.informatique.monmagasinage.modele.Magasin;
@@ -25,6 +24,8 @@ public class VueModifierMagasin extends AppCompatActivity{
         EnumerationTheme.changerTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_modifier_magasin);
+        getSupportActionBar().setTitle("Modifier un magasin");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.accesseurMagasins = MagasinDAO.getInstance();
 
@@ -96,5 +97,10 @@ public class VueModifierMagasin extends AppCompatActivity{
     }
     public void naviguerRetourListeMagasins(){
         this.finish();
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }
